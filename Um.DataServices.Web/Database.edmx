@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IatiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.ChannelStructure' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ChannelStructure">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Date" Type="nvarchar" MaxLength="255" />
+          <Property Name="2013" Type="float" />
+          <Property Name="F3" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.ChannelTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ChannelTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="DWID_Channel" Type="float" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Organisation_Code" Type="nvarchar" MaxLength="255" />
+          <Property Name="DWID_Parent" Type="float" />
+          <Property Name="Kolonne1" Type="nvarchar" MaxLength="255" />
+          <Property Name="F6" Type="nvarchar" MaxLength="255" />
+          <Property Name="Kobling fra datagrundlag: Channelcode i 2012, drøftes færdig for" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Country' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dwid_country" Type="int" />
+          <Property Name="country_code" Type="nvarchar" MaxLength="255" />
+          <Property Name="country" Type="nvarchar" MaxLength="255" />
+          <Property Name="name_danish" Type="nvarchar" MaxLength="255" />
+          <Property Name="parent_code" Type="nvarchar" MaxLength="255" />
+          <Property Name="code" Type="float" />
+          <Property Name="iso_code" Type="float" />
+          <Property Name="dwid_parent" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.DacTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DacTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="dwid_purpose" Type="float" />
+          <Property Name="DAC_CODE" Type="float" />
+          <Property Name="DAC_TXT_UK" Type="nvarchar" MaxLength="255" />
+          <Property Name="PURPOSE" Type="nvarchar" MaxLength="255" />
+          <Property Name="PURPOSE_CODE" Type="float" />
+          <Property Name="DAC_Code Parent" Type="nvarchar" MaxLength="255" />
+          <Property Name="Dac_Code_Text_Parent" Type="nvarchar" MaxLength="255" />
+          <Property Name="F8" Type="nvarchar" MaxLength="255" />
+          <Property Name="Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Modality' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Modality">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="MODALITY_ID" Type="nvarchar" MaxLength="255" />
+          <Property Name="MODALITY_PARENT_ID" Type="nvarchar" MaxLength="255" />
+          <Property Name="MODALITY_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="MODALITY_SUBTYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="255" />
+          <Property Name="CLARIFICATION" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <Function Name="GetActivitiesXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="IATISchema">
+          <Parameter Name="RecipientCountry" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="IatiDbModelStoreContainer">
+          <EntitySet Name="ChannelStructure" EntityType="Self.ChannelStructure" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ChannelStructure].[Date] AS [Date], 
+    [ChannelStructure].[2013] AS [2013], 
+    [ChannelStructure].[F3] AS [F3], 
+    [ChannelStructure].[ID] AS [ID]
+    FROM [dbo].[ChannelStructure] AS [ChannelStructure]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ChannelTable" EntityType="Self.ChannelTable" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ChannelTable].[DWID_Channel] AS [DWID_Channel], 
+    [ChannelTable].[Name] AS [Name], 
+    [ChannelTable].[Organisation_Code] AS [Organisation_Code], 
+    [ChannelTable].[DWID_Parent] AS [DWID_Parent], 
+    [ChannelTable].[Kolonne1] AS [Kolonne1], 
+    [ChannelTable].[F6] AS [F6], 
+    [ChannelTable].[Kobling fra datagrundlag: Channelcode i 2012, drøftes færdig for] AS [Kobling fra datagrundlag: Channelcode i 2012, drøftes færdig for], 
+    [ChannelTable].[ID] AS [ID]
+    FROM [dbo].[ChannelTable] AS [ChannelTable]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Country" EntityType="Self.Country" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Country].[ID] AS [ID], 
+    [Country].[dwid_country] AS [dwid_country], 
+    [Country].[country_code] AS [country_code], 
+    [Country].[country] AS [country], 
+    [Country].[name_danish] AS [name_danish], 
+    [Country].[parent_code] AS [parent_code], 
+    [Country].[code] AS [code], 
+    [Country].[iso_code] AS [iso_code], 
+    [Country].[dwid_parent] AS [dwid_parent]
+    FROM [dbo].[Country] AS [Country]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DacTable" EntityType="Self.DacTable" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DacTable].[dwid_purpose] AS [dwid_purpose], 
+    [DacTable].[DAC_CODE] AS [DAC_CODE], 
+    [DacTable].[DAC_TXT_UK] AS [DAC_TXT_UK], 
+    [DacTable].[PURPOSE] AS [PURPOSE], 
+    [DacTable].[PURPOSE_CODE] AS [PURPOSE_CODE], 
+    [DacTable].[DAC_Code Parent] AS [DAC_Code Parent], 
+    [DacTable].[Dac_Code_Text_Parent] AS [Dac_Code_Text_Parent], 
+    [DacTable].[F8] AS [F8], 
+    [DacTable].[Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg] AS [Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg], 
+    [DacTable].[ID] AS [ID]
+    FROM [dbo].[DacTable] AS [DacTable]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Modality" EntityType="Self.Modality" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Modality].[MODALITY_ID] AS [MODALITY_ID], 
+    [Modality].[MODALITY_PARENT_ID] AS [MODALITY_PARENT_ID], 
+    [Modality].[MODALITY_TYPE] AS [MODALITY_TYPE], 
+    [Modality].[MODALITY_SUBTYPE] AS [MODALITY_SUBTYPE], 
+    [Modality].[DESCRIPTION] AS [DESCRIPTION], 
+    [Modality].[CLARIFICATION] AS [CLARIFICATION], 
+    [Modality].[ID] AS [ID]
+    FROM [dbo].[Modality] AS [Modality]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IatiDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="IatiDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChannelStructures" EntityType="IatiDbModel.ChannelStructure" />
+          <EntitySet Name="ChannelTables" EntityType="IatiDbModel.ChannelTable" />
+          <EntitySet Name="Countries" EntityType="IatiDbModel.Country" />
+          <EntitySet Name="DacTables" EntityType="IatiDbModel.DacTable" />
+          <EntitySet Name="Modalities" EntityType="IatiDbModel.Modality" />
+          <FunctionImport Name="GetActivitiesXml" ReturnType="Collection(IatiDbModel.Activities_Result)">
+            <Parameter Name="RecipientCountry" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="ChannelStructure">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Date" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="C2013" Type="Double" />
+          <Property Name="F3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="ChannelTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="DWID_Channel" Type="Double" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Organisation_Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DWID_Parent" Type="Double" />
+          <Property Name="Kolonne1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="F6" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Kobling_fra_datagrundlag__Channelcode_i_2012__drøftes_færdig_for" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dwid_country" Type="Int32" />
+          <Property Name="country_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="country1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="name_danish" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="parent_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="Double" />
+          <Property Name="iso_code" Type="Double" />
+          <Property Name="dwid_parent" Type="Double" />
+        </EntityType>
+        <EntityType Name="DacTable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="dwid_purpose" Type="Double" />
+          <Property Name="DAC_CODE" Type="Double" />
+          <Property Name="DAC_TXT_UK" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PURPOSE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PURPOSE_CODE" Type="Double" />
+          <Property Name="DAC_Code_Parent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Dac_Code_Text_Parent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="F8" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Kobling_fra_datagrundlag__Purpose_Code__Zoomet_ind_på_et_overbyg" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Modality">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="MODALITY_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MODALITY_PARENT_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MODALITY_TYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MODALITY_SUBTYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CLARIFICATION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <ComplexType Name="Activities_Result">
+          <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IatiDbModelStoreContainer" CdmEntityContainer="IatiDbEntities">
+          <EntitySetMapping Name="ChannelStructures">
+            <EntityTypeMapping TypeName="IatiDbModel.ChannelStructure">
+              <MappingFragment StoreEntitySet="ChannelStructure">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="F3" ColumnName="F3" />
+                <ScalarProperty Name="C2013" ColumnName="2013" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChannelTables">
+            <EntityTypeMapping TypeName="IatiDbModel.ChannelTable">
+              <MappingFragment StoreEntitySet="ChannelTable">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kobling_fra_datagrundlag__Channelcode_i_2012__drøftes_færdig_for" ColumnName="Kobling fra datagrundlag: Channelcode i 2012, drøftes færdig for" />
+                <ScalarProperty Name="F6" ColumnName="F6" />
+                <ScalarProperty Name="Kolonne1" ColumnName="Kolonne1" />
+                <ScalarProperty Name="DWID_Parent" ColumnName="DWID_Parent" />
+                <ScalarProperty Name="Organisation_Code" ColumnName="Organisation_Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DWID_Channel" ColumnName="DWID_Channel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="IatiDbModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="dwid_parent" ColumnName="dwid_parent" />
+                <ScalarProperty Name="iso_code" ColumnName="iso_code" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="parent_code" ColumnName="parent_code" />
+                <ScalarProperty Name="name_danish" ColumnName="name_danish" />
+                <ScalarProperty Name="country1" ColumnName="country" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="dwid_country" ColumnName="dwid_country" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DacTables">
+            <EntityTypeMapping TypeName="IatiDbModel.DacTable">
+              <MappingFragment StoreEntitySet="DacTable">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kobling_fra_datagrundlag__Purpose_Code__Zoomet_ind_på_et_overbyg" ColumnName="Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg" />
+                <ScalarProperty Name="F8" ColumnName="F8" />
+                <ScalarProperty Name="Dac_Code_Text_Parent" ColumnName="Dac_Code_Text_Parent" />
+                <ScalarProperty Name="DAC_Code_Parent" ColumnName="DAC_Code Parent" />
+                <ScalarProperty Name="PURPOSE_CODE" ColumnName="PURPOSE_CODE" />
+                <ScalarProperty Name="PURPOSE" ColumnName="PURPOSE" />
+                <ScalarProperty Name="DAC_TXT_UK" ColumnName="DAC_TXT_UK" />
+                <ScalarProperty Name="DAC_CODE" ColumnName="DAC_CODE" />
+                <ScalarProperty Name="dwid_purpose" ColumnName="dwid_purpose" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modalities">
+            <EntityTypeMapping TypeName="IatiDbModel.Modality">
+              <MappingFragment StoreEntitySet="Modality">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CLARIFICATION" ColumnName="CLARIFICATION" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="MODALITY_SUBTYPE" ColumnName="MODALITY_SUBTYPE" />
+                <ScalarProperty Name="MODALITY_TYPE" ColumnName="MODALITY_TYPE" />
+                <ScalarProperty Name="MODALITY_PARENT_ID" ColumnName="MODALITY_PARENT_ID" />
+                <ScalarProperty Name="MODALITY_ID" ColumnName="MODALITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetActivitiesXml" FunctionName="IatiDbModel.Store.GetActivitiesXml">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IatiDbModel.Activities_Result">
+                <ScalarProperty Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" ColumnName="XML_F52E2B61-18A1-11d1-B105-00805F49916B" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
