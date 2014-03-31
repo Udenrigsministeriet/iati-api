@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <?define UpgradeCode="{55B2A957-E6D7-4603-83EE-8D9ECD4DBEAC}"?>
+  <?define Version="1.9.9"?>
+  <Product Id="*" Name="!(loc.ProductName)" Language="!(loc.Lang)" Codepage="1252" Version="1.0.0"
+           Manufacturer="!(loc.CompanyName)"
+           UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Languages="!(loc.Lang)"
+             Manufacturer="!(loc.CompanyName)" Comments="!(loc.Comments)"
+             Description="!(loc.Description)" Keywords="!(loc.Keywords)" InstallPrivileges="elevated" />
+
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="1.0.0"
+                      IncludeMinimum="yes"
+                      OnlyDetect="no"
+                      Maximum="$(var.Version)"
+                      IncludeMaximum="no"
+                      Property="PREVIOUSFOUND" />
+    </Upgrade>
+    <MediaTemplate EmbedCab="yes" />
+
+    <PropertyRef Id="NETFRAMEWORK45" />
+    <Condition Message='This setup requires the .NET Framework 4.5.'>
+      <![CDATA[Installed OR (NETFRAMEWORK45)]]>
+    </Condition>
+
+    <Feature Id="ProductFeature" Title="!(loc.ProductName)" Level="1">
+      <ComponentGroupRef Id="WebSiteComponents" />
+      <ComponentGroupRef Id="WebsiteIssConfiguration" />
+    </Feature>
+    <InstallExecuteSequence>
+      <LaunchConditions After='AppSearch' />
+      <RemoveExistingProducts After='InstallValidate' />
+    </InstallExecuteSequence>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="globeteamFolder" Name="!(loc.CompanyName)">
+          <Directory Id="INSTALLFOLDER" Name="!(loc.ProductName)" />
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+</Wix>

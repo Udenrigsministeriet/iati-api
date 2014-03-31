@@ -35,6 +35,7 @@ namespace Um.DataServices.Web
         [WebGet]
         public string Activities(string countryCode)
         {
+            //TODO Implement logging
             if (string.IsNullOrEmpty(countryCode))
             {
                 throw new ArgumentNullException("countryCode");

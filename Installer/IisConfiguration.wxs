@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+  <?define WebAppName="OData"?>
+
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="ODataAppPool" Guid="" KeyPath="yes">
+        <iis:WebAppPool Id="ODataAppPool"
+                        Name="$(var.WebAppName)AppPool"
+                        Identity="networkService"
+                        ManagedPipelineMode="Integrated"
+                        ManagedRuntimeVersion="v4.0" />
+      </Component>
+      <Component Id="InstallWebsite" Guid="" KeyPath="yes">
+        <!-- Install to default web site -->
+        <iis:WebSite Id="ODataWebSite" Description='UM IATI $(var.WebAppName) Service' Directory='INSTALLFOLDER' AutoStart='yes' StartOnInstall='yes'>
+          <iis:WebAddress Id="AllUnassigned" Port="80" Header="$(var.WebAppName).um.dk" />
+          <iis:WebApplication Id="ODataWebSiteApplication" Name="[ODataWebSite][WEBSITE_ID]" WebAppPool="$(var.WebAppName)AppPool"></iis:WebApplication>
+        </iis:WebSite>
+      </Component>
+    </DirectoryRef>
+    <ComponentGroup Id="WebsiteIssConfiguration">
+      <ComponentRef Id="InstallWebsite" />
+      <ComponentRef Id="ODataAppPool" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>
