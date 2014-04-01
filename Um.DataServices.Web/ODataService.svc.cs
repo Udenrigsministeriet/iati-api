@@ -33,15 +33,15 @@ namespace Um.DataServices.Web
         }
 
         [WebGet]
-        public string Activities(string countryCode)
+        public string Activities(string recipientCountryCode)
         {
             //TODO Implement logging
-            if (string.IsNullOrEmpty(countryCode))
+            if (string.IsNullOrEmpty(recipientCountryCode))
             {
-                throw new ArgumentNullException("countryCode");
+                throw new ArgumentNullException("recipientCountryCode");
             }
             var entities = new IatiDbEntities();
-            var dataset = entities.GetActivitiesXml(countryCode).ToList();
+            var dataset = entities.GetActivitiesXml(recipientCountryCode).ToList();
             var sb = new StringBuilder();
             foreach (var item in dataset)
             {
