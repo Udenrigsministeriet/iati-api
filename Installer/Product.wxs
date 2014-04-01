@@ -15,7 +15,7 @@
                       IncludeMinimum="yes"
                       OnlyDetect="no"
                       Maximum="$(var.Version)"
-                      IncludeMaximum="no"
+                      IncludeMaximum="yes"
                       Property="PREVIOUSFOUND" />
     </Upgrade>
     <MediaTemplate EmbedCab="yes" />
