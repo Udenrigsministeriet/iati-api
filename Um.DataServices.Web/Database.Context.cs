@@ -27,8 +27,6 @@ namespace Um.DataServices.Web
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ChannelStructure> ChannelStructures { get; set; }
-        public virtual DbSet<ChannelTable> ChannelTables { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<DacTable> DacTables { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }

@@ -4,12 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7d551b0f140446aa9a4e8787fc22809b" Name="Diagram1">
-        <EntityTypeShape EntityType="IatiDbModel.ChannelStructure" Width="1.5" PointX="6.75" PointY="4.75" />
-        <EntityTypeShape EntityType="IatiDbModel.ChannelTable" Width="1.5" PointX="1.25" PointY="2.875" />
-        <EntityTypeShape EntityType="IatiDbModel.Country" Width="1.5" PointX="3.75" PointY="3.75" />
-        <EntityTypeShape EntityType="IatiDbModel.DacTable" Width="1.5" PointX="11.25" PointY="2.75" />
-        <EntityTypeShape EntityType="IatiDbModel.Modality" Width="1.5" PointX="8.75" PointY="0.75" />
+      <Diagram DiagramId="7d551b0f140446aa9a4e8787fc22809b" Name="Diagram1" ZoomLevel="106">
+        <EntityTypeShape EntityType="IatiDbModel.Country" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IatiDbModel.DacTable" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Modality" Width="1.5" PointX="4.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

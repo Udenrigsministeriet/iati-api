@@ -119,12 +119,6 @@
     <Compile Include="Activities_Result.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="ChannelStructure.cs">
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ChannelTable.cs">
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
     <Compile Include="Country.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
