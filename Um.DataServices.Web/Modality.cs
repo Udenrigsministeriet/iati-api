@@ -14,12 +14,10 @@ namespace Um.DataServices.Web
     
     public partial class Modality
     {
-        public string MODALITY_ID { get; set; }
+        public int ID { get; set; }
         public string MODALITY_PARENT_ID { get; set; }
         public string MODALITY_TYPE { get; set; }
         public string MODALITY_SUBTYPE { get; set; }
         public string DESCRIPTION { get; set; }
-        public string CLARIFICATION { get; set; }
-        public long ID { get; set; }
     }
 }

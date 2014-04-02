@@ -6,10 +6,6 @@
     <edmx:StorageModels>
     <Schema Namespace="IatiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IatiDb.dbo.ChannelStructure' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'IatiDb.dbo.ChannelTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Country' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Country">
           <Key>
@@ -29,8 +25,9 @@ warning 6002: The table/view 'IatiDb.dbo.Country' does not have a primary key de
 warning 6002: The table/view 'IatiDb.dbo.DacTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="DacTable">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dwid_purpose" Type="float" />
           <Property Name="DAC_CODE" Type="float" />
           <Property Name="DAC_TXT_UK" Type="nvarchar" MaxLength="255" />
@@ -38,9 +35,6 @@ warning 6002: The table/view 'IatiDb.dbo.DacTable' does not have a primary key d
           <Property Name="PURPOSE_CODE" Type="float" />
           <Property Name="DAC_Code Parent" Type="nvarchar" MaxLength="255" />
           <Property Name="Dac_Code_Text_Parent" Type="nvarchar" MaxLength="255" />
-          <Property Name="F8" Type="nvarchar" MaxLength="255" />
-          <Property Name="Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Modality' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -48,18 +42,15 @@ warning 6002: The table/view 'IatiDb.dbo.Modality' does not have a primary key d
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="MODALITY_ID" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MODALITY_PARENT_ID" Type="nvarchar" MaxLength="255" />
           <Property Name="MODALITY_TYPE" Type="nvarchar" MaxLength="255" />
           <Property Name="MODALITY_SUBTYPE" Type="nvarchar" MaxLength="255" />
           <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="255" />
-          <Property Name="CLARIFICATION" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <Function Name="GetActivitiesXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="IATISchema">
           <Parameter Name="RecipientCountry" Type="varchar" Mode="In" />
+          <Parameter Name="Sector" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="IatiDbModelStoreContainer">
           <EntitySet Name="Country" EntityType="Self.Country" store:Type="Views" store:Schema="dbo">
@@ -77,27 +68,23 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
           </EntitySet>
           <EntitySet Name="DacTable" EntityType="Self.DacTable" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [DacTable].[Id] AS [Id], 
     [DacTable].[dwid_purpose] AS [dwid_purpose], 
     [DacTable].[DAC_CODE] AS [DAC_CODE], 
     [DacTable].[DAC_TXT_UK] AS [DAC_TXT_UK], 
     [DacTable].[PURPOSE] AS [PURPOSE], 
     [DacTable].[PURPOSE_CODE] AS [PURPOSE_CODE], 
     [DacTable].[DAC_Code Parent] AS [DAC_Code Parent], 
-    [DacTable].[Dac_Code_Text_Parent] AS [Dac_Code_Text_Parent], 
-    [DacTable].[F8] AS [F8], 
-    [DacTable].[Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg] AS [Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg], 
-    [DacTable].[ID] AS [ID]
+    [DacTable].[Dac_Code_Text_Parent] AS [Dac_Code_Text_Parent]
     FROM [dbo].[DacTable] AS [DacTable]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Modality" EntityType="Self.Modality" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Modality].[MODALITY_ID] AS [MODALITY_ID], 
+    [Modality].[ID] AS [ID], 
     [Modality].[MODALITY_PARENT_ID] AS [MODALITY_PARENT_ID], 
     [Modality].[MODALITY_TYPE] AS [MODALITY_TYPE], 
     [Modality].[MODALITY_SUBTYPE] AS [MODALITY_SUBTYPE], 
-    [Modality].[DESCRIPTION] AS [DESCRIPTION], 
-    [Modality].[CLARIFICATION] AS [CLARIFICATION], 
-    [Modality].[ID] AS [ID]
+    [Modality].[DESCRIPTION] AS [DESCRIPTION]
     FROM [dbo].[Modality] AS [Modality]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -108,10 +95,11 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
         <EntityContainer Name="IatiDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Countries" EntityType="IatiDbModel.Country" />
           <EntitySet Name="DacTables" EntityType="IatiDbModel.DacTable" />
-          <EntitySet Name="Modalities" EntityType="IatiDbModel.Modality" />
           <FunctionImport Name="GetActivitiesXml" ReturnType="Collection(IatiDbModel.Activities_Result)">
             <Parameter Name="RecipientCountry" Mode="In" Type="String" />
+            <Parameter Name="Sector" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Modalities" EntityType="IatiDbModel.Modality" />
         </EntityContainer>
         <EntityType Name="Country">
           <Key>
@@ -129,7 +117,7 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
         </EntityType>
         <EntityType Name="DacTable">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="dwid_purpose" Type="Double" />
           <Property Name="DAC_CODE" Type="Double" />
@@ -138,25 +126,21 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
           <Property Name="PURPOSE_CODE" Type="Double" />
           <Property Name="DAC_Code_Parent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Dac_Code_Text_Parent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="F8" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Kobling_fra_datagrundlag__Purpose_Code__Zoomet_ind_på_et_overbyg" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="Modality">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="MODALITY_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MODALITY_PARENT_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MODALITY_TYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MODALITY_SUBTYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CLARIFICATION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <ComplexType Name="Activities_Result">
           <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
         </ComplexType>
+        <EntityType Name="Modality">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MODALITY_PARENT_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MODALITY_TYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MODALITY_SUBTYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -181,9 +165,7 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
           <EntitySetMapping Name="DacTables">
             <EntityTypeMapping TypeName="IatiDbModel.DacTable">
               <MappingFragment StoreEntitySet="DacTable">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Kobling_fra_datagrundlag__Purpose_Code__Zoomet_ind_på_et_overbyg" ColumnName="Kobling fra datagrundlag: Purpose_Code# Zoomet ind på et overbyg" />
-                <ScalarProperty Name="F8" ColumnName="F8" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Dac_Code_Text_Parent" ColumnName="Dac_Code_Text_Parent" />
                 <ScalarProperty Name="DAC_Code_Parent" ColumnName="DAC_Code Parent" />
                 <ScalarProperty Name="PURPOSE_CODE" ColumnName="PURPOSE_CODE" />
@@ -194,19 +176,6 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Modalities">
-            <EntityTypeMapping TypeName="IatiDbModel.Modality">
-              <MappingFragment StoreEntitySet="Modality">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CLARIFICATION" ColumnName="CLARIFICATION" />
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="MODALITY_SUBTYPE" ColumnName="MODALITY_SUBTYPE" />
-                <ScalarProperty Name="MODALITY_TYPE" ColumnName="MODALITY_TYPE" />
-                <ScalarProperty Name="MODALITY_PARENT_ID" ColumnName="MODALITY_PARENT_ID" />
-                <ScalarProperty Name="MODALITY_ID" ColumnName="MODALITY_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetActivitiesXml" FunctionName="IatiDbModel.Store.GetActivitiesXml">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IatiDbModel.Activities_Result">
@@ -214,6 +183,17 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Modalities">
+            <EntityTypeMapping TypeName="IatiDbModel.Modality">
+              <MappingFragment StoreEntitySet="Modality">
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="MODALITY_SUBTYPE" ColumnName="MODALITY_SUBTYPE" />
+                <ScalarProperty Name="MODALITY_TYPE" ColumnName="MODALITY_TYPE" />
+                <ScalarProperty Name="MODALITY_PARENT_ID" ColumnName="MODALITY_PARENT_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

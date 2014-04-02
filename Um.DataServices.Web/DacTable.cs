@@ -21,8 +21,6 @@ namespace Um.DataServices.Web
         public Nullable<double> PURPOSE_CODE { get; set; }
         public string DAC_Code_Parent { get; set; }
         public string Dac_Code_Text_Parent { get; set; }
-        public string F8 { get; set; }
-        public string Kobling_fra_datagrundlag__Purpose_Code__Zoomet_ind_på_et_overbyg { get; set; }
-        public long ID { get; set; }
+        public int Id { get; set; }
     }
 }

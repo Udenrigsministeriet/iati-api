@@ -31,13 +31,17 @@ namespace Um.DataServices.Web
         public virtual DbSet<DacTable> DacTables { get; set; }
         public virtual DbSet<Modality> Modalities { get; set; }
     
-        public virtual ObjectResult<Activities_Result> GetActivitiesXml(string recipientCountry)
+        public virtual ObjectResult<Activities_Result> GetActivitiesXml(string recipientCountry, string sector)
         {
             var recipientCountryParameter = recipientCountry != null ?
                 new ObjectParameter("RecipientCountry", recipientCountry) :
                 new ObjectParameter("RecipientCountry", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter);
+            var sectorParameter = sector != null ?
+                new ObjectParameter("Sector", sector) :
+                new ObjectParameter("Sector", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter, sectorParameter);
         }
     }
 }
