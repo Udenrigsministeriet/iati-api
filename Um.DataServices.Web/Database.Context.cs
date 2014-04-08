@@ -28,12 +28,12 @@ namespace Um.DataServices.Web
         }
     
         public virtual DbSet<Aidtype> Aidtypes { get; set; }
-        public virtual DbSet<Channel> Channels { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<Finanslov> Finanslovs { get; set; }
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<Sector> Sectors { get; set; }
+        public virtual DbSet<Channel> Channels { get; set; }
     
         public virtual ObjectResult<Activities_Result> GetActivitiesXml(string recipientCountry, string sector)
         {

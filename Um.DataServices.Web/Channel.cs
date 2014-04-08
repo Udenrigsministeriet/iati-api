@@ -15,9 +15,9 @@ namespace Um.DataServices.Web
     public partial class Channel
     {
         public int ID { get; set; }
-        public Nullable<decimal> channel_code { get; set; }
-        public Nullable<decimal> channel_category_code { get; set; }
         public string channel_name_uk { get; set; }
         public string channel_name_dk { get; set; }
+        public Nullable<int> channel_code { get; set; }
+        public Nullable<int> channel_category_code { get; set; }
     }
 }

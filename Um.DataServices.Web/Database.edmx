@@ -26,10 +26,10 @@ warning 6002: The table/view 'IatiDb.dbo.Channel' does not have a primary key de
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="channel_code" Type="numeric" Precision="5" Scale="0" />
-          <Property Name="channel_category_code" Type="numeric" Precision="5" Scale="0" />
           <Property Name="channel_name_uk" Type="varchar" MaxLength="200" />
           <Property Name="channel_name_dk" Type="varchar" MaxLength="212" />
+          <Property Name="channel_code" Type="int" />
+          <Property Name="channel_category_code" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Country' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -125,10 +125,10 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <EntitySet Name="Channel" EntityType="Self.Channel" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Channel].[ID] AS [ID], 
-    [Channel].[channel_code] AS [channel_code], 
-    [Channel].[channel_category_code] AS [channel_category_code], 
     [Channel].[channel_name_uk] AS [channel_name_uk], 
-    [Channel].[channel_name_dk] AS [channel_name_dk]
+    [Channel].[channel_name_dk] AS [channel_name_dk], 
+    [Channel].[channel_code] AS [channel_code], 
+    [Channel].[channel_category_code] AS [channel_category_code]
     FROM [dbo].[Channel] AS [Channel]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Country" EntityType="Self.Country" store:Type="Views" store:Schema="dbo">
@@ -200,12 +200,12 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
             <Parameter Name="Sector" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Aidtypes" EntityType="IatiDbModel.Aidtype" />
-          <EntitySet Name="Channels" EntityType="IatiDbModel.Channel" />
           <EntitySet Name="Countries" EntityType="IatiDbModel.Country" />
           <EntitySet Name="Currencies" EntityType="IatiDbModel.Currency" />
           <EntitySet Name="Finanslovs" EntityType="IatiDbModel.Finanslov" />
           <EntitySet Name="Organisations" EntityType="IatiDbModel.Organisation" />
           <EntitySet Name="Sectors" EntityType="IatiDbModel.Sector" />
+          <EntitySet Name="Channels" EntityType="IatiDbModel.Channel" />
         </EntityContainer>
         <ComplexType Name="Activities_Result">
           <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
@@ -221,16 +221,6 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="parent_name_uk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="aidtype_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="parent_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Channel">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="channel_code" Type="Decimal" Precision="5" Scale="0" />
-          <Property Name="channel_category_code" Type="Decimal" Precision="5" Scale="0" />
-          <Property Name="channel_name_uk" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="channel_name_dk" Type="String" MaxLength="212" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -297,6 +287,16 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="category_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="parent_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="channel_name_uk" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="channel_name_dk" Type="String" MaxLength="212" FixedLength="false" Unicode="false" />
+          <Property Name="channel_code" Type="Int32" />
+          <Property Name="channel_category_code" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -319,17 +319,6 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
                 <ScalarProperty Name="parent_code" ColumnName="parent_code" />
                 <ScalarProperty Name="aidtype_name_uk" ColumnName="aidtype_name_uk" />
                 <ScalarProperty Name="aidtype_code" ColumnName="aidtype_code" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Channels">
-            <EntityTypeMapping TypeName="IatiDbModel.Channel">
-              <MappingFragment StoreEntitySet="Channel">
-                <ScalarProperty Name="channel_name_dk" ColumnName="channel_name_dk" />
-                <ScalarProperty Name="channel_name_uk" ColumnName="channel_name_uk" />
-                <ScalarProperty Name="channel_category_code" ColumnName="channel_category_code" />
-                <ScalarProperty Name="channel_code" ColumnName="channel_code" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -398,6 +387,17 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
                 <ScalarProperty Name="category_code" ColumnName="category_code" />
                 <ScalarProperty Name="sector_name_uk" ColumnName="sector_name_uk" />
                 <ScalarProperty Name="sector_code" ColumnName="sector_code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Channels">
+            <EntityTypeMapping TypeName="IatiDbModel.Channel">
+              <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="channel_category_code" ColumnName="channel_category_code" />
+                <ScalarProperty Name="channel_code" ColumnName="channel_code" />
+                <ScalarProperty Name="channel_name_dk" ColumnName="channel_name_dk" />
+                <ScalarProperty Name="channel_name_uk" ColumnName="channel_name_uk" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

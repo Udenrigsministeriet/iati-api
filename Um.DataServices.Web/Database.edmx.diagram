@@ -6,12 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="7d551b0f140446aa9a4e8787fc22809b" Name="Diagram1" ZoomLevel="111">
         <EntityTypeShape EntityType="IatiDbModel.Aidtype" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IatiDbModel.Channel" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IatiDbModel.Country" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="IatiDbModel.Currency" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IatiDbModel.Finanslov" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="IatiDbModel.Organisation" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IatiDbModel.Sector" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Country" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Currency" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Finanslov" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Organisation" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Sector" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Channel" Width="1.5" PointX="0.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
