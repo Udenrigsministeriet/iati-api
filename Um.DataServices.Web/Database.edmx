@@ -6,86 +6,188 @@
     <edmx:StorageModels>
     <Schema Namespace="IatiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Aidtype' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Aidtype">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aidtype_code" Type="nvarchar" MaxLength="255" />
+          <Property Name="aidtype_name_uk" Type="nvarchar" MaxLength="255" />
+          <Property Name="parent_code" Type="nvarchar" MaxLength="1" />
+          <Property Name="parent_name_uk" Type="nvarchar" MaxLength="255" />
+          <Property Name="aidtype_name_dk" Type="nvarchar" MaxLength="255" />
+          <Property Name="parent_name_dk" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Channel' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="channel_code" Type="numeric" Precision="5" Scale="0" />
+          <Property Name="channel_category_code" Type="numeric" Precision="5" Scale="0" />
+          <Property Name="channel_name_uk" Type="varchar" MaxLength="200" />
+          <Property Name="channel_name_dk" Type="varchar" MaxLength="212" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Country' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="dwid_country" Type="int" />
-          <Property Name="country_code" Type="nvarchar" MaxLength="255" />
-          <Property Name="country" Type="nvarchar" MaxLength="255" />
-          <Property Name="name_danish" Type="nvarchar" MaxLength="255" />
-          <Property Name="parent_code" Type="nvarchar" MaxLength="255" />
-          <Property Name="code" Type="float" />
-          <Property Name="iso_code" Type="float" />
-          <Property Name="dwid_parent" Type="float" />
+          <Property Name="country_code" Type="nvarchar" MaxLength="5" />
+          <Property Name="name_uk" Type="nvarchar" MaxLength="60" />
+          <Property Name="name_dk" Type="nvarchar" MaxLength="60" />
+          <Property Name="parent_code" Type="nvarchar" MaxLength="5" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IatiDb.dbo.DacTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="DacTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="dwid_purpose" Type="float" />
-          <Property Name="DAC_CODE" Type="float" />
-          <Property Name="DAC_TXT_UK" Type="nvarchar" MaxLength="255" />
-          <Property Name="PURPOSE" Type="nvarchar" MaxLength="255" />
-          <Property Name="PURPOSE_CODE" Type="float" />
-          <Property Name="DAC_Code Parent" Type="nvarchar" MaxLength="255" />
-          <Property Name="Dac_Code_Text_Parent" Type="nvarchar" MaxLength="255" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'IatiDb.dbo.Modality' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Modality">
+warning 6002: The table/view 'IatiDb.dbo.Currency' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Currency">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MODALITY_PARENT_ID" Type="nvarchar" MaxLength="255" />
-          <Property Name="MODALITY_TYPE" Type="nvarchar" MaxLength="255" />
-          <Property Name="MODALITY_SUBTYPE" Type="nvarchar" MaxLength="255" />
-          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="255" />
+          <Property Name="Year" Type="int" />
+          <Property Name="CurrencyCode" Type="varchar" MaxLength="10" />
+          <Property Name="ExchRate" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Finanslov' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Finanslov">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Category1_DK" />
+            <PropertyRef Name="Category1_UK" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubCompanyCode" Type="int" />
+          <Property Name="BudgetSubSection" Type="nvarchar" MaxLength="25" />
+          <Property Name="BudgetSubSection_Name_UK" Type="nvarchar" MaxLength="250" />
+          <Property Name="BudgetSubSection_Name_DK" Type="nvarchar" MaxLength="250" />
+          <Property Name="BudgetSection" Type="nvarchar" MaxLength="25" />
+          <Property Name="BudgetSection_Name_DK" Type="nvarchar" MaxLength="250" />
+          <Property Name="BudgetSection_Name_UK" Type="nvarchar" MaxLength="250" />
+          <Property Name="BudgetGroup" Type="nvarchar" MaxLength="25" />
+          <Property Name="BudgetGroup_Name_UK" Type="nvarchar" MaxLength="250" />
+          <Property Name="BudgetGroup_Name_DK" Type="nvarchar" MaxLength="250" />
+          <Property Name="Category1_DK" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Category1_UK" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Category2_DK" Type="varchar" MaxLength="100" />
+          <Property Name="Category2_UK" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Organisation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Organisation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="organisation_code" Type="int" />
+          <Property Name="organisation_name_uk" Type="varchar" MaxLength="120" />
+          <Property Name="organisation_name_dk" Type="varchar" MaxLength="132" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sector_code" Type="int" />
+          <Property Name="sector_name_uk" Type="nvarchar" MaxLength="255" />
+          <Property Name="category_code" Type="int" />
+          <Property Name="category_name_uk" Type="nvarchar" MaxLength="255" />
+          <Property Name="parent_code" Type="nvarchar" MaxLength="255" />
+          <Property Name="parent_name_uk" Type="nvarchar" MaxLength="255" />
+          <Property Name="sector_name_dk" Type="nvarchar" MaxLength="255" />
+          <Property Name="category_name_dk" Type="nvarchar" MaxLength="255" />
+          <Property Name="parent_name_dk" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <Function Name="GetActivitiesXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="IATISchema">
           <Parameter Name="RecipientCountry" Type="varchar" Mode="In" />
           <Parameter Name="Sector" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="IatiDbModelStoreContainer">
+          <EntitySet Name="Aidtype" EntityType="Self.Aidtype" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Aidtype].[ID] AS [ID], 
+    [Aidtype].[aidtype_code] AS [aidtype_code], 
+    [Aidtype].[aidtype_name_uk] AS [aidtype_name_uk], 
+    [Aidtype].[parent_code] AS [parent_code], 
+    [Aidtype].[parent_name_uk] AS [parent_name_uk], 
+    [Aidtype].[aidtype_name_dk] AS [aidtype_name_dk], 
+    [Aidtype].[parent_name_dk] AS [parent_name_dk]
+    FROM [dbo].[Aidtype] AS [Aidtype]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Channel" EntityType="Self.Channel" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Channel].[ID] AS [ID], 
+    [Channel].[channel_code] AS [channel_code], 
+    [Channel].[channel_category_code] AS [channel_category_code], 
+    [Channel].[channel_name_uk] AS [channel_name_uk], 
+    [Channel].[channel_name_dk] AS [channel_name_dk]
+    FROM [dbo].[Channel] AS [Channel]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Country" EntityType="Self.Country" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Country].[ID] AS [ID], 
-    [Country].[dwid_country] AS [dwid_country], 
     [Country].[country_code] AS [country_code], 
-    [Country].[country] AS [country], 
-    [Country].[name_danish] AS [name_danish], 
-    [Country].[parent_code] AS [parent_code], 
-    [Country].[code] AS [code], 
-    [Country].[iso_code] AS [iso_code], 
-    [Country].[dwid_parent] AS [dwid_parent]
+    [Country].[name_uk] AS [name_uk], 
+    [Country].[name_dk] AS [name_dk], 
+    [Country].[parent_code] AS [parent_code]
     FROM [dbo].[Country] AS [Country]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="DacTable" EntityType="Self.DacTable" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="Currency" EntityType="Self.Currency" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [DacTable].[Id] AS [Id], 
-    [DacTable].[dwid_purpose] AS [dwid_purpose], 
-    [DacTable].[DAC_CODE] AS [DAC_CODE], 
-    [DacTable].[DAC_TXT_UK] AS [DAC_TXT_UK], 
-    [DacTable].[PURPOSE] AS [PURPOSE], 
-    [DacTable].[PURPOSE_CODE] AS [PURPOSE_CODE], 
-    [DacTable].[DAC_Code Parent] AS [DAC_Code Parent], 
-    [DacTable].[Dac_Code_Text_Parent] AS [Dac_Code_Text_Parent]
-    FROM [dbo].[DacTable] AS [DacTable]</DefiningQuery>
+    [Currency].[ID] AS [ID], 
+    [Currency].[Year] AS [Year], 
+    [Currency].[CurrencyCode] AS [CurrencyCode], 
+    [Currency].[ExchRate] AS [ExchRate]
+    FROM [dbo].[Currency] AS [Currency]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="Modality" EntityType="Self.Modality" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="Finanslov" EntityType="Self.Finanslov" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Modality].[ID] AS [ID], 
-    [Modality].[MODALITY_PARENT_ID] AS [MODALITY_PARENT_ID], 
-    [Modality].[MODALITY_TYPE] AS [MODALITY_TYPE], 
-    [Modality].[MODALITY_SUBTYPE] AS [MODALITY_SUBTYPE], 
-    [Modality].[DESCRIPTION] AS [DESCRIPTION]
-    FROM [dbo].[Modality] AS [Modality]</DefiningQuery>
+    [Finanslov].[ID] AS [ID], 
+    [Finanslov].[SubCompanyCode] AS [SubCompanyCode], 
+    [Finanslov].[BudgetSubSection] AS [BudgetSubSection], 
+    [Finanslov].[BudgetSubSection_Name_UK] AS [BudgetSubSection_Name_UK], 
+    [Finanslov].[BudgetSubSection_Name_DK] AS [BudgetSubSection_Name_DK], 
+    [Finanslov].[BudgetSection] AS [BudgetSection], 
+    [Finanslov].[BudgetSection_Name_DK] AS [BudgetSection_Name_DK], 
+    [Finanslov].[BudgetSection_Name_UK] AS [BudgetSection_Name_UK], 
+    [Finanslov].[BudgetGroup] AS [BudgetGroup], 
+    [Finanslov].[BudgetGroup_Name_UK] AS [BudgetGroup_Name_UK], 
+    [Finanslov].[BudgetGroup_Name_DK] AS [BudgetGroup_Name_DK], 
+    [Finanslov].[Category1_DK] AS [Category1_DK], 
+    [Finanslov].[Category1_UK] AS [Category1_UK], 
+    [Finanslov].[Category2_DK] AS [Category2_DK], 
+    [Finanslov].[Category2_UK] AS [Category2_UK]
+    FROM [dbo].[Finanslov] AS [Finanslov]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Organisation" EntityType="Self.Organisation" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Organisation].[ID] AS [ID], 
+    [Organisation].[organisation_code] AS [organisation_code], 
+    [Organisation].[organisation_name_uk] AS [organisation_name_uk], 
+    [Organisation].[organisation_name_dk] AS [organisation_name_dk]
+    FROM [dbo].[Organisation] AS [Organisation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Sector" EntityType="Self.Sector" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Sector].[ID] AS [ID], 
+    [Sector].[sector_code] AS [sector_code], 
+    [Sector].[sector_name_uk] AS [sector_name_uk], 
+    [Sector].[category_code] AS [category_code], 
+    [Sector].[category_name_uk] AS [category_name_uk], 
+    [Sector].[parent_code] AS [parent_code], 
+    [Sector].[parent_name_uk] AS [parent_name_uk], 
+    [Sector].[sector_name_dk] AS [sector_name_dk], 
+    [Sector].[category_name_dk] AS [category_name_dk], 
+    [Sector].[parent_name_dk] AS [parent_name_dk]
+    FROM [dbo].[Sector] AS [Sector]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -93,53 +195,107 @@ warning 6002: The table/view 'IatiDb.dbo.Modality' does not have a primary key d
     <edmx:ConceptualModels>
       <Schema Namespace="IatiDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="IatiDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Countries" EntityType="IatiDbModel.Country" />
-          <EntitySet Name="DacTables" EntityType="IatiDbModel.DacTable" />
           <FunctionImport Name="GetActivitiesXml" ReturnType="Collection(IatiDbModel.Activities_Result)">
             <Parameter Name="RecipientCountry" Mode="In" Type="String" />
             <Parameter Name="Sector" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Modalities" EntityType="IatiDbModel.Modality" />
+          <EntitySet Name="Aidtypes" EntityType="IatiDbModel.Aidtype" />
+          <EntitySet Name="Channels" EntityType="IatiDbModel.Channel" />
+          <EntitySet Name="Countries" EntityType="IatiDbModel.Country" />
+          <EntitySet Name="Currencies" EntityType="IatiDbModel.Currency" />
+          <EntitySet Name="Finanslovs" EntityType="IatiDbModel.Finanslov" />
+          <EntitySet Name="Organisations" EntityType="IatiDbModel.Organisation" />
+          <EntitySet Name="Sectors" EntityType="IatiDbModel.Sector" />
         </EntityContainer>
+        <ComplexType Name="Activities_Result">
+          <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <EntityType Name="Aidtype">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aidtype_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="aidtype_name_uk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="parent_code" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="parent_name_uk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="aidtype_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="parent_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Channel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="channel_code" Type="Decimal" Precision="5" Scale="0" />
+          <Property Name="channel_category_code" Type="Decimal" Precision="5" Scale="0" />
+          <Property Name="channel_name_uk" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="channel_name_dk" Type="String" MaxLength="212" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="dwid_country" Type="Int32" />
-          <Property Name="country_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="country1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="name_danish" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="parent_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="code" Type="Double" />
-          <Property Name="iso_code" Type="Double" />
-          <Property Name="dwid_parent" Type="Double" />
+          <Property Name="country_code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="name_uk" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="name_dk" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="parent_code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="DacTable">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="dwid_purpose" Type="Double" />
-          <Property Name="DAC_CODE" Type="Double" />
-          <Property Name="DAC_TXT_UK" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="PURPOSE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="PURPOSE_CODE" Type="Double" />
-          <Property Name="DAC_Code_Parent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Dac_Code_Text_Parent" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <ComplexType Name="Activities_Result">
-          <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
-        </ComplexType>
-        <EntityType Name="Modality">
+        <EntityType Name="Currency">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MODALITY_PARENT_ID" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MODALITY_TYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MODALITY_SUBTYPE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ExchRate" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Finanslov">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Category1_DK" />
+            <PropertyRef Name="Category1_UK" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubCompanyCode" Type="Int32" />
+          <Property Name="BudgetSubSection" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetSubSection_Name_UK" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetSubSection_Name_DK" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetSection" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetSection_Name_DK" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetSection_Name_UK" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetGroup" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetGroup_Name_UK" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="BudgetGroup_Name_DK" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Category1_DK" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Category1_UK" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Category2_DK" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Category2_UK" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Organisation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="organisation_code" Type="Int32" />
+          <Property Name="organisation_name_uk" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="organisation_name_dk" Type="String" MaxLength="132" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Sector">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sector_code" Type="Int32" />
+          <Property Name="sector_name_uk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="category_code" Type="Int32" />
+          <Property Name="category_name_uk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="parent_code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="parent_name_uk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sector_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="category_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="parent_name_dk" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -147,35 +303,6 @@ warning 6002: The table/view 'IatiDb.dbo.Modality' does not have a primary key d
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="IatiDbModelStoreContainer" CdmEntityContainer="IatiDbEntities">
-          <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="IatiDbModel.Country">
-              <MappingFragment StoreEntitySet="Country">
-                <ScalarProperty Name="dwid_parent" ColumnName="dwid_parent" />
-                <ScalarProperty Name="iso_code" ColumnName="iso_code" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="parent_code" ColumnName="parent_code" />
-                <ScalarProperty Name="name_danish" ColumnName="name_danish" />
-                <ScalarProperty Name="country1" ColumnName="country" />
-                <ScalarProperty Name="country_code" ColumnName="country_code" />
-                <ScalarProperty Name="dwid_country" ColumnName="dwid_country" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DacTables">
-            <EntityTypeMapping TypeName="IatiDbModel.DacTable">
-              <MappingFragment StoreEntitySet="DacTable">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Dac_Code_Text_Parent" ColumnName="Dac_Code_Text_Parent" />
-                <ScalarProperty Name="DAC_Code_Parent" ColumnName="DAC_Code Parent" />
-                <ScalarProperty Name="PURPOSE_CODE" ColumnName="PURPOSE_CODE" />
-                <ScalarProperty Name="PURPOSE" ColumnName="PURPOSE" />
-                <ScalarProperty Name="DAC_TXT_UK" ColumnName="DAC_TXT_UK" />
-                <ScalarProperty Name="DAC_CODE" ColumnName="DAC_CODE" />
-                <ScalarProperty Name="dwid_purpose" ColumnName="dwid_purpose" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetActivitiesXml" FunctionName="IatiDbModel.Store.GetActivitiesXml">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IatiDbModel.Activities_Result">
@@ -183,13 +310,94 @@ warning 6002: The table/view 'IatiDb.dbo.Modality' does not have a primary key d
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Modalities">
-            <EntityTypeMapping TypeName="IatiDbModel.Modality">
-              <MappingFragment StoreEntitySet="Modality">
-                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
-                <ScalarProperty Name="MODALITY_SUBTYPE" ColumnName="MODALITY_SUBTYPE" />
-                <ScalarProperty Name="MODALITY_TYPE" ColumnName="MODALITY_TYPE" />
-                <ScalarProperty Name="MODALITY_PARENT_ID" ColumnName="MODALITY_PARENT_ID" />
+          <EntitySetMapping Name="Aidtypes">
+            <EntityTypeMapping TypeName="IatiDbModel.Aidtype">
+              <MappingFragment StoreEntitySet="Aidtype">
+                <ScalarProperty Name="parent_name_dk" ColumnName="parent_name_dk" />
+                <ScalarProperty Name="aidtype_name_dk" ColumnName="aidtype_name_dk" />
+                <ScalarProperty Name="parent_name_uk" ColumnName="parent_name_uk" />
+                <ScalarProperty Name="parent_code" ColumnName="parent_code" />
+                <ScalarProperty Name="aidtype_name_uk" ColumnName="aidtype_name_uk" />
+                <ScalarProperty Name="aidtype_code" ColumnName="aidtype_code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Channels">
+            <EntityTypeMapping TypeName="IatiDbModel.Channel">
+              <MappingFragment StoreEntitySet="Channel">
+                <ScalarProperty Name="channel_name_dk" ColumnName="channel_name_dk" />
+                <ScalarProperty Name="channel_name_uk" ColumnName="channel_name_uk" />
+                <ScalarProperty Name="channel_category_code" ColumnName="channel_category_code" />
+                <ScalarProperty Name="channel_code" ColumnName="channel_code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="IatiDbModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="parent_code" ColumnName="parent_code" />
+                <ScalarProperty Name="name_dk" ColumnName="name_dk" />
+                <ScalarProperty Name="name_uk" ColumnName="name_uk" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="IatiDbModel.Currency">
+              <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="ExchRate" ColumnName="ExchRate" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Finanslovs">
+            <EntityTypeMapping TypeName="IatiDbModel.Finanslov">
+              <MappingFragment StoreEntitySet="Finanslov">
+                <ScalarProperty Name="Category2_UK" ColumnName="Category2_UK" />
+                <ScalarProperty Name="Category2_DK" ColumnName="Category2_DK" />
+                <ScalarProperty Name="Category1_UK" ColumnName="Category1_UK" />
+                <ScalarProperty Name="Category1_DK" ColumnName="Category1_DK" />
+                <ScalarProperty Name="BudgetGroup_Name_DK" ColumnName="BudgetGroup_Name_DK" />
+                <ScalarProperty Name="BudgetGroup_Name_UK" ColumnName="BudgetGroup_Name_UK" />
+                <ScalarProperty Name="BudgetGroup" ColumnName="BudgetGroup" />
+                <ScalarProperty Name="BudgetSection_Name_UK" ColumnName="BudgetSection_Name_UK" />
+                <ScalarProperty Name="BudgetSection_Name_DK" ColumnName="BudgetSection_Name_DK" />
+                <ScalarProperty Name="BudgetSection" ColumnName="BudgetSection" />
+                <ScalarProperty Name="BudgetSubSection_Name_DK" ColumnName="BudgetSubSection_Name_DK" />
+                <ScalarProperty Name="BudgetSubSection_Name_UK" ColumnName="BudgetSubSection_Name_UK" />
+                <ScalarProperty Name="BudgetSubSection" ColumnName="BudgetSubSection" />
+                <ScalarProperty Name="SubCompanyCode" ColumnName="SubCompanyCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organisations">
+            <EntityTypeMapping TypeName="IatiDbModel.Organisation">
+              <MappingFragment StoreEntitySet="Organisation">
+                <ScalarProperty Name="organisation_name_dk" ColumnName="organisation_name_dk" />
+                <ScalarProperty Name="organisation_name_uk" ColumnName="organisation_name_uk" />
+                <ScalarProperty Name="organisation_code" ColumnName="organisation_code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sectors">
+            <EntityTypeMapping TypeName="IatiDbModel.Sector">
+              <MappingFragment StoreEntitySet="Sector">
+                <ScalarProperty Name="parent_name_dk" ColumnName="parent_name_dk" />
+                <ScalarProperty Name="category_name_dk" ColumnName="category_name_dk" />
+                <ScalarProperty Name="sector_name_dk" ColumnName="sector_name_dk" />
+                <ScalarProperty Name="parent_name_uk" ColumnName="parent_name_uk" />
+                <ScalarProperty Name="parent_code" ColumnName="parent_code" />
+                <ScalarProperty Name="category_name_uk" ColumnName="category_name_uk" />
+                <ScalarProperty Name="category_code" ColumnName="category_code" />
+                <ScalarProperty Name="sector_name_uk" ColumnName="sector_name_uk" />
+                <ScalarProperty Name="sector_code" ColumnName="sector_code" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

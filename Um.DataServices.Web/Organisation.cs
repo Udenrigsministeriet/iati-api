@@ -12,15 +12,11 @@ namespace Um.DataServices.Web
     using System;
     using System.Collections.Generic;
     
-    public partial class DacTable
+    public partial class Organisation
     {
-        public Nullable<double> dwid_purpose { get; set; }
-        public Nullable<double> DAC_CODE { get; set; }
-        public string DAC_TXT_UK { get; set; }
-        public string PURPOSE { get; set; }
-        public Nullable<double> PURPOSE_CODE { get; set; }
-        public string DAC_Code_Parent { get; set; }
-        public string Dac_Code_Text_Parent { get; set; }
-        public int Id { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> organisation_code { get; set; }
+        public string organisation_name_uk { get; set; }
+        public string organisation_name_dk { get; set; }
     }
 }

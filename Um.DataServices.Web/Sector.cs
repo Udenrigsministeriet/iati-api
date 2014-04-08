@@ -12,12 +12,17 @@ namespace Um.DataServices.Web
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class Sector
     {
         public int ID { get; set; }
-        public string country_code { get; set; }
-        public string name_uk { get; set; }
-        public string name_dk { get; set; }
+        public Nullable<int> sector_code { get; set; }
+        public string sector_name_uk { get; set; }
+        public Nullable<int> category_code { get; set; }
+        public string category_name_uk { get; set; }
         public string parent_code { get; set; }
+        public string parent_name_uk { get; set; }
+        public string sector_name_dk { get; set; }
+        public string category_name_dk { get; set; }
+        public string parent_name_dk { get; set; }
     }
 }

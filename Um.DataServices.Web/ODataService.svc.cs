@@ -82,15 +82,15 @@ namespace Um.DataServices.Web
             {
                 return;
             }
-
-            const int length = 2;
+            //TODO Enable exceptions once correct country code format has been implemented
+            const int length = 3;
             if (recipientCountryCode.Length != length)
             {
                 var msg =
                     string.Format(
                         "Length of 'RecipientCountry' parameter is invalid. The length of the specified value was '{0}'. The value of 'RecipientCountry' must be exactly '{1}' char",
                         recipientCountryCode.Length, length);
-                throw new ArgumentException(msg);
+                //throw new ArgumentException(msg);
             }
 
             // Lookup the specified country code in the Countries view. The specified country code must exist, 

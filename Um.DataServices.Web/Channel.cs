@@ -12,12 +12,12 @@ namespace Um.DataServices.Web
     using System;
     using System.Collections.Generic;
     
-    public partial class Country
+    public partial class Channel
     {
         public int ID { get; set; }
-        public string country_code { get; set; }
-        public string name_uk { get; set; }
-        public string name_dk { get; set; }
-        public string parent_code { get; set; }
+        public Nullable<decimal> channel_code { get; set; }
+        public Nullable<decimal> channel_category_code { get; set; }
+        public string channel_name_uk { get; set; }
+        public string channel_name_dk { get; set; }
     }
 }
