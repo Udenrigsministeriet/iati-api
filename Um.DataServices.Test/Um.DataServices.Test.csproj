@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Integration\DeploymentTests.cs" />
     <Compile Include="Integration\ODataServiceTest.cs" />
     <Compile Include="Unit\ODataServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

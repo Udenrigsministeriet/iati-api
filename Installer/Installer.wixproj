@@ -47,6 +47,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Howto.md" />
     <Content Include="Setup.build" />
   </ItemGroup>
   <ItemGroup>

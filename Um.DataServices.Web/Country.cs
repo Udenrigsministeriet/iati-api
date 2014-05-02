@@ -19,5 +19,7 @@ namespace Um.DataServices.Web
         public string name_uk { get; set; }
         public string name_dk { get; set; }
         public string parent_code { get; set; }
+        public string country_code_iati { get; set; }
+        public string CountryType { get; set; }
     }
 }
