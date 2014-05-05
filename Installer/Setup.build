@@ -23,13 +23,13 @@
   <ItemGroup>
     <WixCode Include="Product.wxs" />
     <WixCode Include="$(WebSiteContentCode)" />
-    <WixCode Include="IISConfiguration.wxs" />
+    <!--<WixCode Include="IISConfiguration.wxs" />-->
   </ItemGroup>
 
   <ItemGroup>
     <WixObject Include="Product.wixobj" />
     <WixObject Include="$(WebSiteContentObject)" />
-    <WixObject Include="IISConfiguration.wixobj" />
+    <!--<WixObject Include="IISConfiguration.wixobj" />-->
   </ItemGroup>
 
   <Target Name="Build">

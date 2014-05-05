@@ -27,7 +27,7 @@
 
     <Feature Id="ProductFeature" Title="!(loc.ProductName)" Level="1">
       <ComponentGroupRef Id="WebSiteComponents" />
-      <ComponentGroupRef Id="WebsiteIssConfiguration" />
+      <!--<ComponentGroupRef Id="WebsiteIssConfiguration" />-->
     </Feature>
     <InstallExecuteSequence>
       <LaunchConditions After='AppSearch' />
