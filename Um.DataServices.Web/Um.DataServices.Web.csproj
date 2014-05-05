@@ -104,6 +104,7 @@
       <DependentUpon>Database.edmx</DependentUpon>
       <LastGenOutput>Database.cs</LastGenOutput>
     </Content>
+    <Content Include="Activities.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -116,6 +117,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities.ashx.cs">
+      <DependentUpon>Activities.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Activities_Result.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>

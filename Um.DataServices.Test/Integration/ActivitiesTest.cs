@@ -9,18 +9,18 @@ using Um.DataServices.Web;
 namespace Um.DataServices.Test.Integration
 {
     [TestFixture]
-    public class ODataServiceTest
+    public class ActivitiesTest
     {
         [Test]
         public void TestValidateRecipientCountryCodeCanValidate()
         {
-            Assert.DoesNotThrow(() => ODataService.ValidateRecipientCountryCode("SYA"));
+            Assert.Throws<ArgumentException>(() => Activities.ValidateRecipientCountryCode("SYA"));
         }
 
         [Test]
         public void TestValidateRecipientCountryCodeThrowsOnUnknown()
         {
-            Assert.Throws<ArgumentException>(() => ODataService.ValidateRecipientCountryCode("BD"));
+            Assert.DoesNotThrow(() => Activities.ValidateRecipientCountryCode("BD"));
         }
     }
 }
