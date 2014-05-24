@@ -7,55 +7,55 @@
     </Fragment>
     <Fragment>
         <ComponentGroup Id="WebSiteComponents">
-            <Component Id="cmpD62EB5829E1C5748EA8278BB2FD9CF23" Directory="INSTALLFOLDER" Guid="{4D30EBC1-0B3B-4571-A168-4F9164EDF3F6}">
+            <Component Id="cmpD62EB5829E1C5748EA8278BB2FD9CF23" Directory="INSTALLFOLDER" Guid="{49FFA2D0-E4C2-48C6-B88C-B78712D3CDD4}">
                 <File Id="filB47A752ACB75D1FF29D35A41DE93CFEE" KeyPath="yes" Source="$(var.publishDir)\Activities.ashx" />
             </Component>
-            <Component Id="cmpF81B7353D2B584CE10E4A8BCEEC3F868" Directory="INSTALLFOLDER" Guid="{80C6E4D1-5676-4C6C-82B7-A27512B7B400}">
+            <Component Id="cmpF81B7353D2B584CE10E4A8BCEEC3F868" Directory="INSTALLFOLDER" Guid="{6862755D-E4D6-4518-8672-7AF58F32B6BC}">
                 <File Id="filFEFB88897DB58782DC85D0DE2A7C4A8B" KeyPath="yes" Source="$(var.publishDir)\Database.Context.tt" />
             </Component>
-            <Component Id="cmp74852F76776899519CCE547B5427B802" Directory="INSTALLFOLDER" Guid="{2321C0D5-DB37-47F7-A913-C899A5747393}">
+            <Component Id="cmp74852F76776899519CCE547B5427B802" Directory="INSTALLFOLDER" Guid="{1EEA7395-AB0B-48CF-BDC5-92A6C4233D10}">
                 <File Id="filFC5E1E96187ED5E4CDB0EB9AAE924C47" KeyPath="yes" Source="$(var.publishDir)\Database.edmx.diagram" />
             </Component>
-            <Component Id="cmp727F0B0256DB6E7719ECB4D101EE71D8" Directory="INSTALLFOLDER" Guid="{11161E4D-917F-40D7-AB1F-F41749D56C53}">
+            <Component Id="cmp727F0B0256DB6E7719ECB4D101EE71D8" Directory="INSTALLFOLDER" Guid="{79F4E577-546E-4947-8191-FCCA7C46A3BC}">
                 <File Id="fil76A4412475D40F86C4C6DE684A4C3882" KeyPath="yes" Source="$(var.publishDir)\Database.tt" />
             </Component>
-            <Component Id="cmpE6DF6F683868F748E80FFBAD3E4DA34E" Directory="INSTALLFOLDER" Guid="{FB1FE00A-F44E-4689-95DD-7DC82686E091}">
+            <Component Id="cmpE6DF6F683868F748E80FFBAD3E4DA34E" Directory="INSTALLFOLDER" Guid="{74E869D1-B9B9-4A1B-BCFD-07AEE6AA8FB7}">
                 <File Id="fil3273CA40681B31F250C4AAFA193B1CC2" KeyPath="yes" Source="$(var.publishDir)\ODataService.svc" />
             </Component>
-            <Component Id="cmp3DE0E27CB4AD0EAD15733F20AB0760EF" Directory="INSTALLFOLDER" Guid="{C31180E4-2CD7-4AA0-9941-E2BAD2125B8E}">
+            <Component Id="cmp3DE0E27CB4AD0EAD15733F20AB0760EF" Directory="INSTALLFOLDER" Guid="{BB06BE69-CE48-4A8A-BA57-9278E7876A25}">
                 <File Id="filF804CBAD53A94E1BE2AB44FD5DF0AB63" KeyPath="yes" Source="$(var.publishDir)\packages.config" />
             </Component>
-            <Component Id="cmpCDB7F4EFDEF1E65C3B12BEBAD7E4D7EA" Directory="INSTALLFOLDER" Guid="{71671D08-3502-4F93-A551-15CC4D4FC0AB}">
+            <Component Id="cmpCDB7F4EFDEF1E65C3B12BEBAD7E4D7EA" Directory="INSTALLFOLDER" Guid="{E71A2E3E-41DA-494B-BA6F-2F6776389B8A}">
                 <File Id="fil8994620207C22CA15AF75ACDD6420C79" KeyPath="yes" Source="$(var.publishDir)\Web.config" />
             </Component>
-            <Component Id="cmp4795109627B83AD0BD4AE603B111DBF1" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{46920E74-3427-4CF9-8A42-9384AB270AA8}">
+            <Component Id="cmp4795109627B83AD0BD4AE603B111DBF1" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{006F8434-D197-46C1-BAD0-BA76FAFBF072}">
                 <File Id="filEE905A33DF4BB70A125796A18623634B" KeyPath="yes" Source="$(var.publishDir)\bin\EntityFramework.dll" />
             </Component>
-            <Component Id="cmp7FAFACC5767528A7C01CB444DDF11157" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{1F86F211-A0A2-4F54-91B8-D449BE7D4DCE}">
+            <Component Id="cmp7FAFACC5767528A7C01CB444DDF11157" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{8F9B02E5-6E32-4042-8DFC-EB7F382F0744}">
                 <File Id="filC7FAB35E0E35A062AF335458344059FB" KeyPath="yes" Source="$(var.publishDir)\bin\EntityFramework.SqlServer.dll" />
             </Component>
-            <Component Id="cmp34E2AD567402A573C4C95A38FDC77793" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{78ED526B-9FC1-4BEF-9C72-B6F57506B4A0}">
+            <Component Id="cmp34E2AD567402A573C4C95A38FDC77793" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{AF16B0C8-BC08-4078-BD83-8F730CB58FFC}">
                 <File Id="fil87D721D281C4BFFC49FF137899C618DC" KeyPath="yes" Source="$(var.publishDir)\bin\Microsoft.Data.Edm.dll" />
             </Component>
-            <Component Id="cmp0134A00FD50F94EE59A9B6B9DB5AC009" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{B23476F5-8DAA-4C40-9D68-38C7B93DCA14}">
+            <Component Id="cmp0134A00FD50F94EE59A9B6B9DB5AC009" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{84968A0E-C752-4648-A4A3-0991FE6E03BA}">
                 <File Id="filFFE71AFB72F19B4338B737EF2DCAB81D" KeyPath="yes" Source="$(var.publishDir)\bin\Microsoft.Data.OData.dll" />
             </Component>
-            <Component Id="cmp7283E36F71AF45D5B9BEA12CC9D81B6C" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{978AEC03-27EB-42BF-9B09-DBB96A3E5D89}">
+            <Component Id="cmp7283E36F71AF45D5B9BEA12CC9D81B6C" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{CA7337FE-D360-4D3C-99E7-CED7EE69138A}">
                 <File Id="fil385A00877BC2861B3B20EF436EB5F0B7" KeyPath="yes" Source="$(var.publishDir)\bin\Microsoft.Data.Services.Client.dll" />
             </Component>
-            <Component Id="cmp681044ED10A08C0C5111D0D48F0D4EBC" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{2E0CF375-248C-4A7F-8FD5-B9CDE843B022}">
+            <Component Id="cmp681044ED10A08C0C5111D0D48F0D4EBC" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{AF140801-BB00-46F6-A2B1-66F7551EA786}">
                 <File Id="fil3795531CDD808D1F8ABB0FA4B2443753" KeyPath="yes" Source="$(var.publishDir)\bin\Microsoft.Data.Services.dll" />
             </Component>
-            <Component Id="cmp8A82A74582B4535A845F754A66F6806F" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{82391A15-36DE-4D75-9F0A-F0FA1CC8CB89}">
+            <Component Id="cmp8A82A74582B4535A845F754A66F6806F" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{289B9DA2-E53E-4BBF-8BE3-11FE9D784C13}">
                 <File Id="filE529FF1C09221EC29AE93752F9C9419A" KeyPath="yes" Source="$(var.publishDir)\bin\Microsoft.OData.EntityFrameworkProvider.dll" />
             </Component>
-            <Component Id="cmpDB1A8AB5ED2126F7E3E4F5E17B964CF3" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{B5912CAD-83D9-406D-A3C4-BD07597DE861}">
+            <Component Id="cmpDB1A8AB5ED2126F7E3E4F5E17B964CF3" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{126A3D1A-1B16-4BA3-81C0-4882F7F8A4CF}">
                 <File Id="fil3969AE72983EC4992939BD5FE9AF525B" KeyPath="yes" Source="$(var.publishDir)\bin\System.Spatial.dll" />
             </Component>
-            <Component Id="cmp68942B4A9A9596F7C3ED25E2B19D653B" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{CF780343-CFE9-4BA4-9E38-4B790A1EB7FF}">
+            <Component Id="cmp68942B4A9A9596F7C3ED25E2B19D653B" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{2AF1A54C-8C96-4E9F-929F-4F3AE298DF82}">
                 <File Id="filF46BD5BF7E3EE17C8CA5FD3D9E91089B" KeyPath="yes" Source="$(var.publishDir)\bin\Um.DataServices.Web.dll" />
             </Component>
-            <Component Id="cmpFDDE5F5E596DF10705844F191C9B6263" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{5ADA38BE-CC72-499B-A894-77BB605EA01C}">
+            <Component Id="cmpFDDE5F5E596DF10705844F191C9B6263" Directory="dir7307A6085BD4ABD9B8955C093FD541F5" Guid="{F8B33786-7CFB-4C17-BEFA-C3662BD26CE6}">
                 <File Id="filE23B4A9FBBB34C9C15F2730C970FDF58" KeyPath="yes" Source="$(var.publishDir)\bin\Um.DataServices.Web.pdb" />
             </Component>
         </ComponentGroup>
