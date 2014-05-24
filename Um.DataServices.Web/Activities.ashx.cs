@@ -1,10 +1,12 @@
 ﻿#region
 
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.UI;
 
 #endregion
 
@@ -14,6 +16,15 @@ namespace Um.DataServices.Web
     {
         public void ProcessRequest(HttpContext context)
         {
+            var page = new OutputCachedPage(new OutputCacheParameters
+            {
+                // Reload the cache after 24 hours
+                Duration = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]),
+                Location = OutputCacheLocation.Server,
+                VaryByParam = "sector;RecipientCountryCode"
+            });
+            page.ProcessRequest(HttpContext.Current);
+
             //TODO Implement logging
 
             var recipientCountryCode = context.Request.Params.Get(@"RecipientCountryCode");
@@ -34,8 +45,17 @@ namespace Um.DataServices.Web
                 sb.Append(item.XML_F52E2B61_18A1_11d1_B105_00805F49916B);
             }
 
+            context.Response.BufferOutput = true;
             context.Response.ContentType = @"text/xml";
             context.Response.ContentEncoding = System.Text.Encoding.UTF8;
+
+            // Ask the client to cache the result
+            context.Response.Cache.SetCacheability(HttpCacheability.Public);
+            context.Response.Cache.SetExpires(
+                DateTime.Now.AddSeconds(int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
+            context.Response.Cache.SetMaxAge(new TimeSpan(0, 0,
+                int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
+
             context.Response.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             context.Response.Write(sb.ToString());
         }
@@ -119,29 +139,13 @@ namespace Um.DataServices.Web
             {
                 return;
             }
-            const int length = 3;
-            if (sector.Length != length)
-            {
-                var msg =
-                    string.Format(
-                        "Length of 'Sector' parameter is invalid. The length of the specified value was '{0}'. The value of 'Sector' must be exactly '{1}' char",
-                        sector.Length, length);
-                throw new ArgumentException(msg);
-            }
+
             int parsedSector;
             if (!int.TryParse(sector, out parsedSector))
             {
                 var msg =
                     string.Format(
                         "Value of 'Sector' parameter is invalid. It cannot be parsed as an integer. The value of 'Sector' must be between 0 and 999");
-                throw new ArgumentException(msg);
-            }
-            if (parsedSector < 0 || parsedSector > 999)
-            {
-                var msg =
-                    string.Format(
-                        "Value of 'sector' parameter is invalid. The value of 'sector' must be between 000 and 999",
-                        sector);
                 throw new ArgumentException(msg);
             }
 
@@ -151,12 +155,29 @@ namespace Um.DataServices.Web
 
             var match =
                 entities.Sectors.FirstOrDefault(
-                    c => c.category_code == parsedSector);
+                    c => c.sector_code == parsedSector);
 
             if (match == null)
             {
-                var msg = string.Format("The specified Sector '{0}' is unknown", sector);
+                var msg = string.Format("The specified Sector '{0}' is unknown", parsedSector);
                 throw new ArgumentException(msg);
+            }
+        }
+
+        private sealed class OutputCachedPage : Page
+        {
+            private readonly OutputCacheParameters _cacheSettings;
+
+            public OutputCachedPage(OutputCacheParameters cacheSettings)
+            {
+                ID = Guid.NewGuid().ToString();
+                _cacheSettings = cacheSettings;
+            }
+
+            protected override void FrameworkInitialize()
+            {
+                base.FrameworkInitialize();
+                InitOutputCache(_cacheSettings);
             }
         }
     }
