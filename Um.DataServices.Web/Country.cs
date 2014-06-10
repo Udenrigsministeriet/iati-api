@@ -20,8 +20,8 @@ namespace Um.DataServices.Web
         public string name_dk { get; set; }
         public string parent_code { get; set; }
         public string country_code_iati { get; set; }
-        public string CountryType { get; set; }
         public Nullable<int> Code { get; set; }
         public string partner_country_yn { get; set; }
+        public string Countrytype { get; set; }
     }
 }

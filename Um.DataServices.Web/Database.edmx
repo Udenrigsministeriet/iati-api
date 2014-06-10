@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="IatiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="IatiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Aidtype' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Aidtype">
@@ -42,10 +42,10 @@ warning 6002: The table/view 'IatiDb.dbo.Country' does not have a primary key de
           <Property Name="name_uk" Type="nvarchar" MaxLength="60" />
           <Property Name="name_dk" Type="nvarchar" MaxLength="60" />
           <Property Name="parent_code" Type="nvarchar" MaxLength="5" />
-          <Property Name="Code" Type="int" />
-          <Property Name="CountryType" Type="varchar" MaxLength="40" />
-          <Property Name="partner_country_yn" Type="varchar" MaxLength="3" />
           <Property Name="country_code_iati" Type="nvarchar" MaxLength="5" />
+          <Property Name="Code" Type="int" />
+          <Property Name="Countrytype" Type="varchar" MaxLength="40" />
+          <Property Name="partner_country_yn" Type="varchar" MaxLength="3" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Currency' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -112,6 +112,7 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
         </EntityType>
         <Function Name="GetActivitiesXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="IATISchema">
           <Parameter Name="RecipientCountry" Type="varchar" Mode="In" />
+          <Parameter Name="Region" Type="varchar" Mode="In" />
           <Parameter Name="Sector" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="IatiDbModelStoreContainer">
@@ -142,10 +143,10 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
     [Country].[name_uk] AS [name_uk], 
     [Country].[name_dk] AS [name_dk], 
     [Country].[parent_code] AS [parent_code], 
+    [Country].[country_code_iati] AS [country_code_iati], 
     [Country].[Code] AS [Code], 
-    [Country].[CountryType] AS [CountryType], 
-    [Country].[partner_country_yn] AS [partner_country_yn], 
-    [Country].[country_code_iati] AS [country_code_iati]
+    [Country].[Countrytype] AS [Countrytype], 
+    [Country].[partner_country_yn] AS [partner_country_yn]
     FROM [dbo].[Country] AS [Country]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Currency" EntityType="Self.Currency" store:Type="Views" store:Schema="dbo">
@@ -205,6 +206,7 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
         <EntityContainer Name="IatiDbEntities" annotation:LazyLoadingEnabled="true">
           <FunctionImport Name="GetActivitiesXml" ReturnType="Collection(IatiDbModel.Activities_Result)">
             <Parameter Name="RecipientCountry" Mode="In" Type="String" />
+            <Parameter Name="Region" Mode="In" Type="String" />
             <Parameter Name="Sector" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Aidtypes" EntityType="IatiDbModel.Aidtype" />
@@ -240,9 +242,9 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="name_dk" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="parent_code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="country_code_iati" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="CountryType" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Code" Type="Int32" />
           <Property Name="partner_country_yn" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Countrytype" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Currency">
           <Key>
@@ -338,9 +340,9 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <EntitySetMapping Name="Countries">
             <EntityTypeMapping TypeName="IatiDbModel.Country">
               <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Countrytype" ColumnName="Countrytype" />
                 <ScalarProperty Name="partner_country_yn" ColumnName="partner_country_yn" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="CountryType" ColumnName="CountryType" />
                 <ScalarProperty Name="country_code_iati" ColumnName="country_code_iati" />
                 <ScalarProperty Name="parent_code" ColumnName="parent_code" />
                 <ScalarProperty Name="name_dk" ColumnName="name_dk" />

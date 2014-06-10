@@ -21,7 +21,7 @@ namespace Um.DataServices.Web
                 // Reload the cache after 24 hours
                 Duration = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]),
                 Location = OutputCacheLocation.Server,
-                VaryByParam = "sector;RecipientCountryCode"
+                VaryByParam = "sector;RecipientCountryCode;region"
             });
             page.ProcessRequest(HttpContext.Current);
 
@@ -29,16 +29,19 @@ namespace Um.DataServices.Web
 
             var recipientCountryCode = context.Request.Params.Get(@"RecipientCountryCode");
             var sector = context.Request.Params.Get(@"sector");
-
+            var region = context.Request.Params.Get(@"region");
+            
             var formattedRecipientCountryCode = FormatInputString(recipientCountryCode);
             var formattedSector = FormatInputInteger(sector);
+            var formattedRegion = FormatInputInteger(region);
 
             // Validate input parameters and throw exception if not valid
             ValidateSector(formattedSector);
             ValidateRecipientCountryCode(formattedRecipientCountryCode);
+            ValidateRegion(formattedRegion);
 
             var entities = new IatiDbEntities();
-            var dataset = entities.GetActivitiesXml(formattedRecipientCountryCode, formattedSector).ToList();
+            var dataset = entities.GetActivitiesXml(formattedRecipientCountryCode, formattedRegion, formattedSector).ToList();
             var sb = new StringBuilder();
             foreach (var item in dataset)
             {
@@ -149,7 +152,7 @@ namespace Um.DataServices.Web
                 throw new ArgumentException(msg);
             }
 
-            // Lookup the specified country code in the Countries view. The specified sector must exist, 
+            // Lookup the specified sector in the Sectors view. The specified sector must exist, 
             // for validation to succeed
             var entities = new IatiDbEntities();
 
@@ -162,6 +165,38 @@ namespace Um.DataServices.Web
                 var msg = string.Format("The specified Sector '{0}' is unknown", parsedSector);
                 throw new ArgumentException(msg);
             }
+        }
+
+        public static void ValidateRegion(string region)
+        {
+            if (string.IsNullOrEmpty(region))
+            {
+                return;
+            }
+
+            int parsedRegion;
+            if (!int.TryParse(region, out parsedRegion))
+            {
+                var msg =
+                    string.Format(
+                        "Value of 'Region' parameter is invalid. It cannot be parsed as an integer. The value of 'Region' must be between 0 and 999");
+                throw new ArgumentException(msg);
+            }
+
+            // Lookup the specified region code in the Regions view. The specified region must exist, 
+            // for validation to succeed
+            var entities = new IatiDbEntities();
+
+            //TODO Enable this
+            //var match =
+            //    entities.Regions.FirstOrDefault(
+            //        c => c.code == parsedRegion);
+
+            //if (match == null)
+            //{
+            //    var msg = string.Format("The specified Region '{0}' is unknown", parsedRegion);
+            //    throw new ArgumentException(msg);
+            //}
         }
 
         private sealed class OutputCachedPage : Page

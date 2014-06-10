@@ -35,17 +35,23 @@ namespace Um.DataServices.Web
         public virtual DbSet<Sector> Sectors { get; set; }
         public virtual DbSet<Channel> Channels { get; set; }
     
-        public virtual ObjectResult<Activities_Result> GetActivitiesXml(string recipientCountry, string sector)
+        public virtual ObjectResult<Activities_Result> GetActivitiesXml(string recipientCountry, string region, string sector)
         {
             var recipientCountryParameter = recipientCountry != null ?
                 new ObjectParameter("RecipientCountry", recipientCountry) :
                 new ObjectParameter("RecipientCountry", typeof(string));
     
+            var regionParameter = region != null ?
+                new ObjectParameter("Region", region) :
+                new ObjectParameter("Region", typeof(string));
+    
             var sectorParameter = sector != null ?
                 new ObjectParameter("Sector", sector) :
                 new ObjectParameter("Sector", typeof(string));
-            ((IObjectContextAdapter) this).ObjectContext.CommandTimeout = 300;
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter, sectorParameter);
+
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 3000;
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter, regionParameter, sectorParameter);
         }
     }
 }
