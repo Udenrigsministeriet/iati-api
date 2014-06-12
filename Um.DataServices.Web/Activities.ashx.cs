@@ -187,16 +187,15 @@ namespace Um.DataServices.Web
             // for validation to succeed
             var entities = new IatiDbEntities();
 
-            //TODO Enable this
-            //var match =
-            //    entities.Regions.FirstOrDefault(
-            //        c => c.code == parsedRegion);
+            var match =
+                entities.Regions.FirstOrDefault(
+                    c => c.code == parsedRegion);
 
-            //if (match == null)
-            //{
-            //    var msg = string.Format("The specified Region '{0}' is unknown", parsedRegion);
-            //    throw new ArgumentException(msg);
-            //}
+            if (match == null)
+            {
+                var msg = string.Format("The specified Region '{0}' is unknown", parsedRegion);
+                throw new ArgumentException(msg);
+            }
         }
 
         private sealed class OutputCachedPage : Page

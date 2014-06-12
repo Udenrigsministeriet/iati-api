@@ -92,6 +92,17 @@ warning 6002: The table/view 'IatiDb.dbo.Organisation' does not have a primary k
           <Property Name="organisation_code" Type="int" />
           <Property Name="organisation_name_uk" Type="varchar" MaxLength="120" />
           <Property Name="organisation_name_dk" Type="varchar" MaxLength="132" />
+          <Property Name="channel_code" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Region' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="int" />
+          <Property Name="name_uk" Type="nvarchar" MaxLength="60" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -181,8 +192,16 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
     [Organisation].[ID] AS [ID], 
     [Organisation].[organisation_code] AS [organisation_code], 
     [Organisation].[organisation_name_uk] AS [organisation_name_uk], 
-    [Organisation].[organisation_name_dk] AS [organisation_name_dk]
+    [Organisation].[organisation_name_dk] AS [organisation_name_dk], 
+    [Organisation].[channel_code] AS [channel_code]
     FROM [dbo].[Organisation] AS [Organisation]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Region" EntityType="Self.Region" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Region].[id] AS [id], 
+    [Region].[code] AS [code], 
+    [Region].[name_uk] AS [name_uk]
+    FROM [dbo].[Region] AS [Region]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Sector" EntityType="Self.Sector" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -216,6 +235,7 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <EntitySet Name="Organisations" EntityType="IatiDbModel.Organisation" />
           <EntitySet Name="Sectors" EntityType="IatiDbModel.Sector" />
           <EntitySet Name="Channels" EntityType="IatiDbModel.Channel" />
+          <EntitySet Name="Regions" EntityType="IatiDbModel.Region" />
         </EntityContainer>
         <ComplexType Name="Activities_Result">
           <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
@@ -285,6 +305,7 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="organisation_code" Type="Int32" />
           <Property Name="organisation_name_uk" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="organisation_name_dk" Type="String" MaxLength="132" FixedLength="false" Unicode="false" />
+          <Property Name="channel_code" Type="Int32" />
         </EntityType>
         <EntityType Name="Sector">
           <Key>
@@ -310,6 +331,14 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="channel_name_dk" Type="String" MaxLength="212" FixedLength="false" Unicode="false" />
           <Property Name="channel_code" Type="Int32" />
           <Property Name="channel_category_code" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="name_uk" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -386,6 +415,7 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <EntitySetMapping Name="Organisations">
             <EntityTypeMapping TypeName="IatiDbModel.Organisation">
               <MappingFragment StoreEntitySet="Organisation">
+                <ScalarProperty Name="channel_code" ColumnName="channel_code" />
                 <ScalarProperty Name="organisation_name_dk" ColumnName="organisation_name_dk" />
                 <ScalarProperty Name="organisation_name_uk" ColumnName="organisation_name_uk" />
                 <ScalarProperty Name="organisation_code" ColumnName="organisation_code" />
@@ -417,6 +447,15 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
                 <ScalarProperty Name="channel_name_dk" ColumnName="channel_name_dk" />
                 <ScalarProperty Name="channel_name_uk" ColumnName="channel_name_uk" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="IatiDbModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="name_uk" ColumnName="name_uk" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

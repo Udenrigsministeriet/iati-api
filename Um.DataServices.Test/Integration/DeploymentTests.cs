@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using NUnit.Framework;
 using Um.DataServices.Web;
 
@@ -30,6 +29,7 @@ namespace Um.DataServices.Test.Integration
             paths.Add("Finanslovs");
             paths.Add("Organisations");
             paths.Add("Sectors");
+            paths.Add("Regions");
             paths.Add("Channels");
 
             var urls = (from host in hosts from path in paths select string.Format(template, host, path)).ToList();
@@ -51,7 +51,7 @@ namespace Um.DataServices.Test.Integration
             var hosts = new List<string> {"test"};
 
             var paths = new List<string>();
-            paths.Add(@"/Activities.ashx?RecipientCountryCode='BF'");
+            paths.Add(@"Activities.ashx?RecipientCountryCode='BF'");
 
             var urls = (from host in hosts from path in paths select string.Format(template, host, path)).ToList();
 
@@ -69,7 +69,7 @@ namespace Um.DataServices.Test.Integration
         public void TestGetActivitiesCanGetForeachCountryCode()
         {
             const string template = @"http://{0}/{1}";
-            var hosts = new List<string> { "test" };
+            var hosts = new List<string> {"test"};
 
             var entities = new IatiDbEntities();
             var countries = entities.Countries;
@@ -77,62 +77,22 @@ namespace Um.DataServices.Test.Integration
                 countries.Where(c => c.country_code_iati.Length == 2).Select(c => c.country_code_iati).ToList();
             var paths =
                 (from countryCode in countryCodes
-                 select string.Format(@"/Activities.ashx?RecipientCountryCode={0}", countryCode)).ToList();
+                    select string.Format(@"Activities.ashx?RecipientCountryCode={0}", countryCode)).ToList();
 
             var urls = (from host in hosts
-                        from path in paths
-                        select string.Format(template, host, path)).ToList();
+                from path in paths
+                select string.Format(template, host, path)).ToList();
 
             foreach (
                 var response in
-                    urls.Select(url => (HttpWebRequest)WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse)request.GetResponse()))
+                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                        .Select(request => (HttpWebResponse) request.GetResponse()))
             {
                 Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
                 Console.WriteLine(response.ResponseUri);
             }
         }
 
-        [Test]
-        [Ignore]
-        public void TestGetActivitiesCanGetForeachSector()
-        {
-            var random = new Random();
-
-            const string template = @"http://{0}/{1}";
-            var hosts = new List<string> { "test" };
-
-            var entities = new IatiDbEntities();
-            var sectors = entities.Sectors;
-            var sectorCodes =
-                sectors.Where(s => s.category_code > 0 && s.category_code < 999).Select(s => s.category_code).ToList();
-
-            var countries = entities.Countries;
-            var countryCodes =
-                countries.Where(c => c.country_code_iati.Length == 2).Select(c => c.country_code_iati).ToList();
-
-            var countryCodeIndex = random.Next(countryCodes.Count);
-            var countryCode = countryCodes[countryCodeIndex];
-
-            var paths =
-                (from sectorCode in sectorCodes
-                 select string.Format(@"Activities.ashx?RecipientConutryCode={0}&Sector={1}", countryCode, sectorCode)).ToList();
-
-            var urls = (from host in hosts
-                        from path in paths
-                        select string.Format(template, host, path)).ToList();
-
-            foreach (
-                var response in
-                    urls.Select(url => (HttpWebRequest)WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse)request.GetResponse()))
-            {
-                Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
-                Console.WriteLine(response.ResponseUri);
-            }
-        }
-
-        // http://iatiquery.um.dk/Activities.ashx?RecipientCountryCode='et-eller-andet'
         [Test]
         [Ignore]
         public void TestGetActivitiesCanGetForeachCountryCodeAndSector()
@@ -169,5 +129,78 @@ namespace Um.DataServices.Test.Integration
                 Console.WriteLine(response.ResponseUri);
             }
         }
+
+        // http://iatiquery.um.dk/Activities.ashx?Region='something'
+        [Test]
+        public void TestGetActivitiesCanGetForeachRegion()
+        {
+            const string template = @"http://{0}/{1}";
+            var hosts = new List<string> {"test"};
+
+            var entities = new IatiDbEntities();
+            var regions = entities.Regions;
+            var regionCodes =
+                regions.Select(c => c.code).ToList();
+            var paths =
+                (from regionCode in regionCodes
+                    select string.Format(@"Activities.ashx?Region={0}", regionCode)).ToList();
+
+            var urls = (from host in hosts
+                from path in paths
+                select string.Format(template, host, path)).ToList();
+
+            foreach (
+                var response in
+                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                        .Select(request => (HttpWebResponse) request.GetResponse()))
+            {
+                Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
+                Console.WriteLine(response.ResponseUri);
+            }
+        }
+        // http://iatiquery.um.dk/Activities.ashx?RecipientCountryCode=something&sector=something
+        [Test]
+        [Ignore]
+        public void TestGetActivitiesCanGetForeachSector()
+        {
+            var random = new Random();
+
+            const string template = @"http://{0}/{1}";
+            var hosts = new List<string> {"test"};
+
+            var entities = new IatiDbEntities();
+            var sectors = entities.Sectors;
+            var sectorCodes =
+                sectors.Where(s => s.category_code > 0 && s.category_code < 999).Select(s => s.category_code).ToList();
+
+            var countries = entities.Countries;
+            var countryCodes =
+                countries.Where(c => c.country_code_iati.Length == 2).Select(c => c.country_code_iati).ToList();
+
+            // Uses random to pick a random country from the list of countries
+            var countryCodeIndex = random.Next(countryCodes.Count);
+            var countryCode = countryCodes[countryCodeIndex];
+
+            var paths =
+                (from sectorCode in sectorCodes
+                    select
+                        string.Format(@"Activities.ashx?RecipientConutryCode={0}&Sector={1}", countryCode, sectorCode))
+                    .ToList();
+
+            var urls = (from host in hosts
+                from path in paths
+                select string.Format(template, host, path)).ToList();
+
+            foreach (
+                var response in
+                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                        .Select(request => (HttpWebResponse) request.GetResponse()))
+            {
+                Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
+                Console.WriteLine(response.ResponseUri);
+            }
+        }
+
+        // http://iatiquery.um.dk/Activities.ashx?RecipientCountryCode='et-eller-andet'
     }
 }
