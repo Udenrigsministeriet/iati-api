@@ -30,7 +30,26 @@ namespace Um.DataServices.Web
             var recipientCountryCode = context.Request.Params.Get(@"RecipientCountryCode");
             var sector = context.Request.Params.Get(@"sector");
             var region = context.Request.Params.Get(@"region");
-            
+
+            var activities = GetActivities(recipientCountryCode, region, sector);
+
+            context.Response.BufferOutput = true;
+            context.Response.ContentType = @"text/xml";
+            context.Response.ContentEncoding = System.Text.Encoding.UTF8;
+
+            // Ask the client to cache the result
+            context.Response.Cache.SetCacheability(HttpCacheability.Public);
+            context.Response.Cache.SetExpires(
+                DateTime.Now.AddSeconds(int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
+            context.Response.Cache.SetMaxAge(new TimeSpan(0, 0,
+                int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
+
+            context.Response.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            context.Response.Write(activities);
+        }
+
+        public static string GetActivities(string recipientCountryCode, string region, string sector)
+        {
             var formattedRecipientCountryCode = FormatInputString(recipientCountryCode);
             var formattedSector = FormatInputInteger(sector);
             var formattedRegion = FormatInputInteger(region);
@@ -47,20 +66,7 @@ namespace Um.DataServices.Web
             {
                 sb.Append(item.XML_F52E2B61_18A1_11d1_B105_00805F49916B);
             }
-
-            context.Response.BufferOutput = true;
-            context.Response.ContentType = @"text/xml";
-            context.Response.ContentEncoding = System.Text.Encoding.UTF8;
-
-            // Ask the client to cache the result
-            context.Response.Cache.SetCacheability(HttpCacheability.Public);
-            context.Response.Cache.SetExpires(
-                DateTime.Now.AddSeconds(int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
-            context.Response.Cache.SetMaxAge(new TimeSpan(0, 0,
-                int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
-
-            context.Response.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            context.Response.Write(sb.ToString());
+            return sb.ToString();
         }
 
         public bool IsReusable

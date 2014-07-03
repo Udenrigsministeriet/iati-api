@@ -31,6 +31,7 @@ namespace Um.DataServices.Test.Integration
             paths.Add("Sectors");
             paths.Add("Regions");
             paths.Add("Channels");
+            paths.Add("Activities");
 
             var urls = (from host in hosts from path in paths select string.Format(template, host, path)).ToList();
 

@@ -6,14 +6,14 @@
 
 #region
 
-using System;
+using System.Configuration;
 using System.Data.Services;
 using System.Data.Services.Common;
 using System.Data.Services.Providers;
 using System.Linq;
 using System.ServiceModel.Web;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Web;
 
 #endregion
 
@@ -29,29 +29,26 @@ namespace Um.DataServices.Web
             config.SetServiceOperationAccessRule("*", ServiceOperationRights.AllRead);
             config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V3;
             config.UseVerboseErrors = true;
+
         }
 
+        protected override void OnStartProcessingRequest(ProcessRequestArgs args)
+        {
+            base.OnStartProcessingRequest(args);
+            var c = HttpContext.Current.Response.Cache;
+            c.SetCacheability(HttpCacheability.Server);
+            var lifetime = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]);
+            c.SetExpires(HttpContext.Current.Timestamp.AddSeconds(lifetime));
+            c.VaryByHeaders["Accept"] = true;
+            c.VaryByHeaders["Accept-Charset"] = true;
+            c.VaryByHeaders["Accept-Encoding"] = true;
+            c.VaryByParams["*"] = true;
+        }
 
-        //[WebGet]
-        //public string Activities(string recipientCountryCode, string sector)
-        //{
-        //    //TODO Implement logging
-
-            //var formattedRecipientCountryCode = FormatInputString(recipientCountryCode);
-            //var formattedSector = FormatInputString(sector);
-
-            // Validate input parameters and throw exception if not valid
-            //ValidateRecipientCountryCode(formattedRecipientCountryCode);
-            //ValidateSector(formattedSector);
-
-            //var entities = new IatiDbEntities();
-            //var dataset = entities.GetActivitiesXml(formattedRecipientCountryCode, formattedSector).ToList();
-            //var sb = new StringBuilder();
-            //foreach (var item in dataset)
-            //{
-            //    sb.Append(item.XML_F52E2B61_18A1_11d1_B105_00805F49916B);
-            //}
-        //    return sb.ToString();
-        //}
+        [WebGet]
+        public string Activities(string recipientCountryCode, string sector, string region)
+        {
+            return Um.DataServices.Web.Activities.GetActivities(recipientCountryCode,region,sector);
+        }
     }
 }
