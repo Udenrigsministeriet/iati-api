@@ -8,6 +8,7 @@ using System.Configuration;
 using Um.DataServices.XmlFilePaging;
 using System.Diagnostics;
 using System.Threading;
+using System.Configuration;
 
 namespace Um.DataServices.Test.Integration
 {
