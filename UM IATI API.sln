@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Um.DataServices.Web", "Um.DataServices.Web\Um.DataServices.Web.csproj", "{1C3C3763-8266-4AC8-9ABB-C346746E1636}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{3AE10920-DA75-4FE0-9236-C85B85674443}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Um.DataServices.Test", "Um.DataServices.Test\Um.DataServices.Test.csproj", "{E4B81E25-78D5-4544-B7BD-10EED37100BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Um.DataServices.XmlFilePaging", "Um.DataServices.XmlFilePaging\Um.DataServices.XmlFilePaging.csproj", "{75E36BB7-349F-48D0-A24F-DFB5D93A8626}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,18 @@ Global
 		{E4B81E25-78D5-4544-B7BD-10EED37100BB}.Release|x64.ActiveCfg = Release|x64
 		{E4B81E25-78D5-4544-B7BD-10EED37100BB}.Release|x64.Build.0 = Release|x64
 		{E4B81E25-78D5-4544-B7BD-10EED37100BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Debug|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Debug|Mixed Platforms.Build.0 = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Release|x64.ActiveCfg = Release|Any CPU
+		{75E36BB7-349F-48D0-A24F-DFB5D93A8626}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
