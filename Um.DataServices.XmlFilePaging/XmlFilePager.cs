@@ -63,7 +63,7 @@ namespace Um.DataServices.XmlFilePaging
             var sourceElements = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri, settings.XmlElementToPage);
 
             // 2. The page size is the number of XML elements that will be put in each file.
-            var pageSize = CalculatePageSize(sourceElements.Elements.Count, settings.NumberOfFilesToSplitInto);
+            var pageSize = CalculatePageSize(sourceElements.Elements.Count, settings.NumberOfPages);
 
             if (pageSize == 0)
             {
@@ -102,7 +102,7 @@ namespace Um.DataServices.XmlFilePaging
             var fileUrlList = fileNames.Select(fn => settings.OutputFileBaseUri.Combine(fn).ToString()).ToList();
             var metadata = new PagingMetadata(
                 DateTime.UtcNow, 
-                settings.NumberOfFilesToSplitInto, 
+                settings.NumberOfPages, 
                 fileUrlList, 
                 settings.XmlElementToPage, 
                 sourceElements.Elements.Count);
@@ -126,9 +126,9 @@ namespace Um.DataServices.XmlFilePaging
             return new DocumentParts(document.Root, elements);
         }
 
-        public static int CalculatePageSize(int elementCount, int numberOfFilesToSplitInto)
+        public static int CalculatePageSize(int elementCount, int NumberOfPages)
         {
-            return (int)Math.Ceiling(elementCount / (double)numberOfFilesToSplitInto);
+            return (int)Math.Ceiling(elementCount / (double)NumberOfPages);
         }
 
         public static IEnumerable<KeyValuePair<int, XDocument>> PageAndIndexElements(DocumentParts parts, int pageSize)
@@ -183,7 +183,7 @@ namespace Um.DataServices.XmlFilePaging
             public string OutputFileNameBase { get; set; }
             public string OutputFolder { get; set; }
             public Uri OutputFileBaseUri { get; set; }
-            public int NumberOfFilesToSplitInto { get; set; }
+            public int NumberOfPages { get; set; }
 
             public static XmlFilePagingSettings ReadFromAppConfig()
             {
@@ -201,7 +201,7 @@ namespace Um.DataServices.XmlFilePaging
 
                 settings.OutputFileNameBase = ConfigurationManager.AppSettings["OutputFileNameBase"];
                 if (string.IsNullOrWhiteSpace(settings.OutputFileNameBase))
-                    settings.OutputFileNameBase = "Page";
+                    settings.OutputFileNameBase = "page";
 
                 settings.OutputFolder = ConfigurationManager.AppSettings["OutputFolder"];
                 if (!Directory.Exists(settings.OutputFolder))
@@ -214,10 +214,11 @@ namespace Um.DataServices.XmlFilePaging
                         ConfigurationManager.AppSettings["OutputFileBaseUrl"]));
                 settings.OutputFileBaseUri = outputFileBaseUri;
 
-                int numberOfFilesToSplitInto;
-                if (!int.TryParse(ConfigurationManager.AppSettings["NumberOfPages"], out numberOfFilesToSplitInto))
-                    settings.NumberOfFilesToSplitInto = 7; // Revert to default value.
-                settings.NumberOfFilesToSplitInto = numberOfFilesToSplitInto;
+                int numberOfPages;
+                if (!int.TryParse(ConfigurationManager.AppSettings["NumberOfPages"], out numberOfPages))
+                    settings.NumberOfPages = 7; // Revert to default value.
+                else
+                    settings.NumberOfPages = numberOfPages;
 
                 return settings;
             }
