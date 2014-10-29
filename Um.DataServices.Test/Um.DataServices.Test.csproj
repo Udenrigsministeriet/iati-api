@@ -74,7 +74,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
@@ -89,19 +88,13 @@
   <ItemGroup>
     <Compile Include="Integration\DeploymentTests.cs" />
     <Compile Include="Integration\ActivitiesTest.cs" />
-    <Compile Include="Integration\XmlFilePagingTest.cs" />
     <Compile Include="Unit\ActivitiesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\XmlFilePagingTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Um.DataServices.Web\Um.DataServices.Web.csproj">
       <Project>{1C3C3763-8266-4AC8-9ABB-C346746E1636}</Project>
       <Name>Um.DataServices.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Um.DataServices.XmlFilePaging\Um.DataServices.XmlFilePaging.csproj">
-      <Project>{75e36bb7-349f-48d0-a24f-dfb5d93a8626}</Project>
-      <Name>Um.DataServices.XmlFilePaging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
