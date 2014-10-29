@@ -36,7 +36,7 @@ namespace Um.DataServices.Web
         {
             base.OnStartProcessingRequest(args);
             var c = HttpContext.Current.Response.Cache;
-            c.SetCacheability(HttpCacheability.Server);
+            c.SetCacheability(HttpCacheability.ServerAndPrivate);
             var lifetime = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]);
             c.SetExpires(HttpContext.Current.Timestamp.AddSeconds(lifetime));
             c.VaryByHeaders["Accept"] = true;
