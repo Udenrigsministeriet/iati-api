@@ -10,34 +10,10 @@ using Newtonsoft.Json;
 
 namespace Um.DataServices.XmlFilePaging
 {
-    public class XmlFilePager
+    public static class XmlFilePager
     {
         public const string EventlogSourceName = "Um.DataServices.XmlFilePaging";
         public const string EventlogName = "Application";
-
-        internal static void Main()
-        {
-            // Get configuration from App.config.
-            /*const string testFileUri = @"file://C:\temp\um\TestActitities.xml";
-            const string fullFileUri = @"file://C:\temp\um\Activities.xml";
-            const string webUri = @"http://iatiquery.um.dk/Activities.ashx";
-            */
-
-
-            // 1. Read the newest file from http://iatiquery.um.dk/Activities.ashx
-            // 3. Calculate page size and page the document.
-            // 4. Write pages to files.
-            // 5. Write metadata JSON-file.
-
-            try
-            {
-                PerformPaging(XmlFilePagingSettings.ReadFromAppConfig());
-            }
-            catch (Exception ex)
-            {
-                LogXmlFilePagingExceptionToEventLog(ex);
-            }
-        }
 
         public static void LogXmlFilePagingExceptionToEventLog(Exception ex)
         {
@@ -126,9 +102,9 @@ namespace Um.DataServices.XmlFilePaging
             return new DocumentParts(document.Root, elements);
         }
 
-        public static int CalculatePageSize(int elementCount, int NumberOfPages)
+        public static int CalculatePageSize(int elementCount, int numberOfPages)
         {
-            return (int)Math.Ceiling(elementCount / (double)NumberOfPages);
+            return (int)Math.Ceiling(elementCount / (double)numberOfPages);
         }
 
         public static IEnumerable<KeyValuePair<int, XDocument>> PageAndIndexElements(DocumentParts parts, int pageSize)
@@ -215,10 +191,10 @@ namespace Um.DataServices.XmlFilePaging
                 settings.OutputFileBaseUri = outputFileBaseUri;
 
                 int numberOfPages;
-                if (!int.TryParse(ConfigurationManager.AppSettings["NumberOfPages"], out numberOfPages))
-                    settings.NumberOfPages = 7; // Revert to default value.
-                else
+                if (int.TryParse(ConfigurationManager.AppSettings["NumberOfPages"], out numberOfPages))
                     settings.NumberOfPages = numberOfPages;
+                else
+                    settings.NumberOfPages = 7; // Revert to default value.
 
                 return settings;
             }
