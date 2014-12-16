@@ -51,7 +51,7 @@ namespace Um.DataServices.XmlFilePaging
             // 3. Page the source document elements.
             var indexedPages = PageAndIndexElements(sourceElements, pageSize);
 
-            // 4. Write the paged elements into files in the configured folder.
+            // 4a. Write the paged elements into files in the configured folder.
             var fileNames = new List<string>();
             foreach (var page in indexedPages)
             {
@@ -74,10 +74,19 @@ namespace Um.DataServices.XmlFilePaging
                 File.Move(temporaryFile, filePath);
             }
 
+            // 4b. Also write the original file to the folder.
+            var originalDocument = CreateNewXDocumentFromExistingRoot(sourceElements.DocumentRoot, sourceElements.Elements);
+            var originalFileName = string.Format("{0}.xml", settings.OutputFileNameBase);
+            var originalFilePath = Path.Combine(settings.OutputFolder, originalFileName);
+            var originalFileUrl = settings.OutputFileBaseUri.Combine(originalFileName).ToString();
+            using (var streamWriter = new StreamWriter(originalFilePath))
+                originalDocument.Save(streamWriter);
+
             // 5. Generate metadata result file.
             var fileUrlList = fileNames.Select(fn => settings.OutputFileBaseUri.Combine(fn).ToString()).ToList();
             var metadata = new PagingMetadata(
-                DateTime.UtcNow, 
+                DateTime.UtcNow,
+                originalFileUrl,
                 settings.NumberOfPages, 
                 fileUrlList, 
                 settings.XmlElementToPage, 
@@ -137,14 +146,16 @@ namespace Um.DataServices.XmlFilePaging
         public class PagingMetadata
         {
             public readonly DateTime GeneratedDateTimeUtc;
+            public readonly string OriginalFileUrl;
             public readonly int PageFileCount;
             public readonly string PagedElementName;
             public readonly int TotalElementCount;
             public readonly List<string> PagedFileUrls;
 
-            public PagingMetadata(DateTime generatedDateTimeUtc, int pageFileCount, List<string> pagedFileUrls, string pagedElementName, int totalElementCount)
+            public PagingMetadata(DateTime generatedDateTimeUtc, string originalFileUrl, int pageFileCount, List<string> pagedFileUrls, string pagedElementName, int totalElementCount)
             {
                 GeneratedDateTimeUtc = generatedDateTimeUtc;
+                OriginalFileUrl = originalFileUrl;
                 PageFileCount = pageFileCount;
                 PagedFileUrls = pagedFileUrls;
                 PagedElementName = pagedElementName;
