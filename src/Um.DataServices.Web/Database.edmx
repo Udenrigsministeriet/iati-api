@@ -121,6 +121,19 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="category_name_dk" Type="nvarchar" MaxLength="255" />
           <Property Name="parent_name_dk" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="iati-activityId" />
+            <PropertyRef Name="iati-activitiesId" />
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="iati-activityId" Type="int" Nullable="false" />
+          <Property Name="iati-activitiesId" Type="int" Nullable="false" />
+          <Property Name="ActivityId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="XML" Type="xml" />
+        </EntityType>
         <Function Name="GetActivitiesXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="IATISchema">
           <Parameter Name="RecipientCountry" Type="varchar" Mode="In" />
           <Parameter Name="Region" Type="varchar" Mode="In" />
@@ -217,6 +230,14 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
     [Sector].[parent_name_dk] AS [parent_name_dk]
     FROM [dbo].[Sector] AS [Sector]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Activity" EntityType="Self.Activity" store:Type="Views" store:Schema="IATISchema">
+            <DefiningQuery>SELECT 
+    [Activity].[iati-activityId] AS [iati-activityId], 
+    [Activity].[iati-activitiesId] AS [iati-activitiesId], 
+    [Activity].[ActivityId] AS [ActivityId], 
+    [Activity].[XML] AS [XML]
+    FROM [IATISchema].[Activity] AS [Activity]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -236,6 +257,7 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <EntitySet Name="Sectors" EntityType="IatiDbModel.Sector" />
           <EntitySet Name="Channels" EntityType="IatiDbModel.Channel" />
           <EntitySet Name="Regions" EntityType="IatiDbModel.Region" />
+          <EntitySet Name="Activities" EntityType="IatiDbModel.Activity" />
         </EntityContainer>
         <ComplexType Name="Activities_Result">
           <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
@@ -339,6 +361,17 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="code" Type="Int32" />
           <Property Name="name_uk" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="iati_activityId" />
+            <PropertyRef Name="iati_activitiesId" />
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="iati_activityId" Type="Int32" Nullable="false" />
+          <Property Name="iati_activitiesId" Type="Int32" Nullable="false" />
+          <Property Name="ActivityId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="XML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -456,6 +489,16 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
                 <ScalarProperty Name="name_uk" ColumnName="name_uk" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="IatiDbModel.Activity">
+              <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="XML" ColumnName="XML" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="iati_activitiesId" ColumnName="iati-activitiesId" />
+                <ScalarProperty Name="iati_activityId" ColumnName="iati-activityId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
