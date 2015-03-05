@@ -6,6 +6,64 @@
     <edmx:StorageModels>
     <Schema Namespace="IatiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
+warning 6002: The table/view 'IatiDb.dbo.Activity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Activity">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="iati-activitiesId" />
+            <PropertyRef Name="ActivityId" />
+            <PropertyRef Name="value/@value-date" />
+            <PropertyRef Name="value/text()" />
+            <PropertyRef Name="transaction-type/@code" />
+            <PropertyRef Name="transaction-date/@iso-date" />
+            <PropertyRef Name="flow-type/@code" />
+            <PropertyRef Name="aid-type/@code" />
+            <PropertyRef Name="finance-type/@code" />
+            <PropertyRef Name="tied-status/@code" />
+            <PropertyRef Name="disbursement-channel/@code" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="iati-activitiesId" Type="int" Nullable="false" />
+          <Property Name="ActivityId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="@ref" Type="nvarchar(max)" />
+          <Property Name="value/@currency" Type="nchar" MaxLength="3" />
+          <Property Name="value/@value-date" Type="datetime" Nullable="false" />
+          <Property Name="value/text()" Type="bigint" Nullable="false" />
+          <Property Name="transaction-type/@code" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="transaction-type/@xml:lang" Type="nchar" MaxLength="2" />
+          <Property Name="transaction-type/text()" Type="nvarchar(max)" />
+          <Property Name="provider-org/@ref" Type="nvarchar" MaxLength="255" />
+          <Property Name="provider-org/@provider-activity-id" Type="nvarchar" MaxLength="255" />
+          <Property Name="provider-org/text()" Type="nvarchar(max)" />
+          <Property Name="receiver-org/@ref" Type="nvarchar" MaxLength="255" />
+          <Property Name="receiver-org/@receiver-activity-id" Type="nvarchar" MaxLength="255" />
+          <Property Name="receiver-org/text()" Type="nvarchar(max)" />
+          <Property Name="transaction-date/@iso-date" Type="datetime" Nullable="false" />
+          <Property Name="transaction-date/text()" Type="nvarchar(max)" />
+          <Property Name="flow-type/@code" Type="int" Nullable="false" />
+          <Property Name="flow-type/@xml:lang" Type="nchar" MaxLength="2" />
+          <Property Name="flow-type/text()" Type="nvarchar(max)" />
+          <Property Name="aid-type/@code" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="aid-type/@xml:lang" Type="nchar" MaxLength="2" />
+          <Property Name="aid-type/text()" Type="nvarchar(max)" />
+          <Property Name="finance-type/@code" Type="int" Nullable="false" />
+          <Property Name="finance-type/@xml:lang" Type="nchar" MaxLength="2" />
+          <Property Name="finance-type/text()" Type="nvarchar(max)" />
+          <Property Name="tied-status/@code" Type="int" Nullable="false" />
+          <Property Name="tied-status/@xml:lang" Type="nchar" MaxLength="2" />
+          <Property Name="tied-status/text()" Type="nvarchar(max)" />
+          <Property Name="disbursement-channel/@code" Type="int" Nullable="false" />
+          <Property Name="disbursement-channel/@xml:lang" Type="nchar" MaxLength="2" />
+          <Property Name="disbursement-channel/text()" Type="nvarchar(max)" />
+          <Property Name="country_code" Type="nvarchar" MaxLength="5" />
+          <Property Name="country_code_iati" Type="nvarchar" MaxLength="5" />
+          <Property Name="@cod" Type="nvarchar" MaxLength="255" />
+          <Property Name="orgid" Type="nvarchar(max)" />
+          <Property Name="secid" Type="int" />
+          <Property Name="subcompanycode" Type="nvarchar(max)" />
+          <Property Name="regid" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'IatiDb.dbo.Aidtype' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Aidtype">
           <Key>
@@ -121,25 +179,56 @@ warning 6002: The table/view 'IatiDb.dbo.Sector' does not have a primary key def
           <Property Name="category_name_dk" Type="nvarchar" MaxLength="255" />
           <Property Name="parent_name_dk" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="iati-activityId" />
-            <PropertyRef Name="iati-activitiesId" />
-            <PropertyRef Name="ActivityId" />
-          </Key>
-          <Property Name="iati-activityId" Type="int" Nullable="false" />
-          <Property Name="iati-activitiesId" Type="int" Nullable="false" />
-          <Property Name="ActivityId" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="XML" Type="xml" />
-        </EntityType>
         <Function Name="GetActivitiesXml" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="IATISchema">
           <Parameter Name="RecipientCountry" Type="varchar" Mode="In" />
           <Parameter Name="Region" Type="varchar" Mode="In" />
           <Parameter Name="Sector" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="IatiDbModelStoreContainer">
+          <EntitySet Name="Activity" EntityType="Self.Activity" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Activity].[Id] AS [Id], 
+    [Activity].[iati-activitiesId] AS [iati-activitiesId], 
+    [Activity].[ActivityId] AS [ActivityId], 
+    [Activity].[@ref] AS [@ref], 
+    [Activity].[value/@currency] AS [value/@currency], 
+    [Activity].[value/@value-date] AS [value/@value-date], 
+    [Activity].[value/text()] AS [value/text()], 
+    [Activity].[transaction-type/@code] AS [transaction-type/@code], 
+    [Activity].[transaction-type/@xml:lang] AS [transaction-type/@xml:lang], 
+    [Activity].[transaction-type/text()] AS [transaction-type/text()], 
+    [Activity].[provider-org/@ref] AS [provider-org/@ref], 
+    [Activity].[provider-org/@provider-activity-id] AS [provider-org/@provider-activity-id], 
+    [Activity].[provider-org/text()] AS [provider-org/text()], 
+    [Activity].[receiver-org/@ref] AS [receiver-org/@ref], 
+    [Activity].[receiver-org/@receiver-activity-id] AS [receiver-org/@receiver-activity-id], 
+    [Activity].[receiver-org/text()] AS [receiver-org/text()], 
+    [Activity].[transaction-date/@iso-date] AS [transaction-date/@iso-date], 
+    [Activity].[transaction-date/text()] AS [transaction-date/text()], 
+    [Activity].[flow-type/@code] AS [flow-type/@code], 
+    [Activity].[flow-type/@xml:lang] AS [flow-type/@xml:lang], 
+    [Activity].[flow-type/text()] AS [flow-type/text()], 
+    [Activity].[aid-type/@code] AS [aid-type/@code], 
+    [Activity].[aid-type/@xml:lang] AS [aid-type/@xml:lang], 
+    [Activity].[aid-type/text()] AS [aid-type/text()], 
+    [Activity].[finance-type/@code] AS [finance-type/@code], 
+    [Activity].[finance-type/@xml:lang] AS [finance-type/@xml:lang], 
+    [Activity].[finance-type/text()] AS [finance-type/text()], 
+    [Activity].[tied-status/@code] AS [tied-status/@code], 
+    [Activity].[tied-status/@xml:lang] AS [tied-status/@xml:lang], 
+    [Activity].[tied-status/text()] AS [tied-status/text()], 
+    [Activity].[disbursement-channel/@code] AS [disbursement-channel/@code], 
+    [Activity].[disbursement-channel/@xml:lang] AS [disbursement-channel/@xml:lang], 
+    [Activity].[disbursement-channel/text()] AS [disbursement-channel/text()], 
+    [Activity].[country_code] AS [country_code], 
+    [Activity].[country_code_iati] AS [country_code_iati], 
+    [Activity].[@cod] AS [@cod], 
+    [Activity].[orgid] AS [orgid], 
+    [Activity].[secid] AS [secid], 
+    [Activity].[subcompanycode] AS [subcompanycode], 
+    [Activity].[regid] AS [regid]
+    FROM [dbo].[Activity] AS [Activity]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Aidtype" EntityType="Self.Aidtype" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Aidtype].[ID] AS [ID], 
@@ -229,14 +318,6 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
     [Sector].[category_name_dk] AS [category_name_dk], 
     [Sector].[parent_name_dk] AS [parent_name_dk]
     FROM [dbo].[Sector] AS [Sector]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Activity" EntityType="Self.Activity" store:Type="Views" store:Schema="IATISchema">
-            <DefiningQuery>SELECT 
-    [Activity].[iati-activityId] AS [iati-activityId], 
-    [Activity].[iati-activitiesId] AS [iati-activitiesId], 
-    [Activity].[ActivityId] AS [ActivityId], 
-    [Activity].[XML] AS [XML]
-    FROM [IATISchema].[Activity] AS [Activity]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -364,14 +445,59 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
         </EntityType>
         <EntityType Name="Activity">
           <Key>
-            <PropertyRef Name="iati_activityId" />
+            <PropertyRef Name="Id" />
             <PropertyRef Name="iati_activitiesId" />
             <PropertyRef Name="ActivityId" />
+            <PropertyRef Name="value__value_date" />
+            <PropertyRef Name="value_text__" />
+            <PropertyRef Name="transaction_type__code" />
+            <PropertyRef Name="transaction_date__iso_date" />
+            <PropertyRef Name="flow_type__code" />
+            <PropertyRef Name="aid_type__code" />
+            <PropertyRef Name="finance_type__code" />
+            <PropertyRef Name="tied_status__code" />
+            <PropertyRef Name="disbursement_channel__code" />
           </Key>
-          <Property Name="iati_activityId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="iati_activitiesId" Type="Int32" Nullable="false" />
           <Property Name="ActivityId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="XML" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="C_ref" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="value__currency" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="value__value_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="value_text__" Type="Int64" Nullable="false" />
+          <Property Name="transaction_type__code" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="transaction_type__xml_lang" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="transaction_type_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="provider_org__ref" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="provider_org__provider_activity_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="provider_org_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="receiver_org__ref" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="receiver_org__receiver_activity_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="receiver_org_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="transaction_date__iso_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="transaction_date_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="flow_type__code" Type="Int32" Nullable="false" />
+          <Property Name="flow_type__xml_lang" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="flow_type_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="aid_type__code" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="aid_type__xml_lang" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="aid_type_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="finance_type__code" Type="Int32" Nullable="false" />
+          <Property Name="finance_type__xml_lang" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="finance_type_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tied_status__code" Type="Int32" Nullable="false" />
+          <Property Name="tied_status__xml_lang" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="tied_status_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="disbursement_channel__code" Type="Int32" Nullable="false" />
+          <Property Name="disbursement_channel__xml_lang" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="disbursement_channel_text__" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="country_code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="country_code_iati" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="C_cod" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="orgid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="secid" Type="Int32" />
+          <Property Name="subcompanycode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="regid" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -495,10 +621,46 @@ warning 6002: The table/view 'IatiDb.IATISchema.Activity' does not have a primar
           <EntitySetMapping Name="Activities">
             <EntityTypeMapping TypeName="IatiDbModel.Activity">
               <MappingFragment StoreEntitySet="Activity">
-                <ScalarProperty Name="XML" ColumnName="XML" />
+                <ScalarProperty Name="regid" ColumnName="regid" />
+                <ScalarProperty Name="subcompanycode" ColumnName="subcompanycode" />
+                <ScalarProperty Name="secid" ColumnName="secid" />
+                <ScalarProperty Name="orgid" ColumnName="orgid" />
+                <ScalarProperty Name="C_cod" ColumnName="@cod" />
+                <ScalarProperty Name="country_code_iati" ColumnName="country_code_iati" />
+                <ScalarProperty Name="country_code" ColumnName="country_code" />
+                <ScalarProperty Name="disbursement_channel_text__" ColumnName="disbursement-channel/text()" />
+                <ScalarProperty Name="disbursement_channel__xml_lang" ColumnName="disbursement-channel/@xml:lang" />
+                <ScalarProperty Name="disbursement_channel__code" ColumnName="disbursement-channel/@code" />
+                <ScalarProperty Name="tied_status_text__" ColumnName="tied-status/text()" />
+                <ScalarProperty Name="tied_status__xml_lang" ColumnName="tied-status/@xml:lang" />
+                <ScalarProperty Name="tied_status__code" ColumnName="tied-status/@code" />
+                <ScalarProperty Name="finance_type_text__" ColumnName="finance-type/text()" />
+                <ScalarProperty Name="finance_type__xml_lang" ColumnName="finance-type/@xml:lang" />
+                <ScalarProperty Name="finance_type__code" ColumnName="finance-type/@code" />
+                <ScalarProperty Name="aid_type_text__" ColumnName="aid-type/text()" />
+                <ScalarProperty Name="aid_type__xml_lang" ColumnName="aid-type/@xml:lang" />
+                <ScalarProperty Name="aid_type__code" ColumnName="aid-type/@code" />
+                <ScalarProperty Name="flow_type_text__" ColumnName="flow-type/text()" />
+                <ScalarProperty Name="flow_type__xml_lang" ColumnName="flow-type/@xml:lang" />
+                <ScalarProperty Name="flow_type__code" ColumnName="flow-type/@code" />
+                <ScalarProperty Name="transaction_date_text__" ColumnName="transaction-date/text()" />
+                <ScalarProperty Name="transaction_date__iso_date" ColumnName="transaction-date/@iso-date" />
+                <ScalarProperty Name="receiver_org_text__" ColumnName="receiver-org/text()" />
+                <ScalarProperty Name="receiver_org__receiver_activity_id" ColumnName="receiver-org/@receiver-activity-id" />
+                <ScalarProperty Name="receiver_org__ref" ColumnName="receiver-org/@ref" />
+                <ScalarProperty Name="provider_org_text__" ColumnName="provider-org/text()" />
+                <ScalarProperty Name="provider_org__provider_activity_id" ColumnName="provider-org/@provider-activity-id" />
+                <ScalarProperty Name="provider_org__ref" ColumnName="provider-org/@ref" />
+                <ScalarProperty Name="transaction_type_text__" ColumnName="transaction-type/text()" />
+                <ScalarProperty Name="transaction_type__xml_lang" ColumnName="transaction-type/@xml:lang" />
+                <ScalarProperty Name="transaction_type__code" ColumnName="transaction-type/@code" />
+                <ScalarProperty Name="value_text__" ColumnName="value/text()" />
+                <ScalarProperty Name="value__value_date" ColumnName="value/@value-date" />
+                <ScalarProperty Name="value__currency" ColumnName="value/@currency" />
+                <ScalarProperty Name="C_ref" ColumnName="@ref" />
                 <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
                 <ScalarProperty Name="iati_activitiesId" ColumnName="iati-activitiesId" />
-                <ScalarProperty Name="iati_activityId" ColumnName="iati-activityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

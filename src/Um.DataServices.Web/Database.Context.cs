@@ -50,9 +50,7 @@ namespace Um.DataServices.Web
             var sectorParameter = sector != null ?
                 new ObjectParameter("Sector", sector) :
                 new ObjectParameter("Sector", typeof(string));
-
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 3000;
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter, regionParameter, sectorParameter);
         }
     }
