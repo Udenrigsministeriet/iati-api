@@ -125,6 +125,9 @@
     <Compile Include="Activities_Result.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
+    <Compile Include="Activity.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
     <Compile Include="Aidtype.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>

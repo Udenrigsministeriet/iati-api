@@ -5,52 +5,32 @@
     <title>IATI files</title>
     <style>
         /* Kindly borrowed from: http://www.pvladov.com/2012/10/colorize-csharp-code-for-blog.html */
-        pre.cscode {
-            margin: 0em;
-            overflow: auto;
-            background-color: #efefef;
-        }
-
-        .cscode code {
-            font-family: Consolas,"Courier New",Courier,Monospace;
-            font-size: 10pt;
-            color: #000000;
-        }
-
-        .cscode .key {
-            color: #0000ff;
-        }
-
-        .cscode .com {
-            color: #008000;
-        }
-
-        .cscode .str {
-            color: #a31515;
-        }
+        pre.cscode {margin:0em; overflow:auto; background-color:#efefef;}
+        .cscode code {font-family:Consolas,"Courier New",Courier,Monospace; font-size:10pt; color:#000000;}
+        .cscode .key {color:#0000ff;}
+        .cscode .com {color:#008000;}
+        .cscode .str {color:#a31515;}
     </style>
 </head>
 <body>
     <h1>IATI files</h1>
     <p>
-        This document describes how you can retrieve the IATI activities files published by the Ministry of
-        Foreign Affairs of Denmark for the <a href="http://iatiregistry.org/publisher/danida">
-            International
-            Aid Transparency Initiative
-        </a>.
+        This document describes how you can retrieve the IATI activities files published by the Ministry of 
+        Foreign Affairs of Denmark for the <a href="http://iatiregistry.org/publisher/danida">International 
+        Aid Transparency Initiative</a>.
     </p>
     <h2>The IATI metadata file</h2>
     <p>
-        Whenever a new set of IATI files are generated, a metadata file is created/updated.
-        The file contains useful information such as
+    Whenever a new set of IATI files are generated, a metadata file is created/updated. 
+    The file contains useful information such as
         <ul>
-            <li>when the files were generated</li>
-            <li>the number of activities</li>
-            <li>the number of resulting files</li>
-            <li>a list of URLs to the resulting files</li>
+        <li>when the files were generated</li>
+        <li>the number of activities</li>
+        <li>the number of resulting files</li>
+        <li>a list of URLs to the resulting files</li>
         </ul>
-        The metadata file is in the JSON format and can be retrieved using the following link
-        <ul><li><a href="./iati.metadata.json">iati.metadata.json</a></li></ul>
+            The metadata file is in the JSON format and can be retrieved using the following link
+        <ul><li><a href="http://iatiquery.um.dk/files/iati.metadata.json">iati.metadata.json</a></li></ul>
     </p>
     <h3>IATI metadata file example</h3>
     <p>
@@ -95,7 +75,7 @@
 }</code></pre>
     <h2>Downloading the IATI files from the command line</h2>
     <p>
-        The IATI files are static files that can be downloaded using a standard browser. However,
+        The IATI files are static files that can be downloaded using a standard browser. However, 
         if you wish to download the files from a command line or using a script, you can use tools such as
         <a href="http://curl.haxx.se/">curl</a> or <a href="http://www.gnu.org/software/wget/">wget</a>.
     </p>
@@ -107,13 +87,15 @@
     <pre class="cscode">
     <span class="str">curl http://iatiquery.um.dk/files/iati[1-7].xml -O</span>
 </pre>
-    <h3>Downloading a single file using wget</h3>
+       <h3>Downloading a single file using wget</h3> 
     <pre class="cscode">
     <span class="str">wget http://iatiquery.um.dk/files/iati1.xml </span>
 </pre>
-    <h3>Downloading a range of files using wget</h3>
+    <h3>Downloading a range of files using wget</h3> 
     <pre class="cscode">
-    <span class="str">wget -N http://devserver/files/iati{1..7}.xml </span>
+
+    <span class="str">wget -N http://iatiquery.um.dk/files/iati{1..7}.xml </span>
+
 </pre>
 
 </body>

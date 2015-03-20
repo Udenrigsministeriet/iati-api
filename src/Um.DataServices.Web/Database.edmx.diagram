@@ -13,6 +13,7 @@
         <EntityTypeShape EntityType="IatiDbModel.Sector" Width="1.875" PointX="5.75" PointY="3.75" />
         <EntityTypeShape EntityType="IatiDbModel.Channel" Width="1.5" PointX="5.75" PointY="7.75" />
         <EntityTypeShape EntityType="IatiDbModel.Region" Width="1.5" PointX="8.375" PointY="3.75" />
+        <EntityTypeShape EntityType="IatiDbModel.Activity" Width="3.125" PointX="8.75" PointY="6.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

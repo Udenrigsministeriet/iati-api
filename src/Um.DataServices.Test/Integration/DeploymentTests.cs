@@ -24,6 +24,7 @@ namespace Um.DataServices.Test.Integration
             var paths = new List<string>();
             paths.Add("$metadata");
             paths.Add("Aidtypes");
+            paths.Add("Activities");
             paths.Add("Countries");
             paths.Add("Currencies");
             paths.Add("Finanslovs");
@@ -31,7 +32,6 @@ namespace Um.DataServices.Test.Integration
             paths.Add("Sectors");
             paths.Add("Regions");
             paths.Add("Channels");
-            paths.Add("Activities");
 
             var urls = (from host in hosts from path in paths select string.Format(template, host, path)).ToList();
 

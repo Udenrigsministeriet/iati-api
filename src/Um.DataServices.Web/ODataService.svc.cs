@@ -44,11 +44,5 @@ namespace Um.DataServices.Web
             c.VaryByHeaders["Accept-Encoding"] = true;
             c.VaryByParams["*"] = true;
         }
-
-        [WebGet]
-        public string Activities(string recipientCountryCode, string sector, string region)
-        {
-            return Um.DataServices.Web.Activities.GetActivities(recipientCountryCode,region,sector);
-        }
     }
 }
