@@ -10,8 +10,8 @@ namespace Um.DataServices.Test.Integration
     [TestFixture]
     public class XmlFilePagingTest
     {
-        ManualResetEvent waitEvent = new ManualResetEvent(false);
-        EventLogEntry eventLogEntry = null;
+        readonly ManualResetEvent _waitEvent = new ManualResetEvent(false);
+        EventLogEntry _eventLogEntry;
 
         [Test]
         public void TestSettingsFromAppConfigThrows()
@@ -63,13 +63,13 @@ namespace Um.DataServices.Test.Integration
 
             XmlFilePager.LogXmlFilePagingExceptionToEventLog(exception);
 
-            var actual = waitEvent.WaitOne(10000);
+            var actual = _waitEvent.WaitOne(10000);
             Assert.IsTrue(actual);
 
-            Assert.IsNotNull(eventLogEntry);
-            Assert.That(eventLogEntry.Source, Is.EqualTo(XmlFilePager.EventlogSourceName));
-            Assert.That(eventLogEntry.TimeGenerated, Is.GreaterThan(DateTime.Now.AddSeconds(-10)));
-            Assert.That(eventLogEntry.EntryType, Is.EqualTo(EventLogEntryType.Error));
+            Assert.IsNotNull(_eventLogEntry);
+            Assert.That(_eventLogEntry.Source, Is.EqualTo(XmlFilePager.EventlogSourceName));
+            Assert.That(_eventLogEntry.TimeGenerated, Is.GreaterThan(DateTime.Now.AddSeconds(-10)));
+            Assert.That(_eventLogEntry.EntryType, Is.EqualTo(EventLogEntryType.Error));
         }
 
         void eventLog_EntryWritten(object sender, EntryWrittenEventArgs e)
@@ -77,8 +77,8 @@ namespace Um.DataServices.Test.Integration
             if (e.Entry.Source != XmlFilePager.EventlogSourceName)
                 return;
 
-            eventLogEntry = e.Entry;
-            waitEvent.Set();
+            _eventLogEntry = e.Entry;
+            _waitEvent.Set();
         }
     }
 }

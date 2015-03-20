@@ -41,7 +41,7 @@ namespace Um.DataServices.Test.Unit
         [Test]
         public void TestPageAndIndexElements()
         {
-            var rootAndElements = ReadRootAndElementsExample();
+            var rootAndElements = ReadRootAndElements(GetXmlExample());
             var actual = XmlFilePager.PageAndIndexElements(rootAndElements, 1).ToList();
             Assert.That(actual.Count, Is.EqualTo(2));
 
@@ -52,7 +52,7 @@ namespace Um.DataServices.Test.Unit
         [Test]
         public void TestCreateNewXDocumentFromExistingRoot()
         {
-            var rootAndElements = ReadRootAndElementsExample();
+            var rootAndElements = ReadRootAndElements(GetXmlExample());
             var originalRootName = rootAndElements.DocumentRoot.Name.LocalName;
             var originalElementName = rootAndElements.Elements.First().Name.LocalName;
             var originalElementCount = rootAndElements.Elements.Count();
@@ -90,9 +90,8 @@ namespace Um.DataServices.Test.Unit
             Assert.That(new Uri("/test1/", UriKind.RelativeOrAbsolute).Combine("").ToString(), Is.EqualTo("/test1/"));
         }
 
-        private XmlFilePager.DocumentParts ReadRootAndElementsExample()
+        private static XmlFilePager.DocumentParts ReadRootAndElements(string xml)
         {
-            var xml = GetXmlExample();
             using (var stringReader = new StringReader(xml))
             using (var xmlReader = XmlReader.Create(stringReader))
             {
@@ -100,7 +99,7 @@ namespace Um.DataServices.Test.Unit
             }
         }
 
-        private string GetXmlExample()
+        private static string GetXmlExample()
         {
             return @"<?xml version=""1.0"" encoding=""utf-8""?>
 <iati-activities version=""1.03"" generated-datetime=""2014-10-26T22:40:01.617"">

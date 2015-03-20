@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
 using Newtonsoft.Json;
@@ -35,8 +36,14 @@ namespace Um.DataServices.XmlFilePaging
 
         public static void PerformPaging(XmlFilePagingSettings settings)
         {
-            // 1. Read the xml document from the configured URI.
+            // 1a. Read the xml document from the configured URI.
             var sourceElements = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri, settings.XmlElementToPage);
+
+            // 1b. Check for duplicate identifiers in the source file.
+            var sourceActivityIdentifies = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri, settings.XmlElementIdentifier);
+            var distinctCount = sourceActivityIdentifies.Elements.Distinct().Count();
+            if (sourceElements.Elements.Count != distinctCount)
+                throw new ApplicationException("The source file contains duplicates of <iati-identifier>.");
 
             // 2. The page size is the number of XML elements that will be put in each file.
             var pageSize = CalculatePageSize(sourceElements.Elements.Count, settings.NumberOfPages);
@@ -74,6 +81,14 @@ namespace Um.DataServices.XmlFilePaging
                 File.Move(temporaryFile, filePath);
             }
 
+            var fileCheckDict = new Dictionary<string, int>();
+            foreach (var fileName in fileNames)
+            {
+                var fileUri = new Uri(Path.Combine(settings.OutputFolder, fileName));
+                var elements = ReadRootAndElementsFromXmlDocument(fileUri, "iati-identifier");
+                fileCheckDict.Add(fileName, elements.Elements.Count);
+            }
+
             // 4b. Also write the original file to the folder.
             var originalDocument = CreateNewXDocumentFromExistingRoot(sourceElements.DocumentRoot, sourceElements.Elements);
             var originalFileName = string.Format("{0}.xml", settings.OutputFileNameBase);
@@ -83,12 +98,18 @@ namespace Um.DataServices.XmlFilePaging
                 originalDocument.Save(streamWriter);
 
             // 5. Generate metadata result file.
-            var fileUrlList = fileNames.Select(fn => settings.OutputFileBaseUri.Combine(fn).ToString()).ToList();
+            var pagedFileInfos = fileNames.Select(fn => 
+                new PagedFileInfo
+                {
+                    Url = settings.OutputFileBaseUri.Combine(fn).ToString(),
+                    ElementCount = fileCheckDict[fn]
+                }
+                ).ToList();
             var metadata = new PagingMetadata(
                 DateTime.UtcNow,
                 originalFileUrl,
                 settings.NumberOfPages, 
-                fileUrlList, 
+                pagedFileInfos, 
                 settings.XmlElementToPage, 
                 sourceElements.Elements.Count);
             var jsonMetadata = JsonConvert.SerializeObject(metadata, Newtonsoft.Json.Formatting.Indented);
@@ -150,14 +171,14 @@ namespace Um.DataServices.XmlFilePaging
             public readonly int PageFileCount;
             public readonly string PagedElementName;
             public readonly int TotalElementCount;
-            public readonly List<string> PagedFileUrls;
+            public readonly List<PagedFileInfo> PagedFileInfo;
 
-            public PagingMetadata(DateTime generatedDateTimeUtc, string originalFileUrl, int pageFileCount, List<string> pagedFileUrls, string pagedElementName, int totalElementCount)
+            public PagingMetadata(DateTime generatedDateTimeUtc, string originalFileUrl, int pageFileCount, List<PagedFileInfo> pagedFileInfos, string pagedElementName, int totalElementCount)
             {
                 GeneratedDateTimeUtc = generatedDateTimeUtc;
                 OriginalFileUrl = originalFileUrl;
                 PageFileCount = pageFileCount;
-                PagedFileUrls = pagedFileUrls;
+                PagedFileInfo = pagedFileInfos;
                 PagedElementName = pagedElementName;
                 TotalElementCount = totalElementCount;
             }
@@ -165,7 +186,8 @@ namespace Um.DataServices.XmlFilePaging
 
         public class XmlFilePagingSettings
         {
-            public string XmlElementToPage { get; set; } 
+            public string XmlElementToPage { get; set; }
+            public string XmlElementIdentifier { get; set; }
             public Uri SourceDocumentUri { get; set; }
             public string OutputFileNameBase { get; set; }
             public string OutputFolder { get; set; }
@@ -184,7 +206,11 @@ namespace Um.DataServices.XmlFilePaging
 
                 settings.XmlElementToPage = ConfigurationManager.AppSettings["XmlElementToPage"];
                 if (string.IsNullOrWhiteSpace(settings.XmlElementToPage))
-                    throw new ConfigurationErrorsException(string.Format("App setting 'XmlElementToPage' must not be empty for blank."));
+                    throw new ConfigurationErrorsException(string.Format("App setting 'XmlElementToPage' must be specified."));
+
+                settings.XmlElementIdentifier = ConfigurationManager.AppSettings["XmlElementIdentifier"];
+                if (string.IsNullOrWhiteSpace(settings.XmlElementIdentifier))
+                    throw new ConfigurationErrorsException(string.Format("App setting 'XmlElementIdentifier' must be specified."));
 
                 settings.OutputFileNameBase = ConfigurationManager.AppSettings["OutputFileNameBase"];
                 if (string.IsNullOrWhiteSpace(settings.OutputFileNameBase))
@@ -210,6 +236,12 @@ namespace Um.DataServices.XmlFilePaging
                 return settings;
             }
         }
+    }
+
+    public class PagedFileInfo
+    {
+        public string Url { get; set; }
+        public int ElementCount { get; set; }
     }
 
     public static class Extensions
