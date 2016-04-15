@@ -10,15 +10,15 @@
             <Component Id="cmpD62EB5829E1C5748EA8278BB2FD9CF23" Directory="INSTALLFOLDER" Guid="{2BEB79A4-C393-44DC-9C42-7B9EB300D022}">
                 <File Id="filB47A752ACB75D1FF29D35A41DE93CFEE" KeyPath="yes" Source="$(var.publishDir)\Activities.ashx" />
             </Component>
-            <Component Id="cmpF81B7353D2B584CE10E4A8BCEEC3F868" Directory="INSTALLFOLDER" Guid="{19942BD4-1006-4551-8F0B-6DFE3327294F}">
+            <!--<Component Id="cmpF81B7353D2B584CE10E4A8BCEEC3F868" Directory="INSTALLFOLDER" Guid="{19942BD4-1006-4551-8F0B-6DFE3327294F}">
                 <File Id="filFEFB88897DB58782DC85D0DE2A7C4A8B" KeyPath="yes" Source="$(var.publishDir)\Database.Context.tt" />
-            </Component>
-            <Component Id="cmp74852F76776899519CCE547B5427B802" Directory="INSTALLFOLDER" Guid="{E55DECD3-0320-4CE3-988C-145D310B4B7C}">
+            </Component>-->
+            <!--<Component Id="cmp74852F76776899519CCE547B5427B802" Directory="INSTALLFOLDER" Guid="{E55DECD3-0320-4CE3-988C-145D310B4B7C}">
                 <File Id="filFC5E1E96187ED5E4CDB0EB9AAE924C47" KeyPath="yes" Source="$(var.publishDir)\Database.edmx.diagram" />
             </Component>
             <Component Id="cmp727F0B0256DB6E7719ECB4D101EE71D8" Directory="INSTALLFOLDER" Guid="{2362C24C-3119-4D4C-B357-F745EB6739E9}">
                 <File Id="fil76A4412475D40F86C4C6DE684A4C3882" KeyPath="yes" Source="$(var.publishDir)\Database.tt" />
-            </Component>
+            </Component>-->
             <Component Id="cmpE6DF6F683868F748E80FFBAD3E4DA34E" Directory="INSTALLFOLDER" Guid="{B04BBAE1-A444-45F7-B31B-B59B9F24182F}">
                 <File Id="fil3273CA40681B31F250C4AAFA193B1CC2" KeyPath="yes" Source="$(var.publishDir)\ODataService.svc" />
             </Component>

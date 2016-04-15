@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -107,6 +108,7 @@
     </Content>
     <Content Include="Activities.ashx" />
     <Content Include="README.md" />
+    <None Include="Properties\PublishProfiles\iati.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -126,6 +128,12 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Activity.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Activity_Budget.cs">
+      <DependentUpon>Database.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Activity_Transactions.cs">
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Aidtype.cs">

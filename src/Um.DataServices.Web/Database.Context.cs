@@ -27,15 +27,17 @@ namespace Um.DataServices.Web
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Activity> Activities { get; set; }
+        public virtual DbSet<Activity_Budget> Activity_Budget { get; set; }
+        public virtual DbSet<Activity_Transactions> Activity_Transactions { get; set; }
         public virtual DbSet<Aidtype> Aidtypes { get; set; }
+        public virtual DbSet<Channel> Channels { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Currency> Currencies { get; set; }
         public virtual DbSet<Finanslov> Finanslovs { get; set; }
         public virtual DbSet<Organisation> Organisations { get; set; }
-        public virtual DbSet<Sector> Sectors { get; set; }
-        public virtual DbSet<Channel> Channels { get; set; }
         public virtual DbSet<Region> Regions { get; set; }
-        public virtual DbSet<Activity> Activities { get; set; }
+        public virtual DbSet<Sector> Sectors { get; set; }
     
         public virtual ObjectResult<Activities_Result> GetActivitiesXml(string recipientCountry, string region, string sector)
         {
@@ -50,7 +52,9 @@ namespace Um.DataServices.Web
             var sectorParameter = sector != null ?
                 new ObjectParameter("Sector", sector) :
                 new ObjectParameter("Sector", typeof(string));
-    
+
+            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 3000;
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter, regionParameter, sectorParameter);
         }
     }

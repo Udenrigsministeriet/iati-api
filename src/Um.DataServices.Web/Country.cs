@@ -21,7 +21,7 @@ namespace Um.DataServices.Web
         public string parent_code { get; set; }
         public string country_code_iati { get; set; }
         public Nullable<int> Code { get; set; }
-        public string partner_country_yn { get; set; }
         public string Countrytype { get; set; }
+        public string partner_country_yn { get; set; }
     }
 }
