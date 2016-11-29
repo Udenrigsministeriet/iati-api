@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Um.DataServices.Web", "Um.DataServices.Web\Um.DataServices.Web.csproj", "{1C3C3763-8266-4AC8-9ABB-C346746E1636}"
 EndProject
@@ -10,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Um.DataServices.Test", "Um.DataServices.Test\Um.DataServices.Test.csproj", "{E4B81E25-78D5-4544-B7BD-10EED37100BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Um.DataServices.XmlFilePaging", "Um.DataServices.XmlFilePaging\Um.DataServices.XmlFilePaging.csproj", "{75E36BB7-349F-48D0-A24F-DFB5D93A8626}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{396014C6-F1AB-4E20-A3C6-DB1CF6DEBDBB}"
+	ProjectSection(SolutionItems) = preProject
+		Database\v201_AddViewsToDb.sql = Database\v201_AddViewsToDb.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
