@@ -12,7 +12,7 @@
     <WebSiteContentObject>WebSiteContent.wixobj</WebSiteContentObject>
     <MsiOut>bin\Release\Um.DataServices.Web.msi</MsiOut>
     <OutputWxsFileName>WebSiteComponents</OutputWxsFileName>
-    <WixPath>C:\Program Files (x86)\WiX Toolset v3.8\bin\</WixPath>
+    <WixPath>C:\Program Files (x86)\WiX Toolset v3.10\bin\</WixPath>
   </PropertyGroup>
 
   <ItemGroup>

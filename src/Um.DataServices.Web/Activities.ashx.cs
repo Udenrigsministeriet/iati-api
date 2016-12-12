@@ -16,51 +16,54 @@ namespace Um.DataServices.Web
     {
         public void ProcessRequest(HttpContext context)
         {
-            var page = new OutputCachedPage(new OutputCacheParameters
-            {
-                // Reload the cache after 24 hours
-                Duration = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]),
-                Location = OutputCacheLocation.Server,
-                VaryByParam = "sector;RecipientCountryCode;region"
-            });
-            page.ProcessRequest(HttpContext.Current);
+            //var page = new OutputCachedPage(new OutputCacheParameters
+            //{
+            //    // Reload the cache after 24 hours
+            //    Duration = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]),
+            //    Location = OutputCacheLocation.Server,
+            //    VaryByParam = "sector;RecipientCountryCode;region"
+            //});
+            //page.ProcessRequest(HttpContext.Current);
 
             //TODO Implement logging
 
             var recipientCountryCode = context.Request.Params.Get(@"RecipientCountryCode");
             var sector = context.Request.Params.Get(@"sector");
             var region = context.Request.Params.Get(@"region");
+            var project = context.Request.Params.Get(@"project");
 
-            var activities = GetActivities(recipientCountryCode, region, sector);
+            var activities = GetActivities(recipientCountryCode, region, sector,project);
 
             context.Response.BufferOutput = true;
             context.Response.ContentType = @"text/xml";
             context.Response.ContentEncoding = System.Text.Encoding.UTF8;
 
             // Ask the client to cache the result
-            context.Response.Cache.SetCacheability(HttpCacheability.Public);
-            context.Response.Cache.SetExpires(
-                DateTime.Now.AddSeconds(int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
-            context.Response.Cache.SetMaxAge(new TimeSpan(0, 0,
-                int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
+            //context.Response.Cache.SetCacheability(HttpCacheability.Public);
+            //context.Response.Cache.SetExpires(
+            //    DateTime.Now.AddSeconds(int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
+            //context.Response.Cache.SetMaxAge(new TimeSpan(0, 0,
+            //    int.Parse(ConfigurationManager.AppSettings[Schema.ClientSideCacheLifetime])));
 
             context.Response.Write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             context.Response.Write(activities);
         }
 
-        public static string GetActivities(string recipientCountryCode, string region, string sector)
+        public static string GetActivities(string recipientCountryCode, string region, string sector, string projektId)
         {
             var formattedRecipientCountryCode = FormatInputString(recipientCountryCode);
             var formattedSector = FormatInputInteger(sector);
             var formattedRegion = FormatInputInteger(region);
+            var formattedProjektId = FormatInputInteger(projektId);
 
             // Validate input parameters and throw exception if not valid
             ValidateSector(formattedSector);
             ValidateRecipientCountryCode(formattedRecipientCountryCode);
             ValidateRegion(formattedRegion);
+            //ValidateProjekt(formattedProjektId);
 
             var entities = new IatiDbEntities();
-            var dataset = entities.GetActivitiesXml(formattedRecipientCountryCode, formattedRegion, formattedSector).ToList();
+            var dataset = entities.GetActivitiesXml(formattedRecipientCountryCode, formattedRegion, formattedSector, formattedProjektId).ToList();
             var sb = new StringBuilder();
             foreach (var item in dataset)
             {

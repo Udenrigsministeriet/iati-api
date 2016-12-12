@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
   <String Id="Lang">1033</String>
-  <String Id="Comments">IATI Data Services</String>
-  <String Id="Description">IATI Data Services</String>
-  <String Id="Keywords">IATI ODATA API</String>
-  <String Id="ProductName">IATI Data Services</String>
+  <String Id="Comments">IATI Data Services v2</String>
+  <String Id="Description">IATI Data Services v2</String>
+  <String Id="Keywords">IATI ODATA API v2</String>
+  <String Id="ProductName">IATI Data Services v2</String>
   <String Id="CompanyName">Globeteam</String>
 </WixLocalization>

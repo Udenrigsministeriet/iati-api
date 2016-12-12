@@ -21,8 +21,9 @@ namespace Um.DataServices.XmlFilePaging
             if (!EventLog.SourceExists(EventlogSourceName))
                 EventLog.CreateEventSource(EventlogSourceName, EventlogName);
 
-            var logMessage = string.Format("En error was encountered while running xml file paging. {0}" + Environment.NewLine,
-                ex.Message);
+            var logMessage =
+                string.Format("En error was encountered while running xml file paging. {0}" + Environment.NewLine,
+                    ex.Message);
             var innerException = ex.InnerException;
             while (innerException != null)
             {
@@ -37,10 +38,12 @@ namespace Um.DataServices.XmlFilePaging
         public static void PerformPaging(XmlFilePagingSettings settings)
         {
             // 1a. Read the xml document from the configured URI.
-            var sourceElements = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri, settings.XmlElementToPage);
+            var sourceElements = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri,
+                settings.XmlElementToPage);
 
             // 1b. Check for duplicate identifiers in the source file.
-            var sourceActivityIdentifies = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri, settings.XmlElementIdentifier);
+            var sourceActivityIdentifies = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri,
+                settings.XmlElementIdentifier);
             var distinctCount = sourceActivityIdentifies.Elements.Distinct().Count();
             if (sourceElements.Elements.Count != distinctCount)
                 throw new ApplicationException("The source file contains duplicates of <iati-identifier>.");
@@ -50,9 +53,10 @@ namespace Um.DataServices.XmlFilePaging
 
             if (pageSize == 0)
             {
-                throw new ApplicationException(string.Format("The source document did not contain any elements with the specifed name." +
-                                                             "Source document URL: {0}, Element name: {1}", 
-                                                             settings.SourceDocumentUri, settings.XmlElementToPage));
+                throw new ApplicationException(
+                    string.Format("The source document did not contain any elements with the specifed name." +
+                                  "Source document URL: {0}, Element name: {1}",
+                        settings.SourceDocumentUri, settings.XmlElementToPage));
             }
 
             // 3. Page the source document elements.
@@ -90,7 +94,8 @@ namespace Um.DataServices.XmlFilePaging
             }
 
             // 4b. Also write the original file to the folder.
-            var originalDocument = CreateNewXDocumentFromExistingRoot(sourceElements.DocumentRoot, sourceElements.Elements);
+            var originalDocument = CreateNewXDocumentFromExistingRoot(sourceElements.DocumentRoot,
+                sourceElements.Elements);
             var originalFileName = string.Format("{0}.xml", settings.OutputFileNameBase);
             var originalFilePath = Path.Combine(settings.OutputFolder, originalFileName);
             var originalFileUrl = settings.OutputFileBaseUri.Combine(originalFileName).ToString();
@@ -98,22 +103,23 @@ namespace Um.DataServices.XmlFilePaging
                 originalDocument.Save(streamWriter);
 
             // 5. Generate metadata result file.
-            var pagedFileInfos = fileNames.Select(fn => 
-                new PagedFileInfo
-                {
-                    Url = settings.OutputFileBaseUri.Combine(fn).ToString(),
-                    ElementCount = fileCheckDict[fn]
-                }
-                ).ToList();
+            var pagedFileInfos = fileNames.Select(fn =>
+                    new PagedFileInfo
+                    {
+                        Url = settings.OutputFileBaseUri.Combine(fn).ToString(),
+                        ElementCount = fileCheckDict[fn]
+                    }
+            ).ToList();
             var metadata = new PagingMetadata(
                 DateTime.UtcNow,
                 originalFileUrl,
-                settings.NumberOfPages, 
-                pagedFileInfos, 
-                settings.XmlElementToPage, 
+                settings.NumberOfPages,
+                pagedFileInfos,
+                settings.XmlElementToPage,
                 sourceElements.Elements.Count);
             var jsonMetadata = JsonConvert.SerializeObject(metadata, Newtonsoft.Json.Formatting.Indented);
-            var metadataFilePath = Path.Combine(settings.OutputFolder, string.Format("{0}.metadata.json", settings.OutputFileNameBase));
+            var metadataFilePath = Path.Combine(settings.OutputFolder,
+                string.Format("{0}.metadata.json", settings.OutputFileNameBase));
             File.WriteAllText(metadataFilePath, jsonMetadata);
         }
 
@@ -134,13 +140,19 @@ namespace Um.DataServices.XmlFilePaging
 
         public static int CalculatePageSize(int elementCount, int numberOfPages)
         {
-            return (int)Math.Ceiling(elementCount / (double)numberOfPages);
+            return (int) Math.Ceiling(elementCount/(double) numberOfPages);
         }
 
         public static IEnumerable<KeyValuePair<int, XDocument>> PageAndIndexElements(DocumentParts parts, int pageSize)
         {
             return parts.Elements.Page(pageSize)
-                .Select((elements, i) => new { Index = i + 1, Document = CreateNewXDocumentFromExistingRoot(parts.DocumentRoot, elements) })
+                .Select(
+                    (elements, i) =>
+                        new
+                        {
+                            Index = i + 1,
+                            Document = CreateNewXDocumentFromExistingRoot(parts.DocumentRoot, elements)
+                        })
                 .ToDictionary(i => i.Index, i => i.Document);
         }
 
@@ -173,7 +185,8 @@ namespace Um.DataServices.XmlFilePaging
             public readonly int TotalElementCount;
             public readonly List<PagedFileInfo> PagedFileInfo;
 
-            public PagingMetadata(DateTime generatedDateTimeUtc, string originalFileUrl, int pageFileCount, List<PagedFileInfo> pagedFileInfos, string pagedElementName, int totalElementCount)
+            public PagingMetadata(DateTime generatedDateTimeUtc, string originalFileUrl, int pageFileCount,
+                List<PagedFileInfo> pagedFileInfos, string pagedElementName, int totalElementCount)
             {
                 GeneratedDateTimeUtc = generatedDateTimeUtc;
                 OriginalFileUrl = originalFileUrl;
@@ -199,18 +212,23 @@ namespace Um.DataServices.XmlFilePaging
                 var settings = new XmlFilePagingSettings();
 
                 Uri sourceDocumentUri;
-                if (!Uri.TryCreate(ConfigurationManager.AppSettings["SourceDocumentUri"], UriKind.RelativeOrAbsolute, out sourceDocumentUri))
-                    throw new ConfigurationErrorsException(string.Format("App setting 'SourceDocumentUri' is not a valid URI. Value: {0}",
-                        ConfigurationManager.AppSettings["SourceDocumentUri"]));
+                if (
+                    !Uri.TryCreate(ConfigurationManager.AppSettings["SourceDocumentUri"], UriKind.RelativeOrAbsolute,
+                        out sourceDocumentUri))
+                    throw new ConfigurationErrorsException(
+                        string.Format("App setting 'SourceDocumentUri' is not a valid URI. Value: {0}",
+                            ConfigurationManager.AppSettings["SourceDocumentUri"]));
                 settings.SourceDocumentUri = sourceDocumentUri;
 
                 settings.XmlElementToPage = ConfigurationManager.AppSettings["XmlElementToPage"];
                 if (string.IsNullOrWhiteSpace(settings.XmlElementToPage))
-                    throw new ConfigurationErrorsException(string.Format("App setting 'XmlElementToPage' must be specified."));
+                    throw new ConfigurationErrorsException(
+                        string.Format("App setting 'XmlElementToPage' must be specified."));
 
                 settings.XmlElementIdentifier = ConfigurationManager.AppSettings["XmlElementIdentifier"];
                 if (string.IsNullOrWhiteSpace(settings.XmlElementIdentifier))
-                    throw new ConfigurationErrorsException(string.Format("App setting 'XmlElementIdentifier' must be specified."));
+                    throw new ConfigurationErrorsException(
+                        string.Format("App setting 'XmlElementIdentifier' must be specified."));
 
                 settings.OutputFileNameBase = ConfigurationManager.AppSettings["OutputFileNameBase"];
                 if (string.IsNullOrWhiteSpace(settings.OutputFileNameBase))
@@ -218,13 +236,17 @@ namespace Um.DataServices.XmlFilePaging
 
                 settings.OutputFolder = ConfigurationManager.AppSettings["OutputFolder"];
                 if (!Directory.Exists(settings.OutputFolder))
-                    throw new ConfigurationErrorsException(string.Format("App setting 'OutputFolder' is not an existing directory. Value: {0}",
-                        settings.OutputFolder));
+                    throw new ConfigurationErrorsException(
+                        string.Format("App setting 'OutputFolder' is not an existing directory. Value: {0}",
+                            settings.OutputFolder));
 
                 Uri outputFileBaseUri;
-                if (!Uri.TryCreate(ConfigurationManager.AppSettings["OutputFileBaseUrl"], UriKind.Absolute, out outputFileBaseUri))
-                    throw new ConfigurationErrorsException(string.Format("App setting 'OutputFileBaseUrl' is not a valid absolute URI. Value: {0}", 
-                        ConfigurationManager.AppSettings["OutputFileBaseUrl"]));
+                if (
+                    !Uri.TryCreate(ConfigurationManager.AppSettings["OutputFileBaseUrl"], UriKind.Absolute,
+                        out outputFileBaseUri))
+                    throw new ConfigurationErrorsException(
+                        string.Format("App setting 'OutputFileBaseUrl' is not a valid absolute URI. Value: {0}",
+                            ConfigurationManager.AppSettings["OutputFileBaseUrl"]));
                 settings.OutputFileBaseUri = outputFileBaseUri;
 
                 int numberOfPages;
@@ -249,8 +271,8 @@ namespace Um.DataServices.XmlFilePaging
         public static IEnumerable<IEnumerable<T>> Page<T>(this IEnumerable<T> elements, int pageSize)
         {
             return elements
-                .Select((x, i) => new { Index = i, Value = x })
-                .GroupBy(x => x.Index / pageSize)
+                .Select((x, i) => new {Index = i, Value = x})
+                .GroupBy(x => x.Index/pageSize)
                 .Select(x => x.Select(v => v.Value));
         }
 

@@ -32,17 +32,17 @@ namespace Um.DataServices.Web
 
         }
 
-        protected override void OnStartProcessingRequest(ProcessRequestArgs args)
-        {
-            base.OnStartProcessingRequest(args);
-            var c = HttpContext.Current.Response.Cache;
-            c.SetCacheability(HttpCacheability.ServerAndPrivate);
-            var lifetime = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]);
-            c.SetExpires(HttpContext.Current.Timestamp.AddSeconds(lifetime));
-            c.VaryByHeaders["Accept"] = true;
-            c.VaryByHeaders["Accept-Charset"] = true;
-            c.VaryByHeaders["Accept-Encoding"] = true;
-            c.VaryByParams["*"] = true;
-        }
+        //protected override void OnStartProcessingRequest(ProcessRequestArgs args)
+        //{
+        //    base.OnStartProcessingRequest(args);
+        //    var c = HttpContext.Current.Response.Cache;
+        //    c.SetCacheability(HttpCacheability.ServerAndPrivate);
+        //    var lifetime = int.Parse(ConfigurationManager.AppSettings[Schema.ServerSideCacheLifetime]);
+        //    c.SetExpires(HttpContext.Current.Timestamp.AddSeconds(lifetime));
+        //    c.VaryByHeaders["Accept"] = true;
+        //    c.VaryByHeaders["Accept-Charset"] = true;
+        //    c.VaryByHeaders["Accept-Encoding"] = true;
+        //    c.VaryByParams["*"] = true;
+        //}
     }
 }

@@ -14,17 +14,17 @@ namespace Um.DataServices.Web
     
     public partial class Activity_Transactions
     {
-        public int Id { get; set; }
-        public string ActivityId { get; set; }
+        public int transactionID { get; set; }
+        public int iati_activityID { get; set; }
         public string CurrencyCode { get; set; }
-        public System.DateTime TransactionDate { get; set; }
-        public decimal TransactionAmount { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
+        public Nullable<decimal> TransactionAmount { get; set; }
         public string TransactionTypeCode { get; set; }
-        public int FlowTypeCode { get; set; }
+        public Nullable<int> FlowTypeCode { get; set; }
         public string AidType { get; set; }
-        public int FinanceTypeCode { get; set; }
-        public int TiedStatusCode { get; set; }
-        public int DisbursementChannelCode { get; set; }
+        public Nullable<int> FinanceTypeCode { get; set; }
+        public Nullable<int> TiedStatusCode { get; set; }
+        public string DisbursementChannelCode { get; set; }
         public string CountryCode { get; set; }
         public string CountryCodeIati { get; set; }
         public string ChannelCode { get; set; }

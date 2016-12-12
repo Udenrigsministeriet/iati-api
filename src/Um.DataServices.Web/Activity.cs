@@ -14,18 +14,14 @@ namespace Um.DataServices.Web
     
     public partial class Activity
     {
-        public int Id { get; set; }
-        public string ActivityId { get; set; }
+        public string ProjectId { get; set; }
+        public int iati_activityID { get; set; }
         public Nullable<System.DateTime> LastUpdateDateTime { get; set; }
         public string IatiIdentifier { get; set; }
         public string JournalNo { get; set; }
         public string LevelNo { get; set; }
         public string Title { get; set; }
         public string ActivityStatus { get; set; }
-        public string DateStartPlanned { get; set; }
-        public string DateEndPlanned { get; set; }
-        public string DateStartActual { get; set; }
-        public string DateEndActual { get; set; }
         public string ContactInfoEmail { get; set; }
         public string ContactInfoOrganisation { get; set; }
         public string ContactInfoPerson { get; set; }

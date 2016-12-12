@@ -14,12 +14,16 @@ namespace Um.DataServices.Test.Integration
     [TestFixture]
     public class DeploymentTests
     {
-        //http://iatiquery.um.dk/ODataService.svc/Countries?$format=json
+        private const string HostDev = "iatiquery-dev.um.dk";
+        private const string HostTest = "iatiquery-test.um.dk";
+        private const string HostProd = "iatiquery.um.dk";
+
+        //http://iatiquery.um.dk/v2/ODataService.svc/Countries?$format=json
         [Test]
         public void TestAllUrls()
         {
-            const string template = @"http://{0}/ODataService.svc/{1}";
-            var hosts = new List<string> {"test", "iatiquery.um.dk", "iatiquery-test.um.dk"};
+            const string template = @"http://{0}/v2/ODataService.svc/{1}";
+            var hosts = new List<string> { HostDev, HostTest, HostProd};
 
             var paths = new List<string>();
             paths.Add("$metadata");
@@ -44,12 +48,12 @@ namespace Um.DataServices.Test.Integration
             }
         }
 
-        // http://iatiquery.um.dk/Activities.ashx?RecipientCountryCode='et-eller-andet'
+        // http://iatiquery.um.dk/v2/Activities.ashx?RecipientCountryCode='et-eller-andet'
         [Test]
         public void TestGetActivitiesCanGet()
         {
-            const string template = @"http://{0}/{1}";
-            var hosts = new List<string> {"test"};
+            const string template = @"http://{0}/v2/{1}";
+            var hosts = new List<string> { HostDev };
 
             var paths = new List<string>();
             paths.Add(@"Activities.ashx?RecipientCountryCode='BF'");
@@ -65,12 +69,12 @@ namespace Um.DataServices.Test.Integration
             }
         }
 
-        // http://iatiquery.um.dk/Activities.ashx?RecipientCountryCode='et-eller-andet'
+        // http://iatiquery.um.dk/v2/Activities.ashx?RecipientCountryCode='et-eller-andet'
         [Test]
         public void TestGetActivitiesCanGetForeachCountryCode()
         {
-            const string template = @"http://{0}/{1}";
-            var hosts = new List<string> {"test"};
+            const string template = @"http://{0}/v2/{1}";
+            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var countries = entities.Countries;
@@ -98,8 +102,8 @@ namespace Um.DataServices.Test.Integration
         [Ignore]
         public void TestGetActivitiesCanGetForeachCountryCodeAndSector()
         {
-            const string template = @"http://{0}/{1}";
-            var hosts = new List<string> {"test"};
+            const string template = @"http://{0}/v2/{1}";
+            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var countries = entities.Countries;
@@ -135,8 +139,8 @@ namespace Um.DataServices.Test.Integration
         [Test]
         public void TestGetActivitiesCanGetForeachRegion()
         {
-            const string template = @"http://{0}/{1}";
-            var hosts = new List<string> {"test"};
+            const string template = @"http://{0}/v2/{1}";
+            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var regions = entities.Regions;
@@ -166,8 +170,8 @@ namespace Um.DataServices.Test.Integration
         {
             var random = new Random();
 
-            const string template = @"http://{0}/{1}";
-            var hosts = new List<string> {"test"};
+            const string template = @"http://{0}/v2/{1}";
+            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var sectors = entities.Sectors;
