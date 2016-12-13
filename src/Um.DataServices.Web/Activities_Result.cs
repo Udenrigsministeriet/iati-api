@@ -13,7 +13,6 @@ namespace Um.DataServices.Web
     
     public partial class Activities_Result
     {
-        //public string XML_F52E2B61_18A1_11d1_B105_00805F49916B { get; set; }
-        public string XML_F52E2B61_18A1_11d1_B105_00805F49916B { get; set; }
+        public string TypedXML { get; set; }
     }
 }

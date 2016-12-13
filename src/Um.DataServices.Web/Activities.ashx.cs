@@ -67,15 +67,12 @@ namespace Um.DataServices.Web
             var sb = new StringBuilder();
             foreach (var item in dataset)
             {
-                sb.Append(item.XML_F52E2B61_18A1_11d1_B105_00805F49916B);
+                sb.Append(item.TypedXML);
             }
             return sb.ToString();
         }
 
-        public bool IsReusable
-        {
-            get { return false; }
-        }
+        public bool IsReusable => false;
 
         public static string FormatInputString(string input)
         {
@@ -101,7 +98,7 @@ namespace Um.DataServices.Web
         {
             if (string.IsNullOrEmpty(filter))
             {
-                throw new ArgumentNullException(@"filter");
+                throw new ArgumentNullException(nameof(filter));
             }
             if (string.IsNullOrEmpty(text))
             {
@@ -124,9 +121,7 @@ namespace Um.DataServices.Web
             if (recipientCountryCode.Length != length)
             {
                 var msg =
-                    string.Format(
-                        "Length of 'RecipientCountry' parameter is invalid. The length of the specified value was '{0}'. The value of 'RecipientCountry' must be exactly '{1}' char",
-                        recipientCountryCode.Length, length);
+                    $"Length of 'RecipientCountry' parameter is invalid. The length of the specified value was '{recipientCountryCode.Length}'. The value of 'RecipientCountry' must be exactly '{length}' char";
                 throw new ArgumentException(msg);
             }
 
@@ -140,7 +135,7 @@ namespace Um.DataServices.Web
 
             if (match == null)
             {
-                var msg = string.Format("The specified RecipientCountryCode '{0}' is unknown", recipientCountryCode);
+                var msg = $"The specified RecipientCountryCode '{recipientCountryCode}' is unknown";
                 throw new ArgumentException(msg);
             }
         }
@@ -171,7 +166,7 @@ namespace Um.DataServices.Web
 
             if (match == null)
             {
-                var msg = string.Format("The specified Sector '{0}' is unknown", parsedSector);
+                var msg = $"The specified Sector '{parsedSector}' is unknown";
                 throw new ArgumentException(msg);
             }
         }
@@ -202,7 +197,7 @@ namespace Um.DataServices.Web
 
             if (match == null)
             {
-                var msg = string.Format("The specified Region '{0}' is unknown", parsedRegion);
+                var msg = $"The specified Region '{parsedRegion}' is unknown";
                 throw new ArgumentException(msg);
             }
         }

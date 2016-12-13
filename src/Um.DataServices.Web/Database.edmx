@@ -387,7 +387,7 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <EntitySet Name="Activity_Transactions" EntityType="IatiDbModel.Activity_Transactions" />
           </EntityContainer>
         <ComplexType Name="Activities_Result">
-          <Property Type="String" Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="TypedXML" Nullable="true" MaxLength="Max" />
         </ComplexType>
         <EntityType Name="Aidtype">
           <Key>
@@ -571,7 +571,7 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <FunctionImportMapping FunctionImportName="GetActivitiesXml" FunctionName="IatiDbModel.Store.GetActivitiesXml">
             <ResultMapping>
               <ComplexTypeMapping TypeName="IatiDbModel.Activities_Result">
-                <ScalarProperty Name="XML_F52E2B61_18A1_11d1_B105_00805F49916B" ColumnName="XML_F52E2B61-18A1-11d1-B105-00805F49916B" />
+                <ScalarProperty Name="TypedXML" ColumnName="TypedXML" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

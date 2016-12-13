@@ -56,10 +56,8 @@ namespace Um.DataServices.Web
             var projectIdParameter = projectId != null ?
                 new ObjectParameter("ProjectId", projectId) :
                 new ObjectParameter("ProjectId", typeof(string));
-
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 3000;
-            var o = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter, regionParameter, sectorParameter, projectIdParameter);
-            return o;
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Activities_Result>("GetActivitiesXml", recipientCountryParameter, regionParameter, sectorParameter, projectIdParameter);
         }
     }
 }

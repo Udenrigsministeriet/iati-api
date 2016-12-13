@@ -54,9 +54,8 @@ namespace Um.DataServices.XmlFilePaging
             if (pageSize == 0)
             {
                 throw new ApplicationException(
-                    string.Format("The source document did not contain any elements with the specifed name." +
-                                  "Source document URL: {0}, Element name: {1}",
-                        settings.SourceDocumentUri, settings.XmlElementToPage));
+                    "The source document did not contain any elements with the specifed name." +
+                    $"Source document URL: {settings.SourceDocumentUri}, Element name: {settings.XmlElementToPage}");
             }
 
             // 3. Page the source document elements.
@@ -66,7 +65,7 @@ namespace Um.DataServices.XmlFilePaging
             var fileNames = new List<string>();
             foreach (var page in indexedPages)
             {
-                var fileName = string.Format("{0}{1}.xml", settings.OutputFileNameBase, page.Key);
+                var fileName = $"{settings.OutputFileNameBase}{page.Key}.xml";
 
                 // Store file names for metadata report.
                 fileNames.Add(fileName);
@@ -96,7 +95,7 @@ namespace Um.DataServices.XmlFilePaging
             // 4b. Also write the original file to the folder.
             var originalDocument = CreateNewXDocumentFromExistingRoot(sourceElements.DocumentRoot,
                 sourceElements.Elements);
-            var originalFileName = string.Format("{0}.xml", settings.OutputFileNameBase);
+            var originalFileName = $"{settings.OutputFileNameBase}.xml";
             var originalFilePath = Path.Combine(settings.OutputFolder, originalFileName);
             var originalFileUrl = settings.OutputFileBaseUri.Combine(originalFileName).ToString();
             using (var streamWriter = new StreamWriter(originalFilePath))
@@ -119,7 +118,7 @@ namespace Um.DataServices.XmlFilePaging
                 sourceElements.Elements.Count);
             var jsonMetadata = JsonConvert.SerializeObject(metadata, Newtonsoft.Json.Formatting.Indented);
             var metadataFilePath = Path.Combine(settings.OutputFolder,
-                string.Format("{0}.metadata.json", settings.OutputFileNameBase));
+                $"{settings.OutputFileNameBase}.metadata.json");
             File.WriteAllText(metadataFilePath, jsonMetadata);
         }
 
@@ -216,8 +215,7 @@ namespace Um.DataServices.XmlFilePaging
                     !Uri.TryCreate(ConfigurationManager.AppSettings["SourceDocumentUri"], UriKind.RelativeOrAbsolute,
                         out sourceDocumentUri))
                     throw new ConfigurationErrorsException(
-                        string.Format("App setting 'SourceDocumentUri' is not a valid URI. Value: {0}",
-                            ConfigurationManager.AppSettings["SourceDocumentUri"]));
+                        $"App setting 'SourceDocumentUri' is not a valid URI. Value: {ConfigurationManager.AppSettings["SourceDocumentUri"]}");
                 settings.SourceDocumentUri = sourceDocumentUri;
 
                 settings.XmlElementToPage = ConfigurationManager.AppSettings["XmlElementToPage"];
@@ -237,16 +235,14 @@ namespace Um.DataServices.XmlFilePaging
                 settings.OutputFolder = ConfigurationManager.AppSettings["OutputFolder"];
                 if (!Directory.Exists(settings.OutputFolder))
                     throw new ConfigurationErrorsException(
-                        string.Format("App setting 'OutputFolder' is not an existing directory. Value: {0}",
-                            settings.OutputFolder));
+                        $"App setting 'OutputFolder' is not an existing directory. Value: {settings.OutputFolder}");
 
                 Uri outputFileBaseUri;
                 if (
                     !Uri.TryCreate(ConfigurationManager.AppSettings["OutputFileBaseUrl"], UriKind.Absolute,
                         out outputFileBaseUri))
                     throw new ConfigurationErrorsException(
-                        string.Format("App setting 'OutputFileBaseUrl' is not a valid absolute URI. Value: {0}",
-                            ConfigurationManager.AppSettings["OutputFileBaseUrl"]));
+                        $"App setting 'OutputFileBaseUrl' is not a valid absolute URI. Value: {ConfigurationManager.AppSettings["OutputFileBaseUrl"]}");
                 settings.OutputFileBaseUri = outputFileBaseUri;
 
                 int numberOfPages;

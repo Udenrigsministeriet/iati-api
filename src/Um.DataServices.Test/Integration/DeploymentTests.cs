@@ -18,34 +18,35 @@ namespace Um.DataServices.Test.Integration
         private const string HostTest = "iatiquery-test.um.dk";
         private const string HostProd = "iatiquery.um.dk";
 
+        private readonly List<string> _hosts = new List<string> {HostDev};
+
         //http://iatiquery.um.dk/v2/ODataService.svc/Countries?$format=json
         [Test]
         public void TestAllUrls()
         {
             const string template = @"http://{0}/v2/ODataService.svc/{1}";
-            var hosts = new List<string> { HostDev, HostTest, HostProd};
 
-            var paths = new List<string>();
-            paths.Add("$metadata");
-            paths.Add("Aidtypes");
-            paths.Add("Activities");
-            paths.Add("Countries");
-            paths.Add("Currencies");
-            paths.Add("Finanslovs");
-            paths.Add("Organisations");
-            paths.Add("Sectors");
-            paths.Add("Regions");
-            paths.Add("Channels");
+            var paths = new List<string>
+            {
+                "$metadata",
+                "Aidtypes",
+                "Activities",
+                "Countries",
+                "Currencies",
+                "Finanslovs",
+                "Organisations",
+                "Sectors",
+                "Regions",
+                "Channels"
+            };
 
-            var urls = (from host in hosts from path in paths select string.Format(template, host, path)).ToList();
+            var urls = (from host in _hosts from path in paths select string.Format(template, host, path)).ToList();
 
             foreach (
                 var response in
-                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse) request.GetResponse()))
-            {
+                urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                    .Select(request => (HttpWebResponse) request.GetResponse()))
                 Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
-            }
         }
 
         // http://iatiquery.um.dk/v2/Activities.ashx?RecipientCountryCode='et-eller-andet'
@@ -53,20 +54,16 @@ namespace Um.DataServices.Test.Integration
         public void TestGetActivitiesCanGet()
         {
             const string template = @"http://{0}/v2/{1}";
-            var hosts = new List<string> { HostDev };
 
-            var paths = new List<string>();
-            paths.Add(@"Activities.ashx?RecipientCountryCode='BF'");
+            var paths = new List<string> {@"Activities.ashx?RecipientCountryCode='BF'"};
 
-            var urls = (from host in hosts from path in paths select string.Format(template, host, path)).ToList();
+            var urls = (from host in _hosts from path in paths select string.Format(template, host, path)).ToList();
 
             foreach (
                 var response in
-                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse) request.GetResponse()))
-            {
+                urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                    .Select(request => (HttpWebResponse) request.GetResponse()))
                 Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
-            }
         }
 
         // http://iatiquery.um.dk/v2/Activities.ashx?RecipientCountryCode='et-eller-andet'
@@ -74,24 +71,23 @@ namespace Um.DataServices.Test.Integration
         public void TestGetActivitiesCanGetForeachCountryCode()
         {
             const string template = @"http://{0}/v2/{1}";
-            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var countries = entities.Countries;
             var countryCodes =
                 countries.Where(c => c.country_code_iati.Length == 2).Select(c => c.country_code_iati).ToList();
             var paths =
-                (from countryCode in countryCodes
-                    select string.Format(@"Activities.ashx?RecipientCountryCode={0}", countryCode)).ToList();
+            (from countryCode in countryCodes
+                select $@"Activities.ashx?RecipientCountryCode={countryCode}").ToList();
 
-            var urls = (from host in hosts
-                from path in paths
+            var urls = (from host in _hosts
+                        from path in paths
                 select string.Format(template, host, path)).ToList();
 
             foreach (
                 var response in
-                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse) request.GetResponse()))
+                urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                    .Select(request => (HttpWebResponse) request.GetResponse()))
             {
                 Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
                 Console.WriteLine(response.ResponseUri);
@@ -103,7 +99,6 @@ namespace Um.DataServices.Test.Integration
         public void TestGetActivitiesCanGetForeachCountryCodeAndSector()
         {
             const string template = @"http://{0}/v2/{1}";
-            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var countries = entities.Countries;
@@ -112,23 +107,25 @@ namespace Um.DataServices.Test.Integration
 
             var sectors = entities.Sectors;
             var sectorCodes =
-                sectors.Where(s => s.category_code > 0 && s.category_code < 999).Select(s => s.category_code).ToList();
+                sectors.Where(s => (s.category_code > 0) && (s.category_code < 999))
+                    .Select(s => s.category_code)
+                    .ToList();
             var paths =
                 (from countryCode in countryCodes
-                    from sectorCode in sectorCodes
-                    select
-                        string.Format(@"Activities.ashx?RecipientCountryCode={0}&sector={1}", countryCode, sectorCode))
+                        from sectorCode in sectorCodes
+                        select
+                        $@"Activities.ashx?RecipientCountryCode={countryCode}&sector={sectorCode}")
                     .ToList();
             Console.WriteLine("Total number of paths: '{0}'", paths.Count);
 
-            var urls = (from host in hosts
-                from path in paths
+            var urls = (from host in _hosts
+                        from path in paths
                 select string.Format(template, host, path)).ToList();
 
             foreach (
                 var response in
-                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse) request.GetResponse()))
+                urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                    .Select(request => (HttpWebResponse) request.GetResponse()))
             {
                 Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
                 Console.WriteLine(response.ResponseUri);
@@ -140,29 +137,29 @@ namespace Um.DataServices.Test.Integration
         public void TestGetActivitiesCanGetForeachRegion()
         {
             const string template = @"http://{0}/v2/{1}";
-            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var regions = entities.Regions;
             var regionCodes =
                 regions.Select(c => c.code).ToList();
             var paths =
-                (from regionCode in regionCodes
-                    select string.Format(@"Activities.ashx?Region={0}", regionCode)).ToList();
+            (from regionCode in regionCodes
+                select $@"Activities.ashx?Region={regionCode}").ToList();
 
-            var urls = (from host in hosts
-                from path in paths
+            var urls = (from host in _hosts
+                        from path in paths
                 select string.Format(template, host, path)).ToList();
 
             foreach (
                 var response in
-                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse) request.GetResponse()))
+                urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                    .Select(request => (HttpWebResponse) request.GetResponse()))
             {
                 Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
                 Console.WriteLine(response.ResponseUri);
             }
         }
+
         // http://iatiquery.um.dk/Activities.ashx?RecipientCountryCode=something&sector=something
         [Test]
         [Ignore]
@@ -171,12 +168,13 @@ namespace Um.DataServices.Test.Integration
             var random = new Random();
 
             const string template = @"http://{0}/v2/{1}";
-            var hosts = new List<string> { HostDev };
 
             var entities = new IatiDbEntities();
             var sectors = entities.Sectors;
             var sectorCodes =
-                sectors.Where(s => s.category_code > 0 && s.category_code < 999).Select(s => s.category_code).ToList();
+                sectors.Where(s => (s.category_code > 0) && (s.category_code < 999))
+                    .Select(s => s.category_code)
+                    .ToList();
 
             var countries = entities.Countries;
             var countryCodes =
@@ -188,18 +186,18 @@ namespace Um.DataServices.Test.Integration
 
             var paths =
                 (from sectorCode in sectorCodes
-                    select
-                        string.Format(@"Activities.ashx?RecipientConutryCode={0}&Sector={1}", countryCode, sectorCode))
+                        select
+                        $@"Activities.ashx?RecipientConutryCode={countryCode}&Sector={sectorCode}")
                     .ToList();
 
-            var urls = (from host in hosts
-                from path in paths
+            var urls = (from host in _hosts
+                        from path in paths
                 select string.Format(template, host, path)).ToList();
 
             foreach (
                 var response in
-                    urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
-                        .Select(request => (HttpWebResponse) request.GetResponse()))
+                urls.Select(url => (HttpWebRequest) WebRequest.Create(url))
+                    .Select(request => (HttpWebResponse) request.GetResponse()))
             {
                 Assert.That(response.StatusCode.Equals(HttpStatusCode.OK));
                 Console.WriteLine(response.ResponseUri);
