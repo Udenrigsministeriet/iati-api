@@ -87,7 +87,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Usage.html" />
+    <Content Include="index.html" />
     <Content Include="packages.config" />
     <EntityDeploy Include="Database.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

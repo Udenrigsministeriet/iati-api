@@ -26,7 +26,7 @@
     </Condition>-->
 
     <PropertyRef Id="WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED" />
-    <Condition Message="$(loc.ProductName) requires .NET Framework 4.6 or higher.">
+    <Condition Message="!(loc.ProductName) requires .NET Framework 4.6 or higher.">
       <![CDATA[Installed OR (WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED)]]>
     </Condition>
 

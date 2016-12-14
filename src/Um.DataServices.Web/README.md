@@ -9,6 +9,8 @@
 
 After updating the DB model, add the following line to Database.Context.cs
 ```
-((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 3000;
+((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 60 * 15;
+
 ```
+
 

@@ -30,45 +30,45 @@
         <li>a list of URLs to the resulting files</li>
         </ul>
             The metadata file is in the JSON format and can be retrieved using the following link
-        <ul><li><a href="http://iatiquery.um.dk/v2/files/iati.metadata.json">iati.metadata.json</a></li></ul>
+        <ul><li><a href="http://iati.um.dk/api/v2/files/iati.metadata.json">iati.metadata.json</a></li></ul>
     </p>
     <h3>IATI metadata file example</h3>
     <p>
         Below is an example of how the JSON file may look after a successful file generation.
     </p>
     <pre class="cscode"><code>{
-    <span class="str">"GeneratedDateTimeUtc"</span>: <span class="str">"2014-10-29T09:27:03.6108979Z"</span>,
-    <span class="str">"OriginalFileUrl"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati.xml"</span>,
+    <span class="str">"GeneratedDateTimeUtc"</span>: <span class="str">"2016-12-14T09:27:03.6108979Z"</span>,
+    <span class="str">"OriginalFileUrl"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati.xml"</span>,
     <span class="str">"PageFileCount"</span>: 7,
     <span class="str">"PagedElementName"</span>: <span class="str">"iati-activity"</span>,
     <span class="str">"TotalElementCount"</span>: 21469,
     <span class="str">"PagedFileInfo"</span>: [
       {
-        <span class="str">"Url"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati1.xml"</span>,
+        <span class="str">"Url"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati1.xml"</span>,
         <span class="str">"ElementCount"</span>: 3067,
       },
       {
-        <span class="str">"Url"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati1.xml"</span>,
+        <span class="str">"Url"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati1.xml"</span>,
         <span class="str">"ElementCount"</span>: 3067,
       },
       {
-        <span class="str">"Url"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati1.xml"</span>,
+        <span class="str">"Url"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati1.xml"</span>,
         <span class="str">"ElementCount"</span>: 3067,
       },
       {
-        <span class="str">"Url"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati1.xml"</span>,
+        <span class="str">"Url"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati1.xml"</span>,
         <span class="str">"ElementCount"</span>: 3067,
       },
       {
-        <span class="str">"Url"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati1.xml"</span>,
+        <span class="str">"Url"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati1.xml"</span>,
         <span class="str">"ElementCount"</span>: 3067,
       },
       {
-        <span class="str">"Url"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati1.xml"</span>,
+        <span class="str">"Url"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati1.xml"</span>,
         <span class="str">"ElementCount"</span>: 3067,
       },
       {
-        <span class="str">"Url"</span>: <span class="str">"http://iatiquery.um.dk/v2/files/iati1.xml"</span>,
+        <span class="str">"Url"</span>: <span class="str">"http://iati.um.dk/api/v2/files/iati1.xml"</span>,
         <span class="str">"ElementCount"</span>: 3067,
       }
     ]
@@ -81,20 +81,20 @@
     </p>
     <h3>Downloading a single file using curl</h3>
     <pre class="cscode">
-    <span class="str">curl http://iatiquery.um.dk/v2/files/iati1.xml -O</span>
+    <span class="str">curl http://iati.um.dk/api/v2/files/iati1.xml -O</span>
 </pre>
     <h3>Download a range of files using curl</h3>
     <pre class="cscode">
-    <span class="str">curl http://iatiquery.um.dk/v2/files/iati[1-7].xml -O</span>
+    <span class="str">curl http://iati.um.dk/api/v2/files/iati[1-7].xml -O</span>
 </pre>
        <h3>Downloading a single file using wget</h3> 
     <pre class="cscode">
-    <span class="str">wget http://iatiquery.um.dk/v2/files/iati1.xml </span>
+    <span class="str">wget http://iati.um.dk/api/v2/files/iati1.xml </span>
 </pre>
     <h3>Downloading a range of files using wget</h3> 
     <pre class="cscode">
 
-    <span class="str">wget -N http://iatiquery.um.dk/v2/files/iati{1..7}.xml </span>
+    <span class="str">wget -N http://iati.um.dk/api/v2/files/iati{1..7}.xml </span>
 
 </pre>
 

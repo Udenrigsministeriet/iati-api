@@ -16,6 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{39
 		Database\v201_AddViewsToDb.sql = Database\v201_AddViewsToDb.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{0BB8378B-CC30-44A4-86FE-8872D63B4641}"
+	ProjectSection(SolutionItems) = preProject
+		Installation.md = Installation.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

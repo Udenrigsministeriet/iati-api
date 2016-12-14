@@ -29,7 +29,7 @@
                 <File Id="fil9571ECD74A9FBA9631D1B980920C7FBC" KeyPath="yes" Source="$(var.publishDir)\README.md" />
             </Component>
             <Component Id="cmpB61FA733F0BF9AFFB7DC06746A730812" Directory="INSTALLFOLDER" Guid="{3077729B-A359-4414-9110-239C57035394}">
-                <File Id="filC66598C3FF3E0A69440A3DF578AD1655" KeyPath="yes" Source="$(var.publishDir)\Usage.html" />
+                <File Id="filC66598C3FF3E0A69440A3DF578AD1655" KeyPath="yes" Source="$(var.publishDir)\index.html" />
             </Component>
             <Component Id="cmpCDB7F4EFDEF1E65C3B12BEBAD7E4D7EA" Directory="INSTALLFOLDER" Guid="{DAC784D9-4640-473B-B11E-AC00553A5C5E}">
                 <File Id="fil8994620207C22CA15AF75ACDD6420C79" KeyPath="yes" Source="$(var.publishDir)\Web.config" />
