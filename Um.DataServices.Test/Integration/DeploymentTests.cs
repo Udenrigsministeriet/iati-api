@@ -95,7 +95,7 @@ namespace Um.DataServices.Test.Integration
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Running takes a very long time, so only enable when needed")]
         public void TestGetActivitiesCanGetForeachCountryCodeAndSector()
         {
             const string template = @"http://{0}/v2/{1}";
@@ -162,7 +162,7 @@ namespace Um.DataServices.Test.Integration
 
         // http://iatiquery.um.dk/Activities.ashx?RecipientCountryCode=something&sector=something
         [Test]
-        [Ignore]
+        [Ignore("Running takes a very long time, so only enable when needed")]
         public void TestGetActivitiesCanGetForeachSector()
         {
             var random = new Random();
