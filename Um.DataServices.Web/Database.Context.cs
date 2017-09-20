@@ -37,6 +37,7 @@ namespace Um.DataServices.Web
         public virtual DbSet<Sector> Sectors { get; set; }
         public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<Activity_Budget> Activity_Budget { get; set; }
+        public virtual DbSet<Activity_Result> Activity_Result { get; set; }
         public virtual DbSet<Activity_Transactions> Activity_Transactions { get; set; }
     
         public virtual ObjectResult<Activities_Result> GetActivitiesXml(string recipientCountry, string region, string sector, string projectId)

@@ -15,7 +15,7 @@ namespace Um.DataServices.Web
     public partial class Activity_Transactions
     {
         public int transactionID { get; set; }
-        public int iati_activityID { get; set; }
+        public string ActivityID { get; set; }
         public string CurrencyCode { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
         public Nullable<decimal> TransactionAmount { get; set; }
@@ -27,7 +27,7 @@ namespace Um.DataServices.Web
         public string DisbursementChannelCode { get; set; }
         public string CountryCode { get; set; }
         public string CountryCodeIati { get; set; }
-        public string ChannelCode { get; set; }
+        public Nullable<int> ChannelCode { get; set; }
         public string OrganisationId { get; set; }
         public Nullable<int> SectorCode { get; set; }
         public string SubcompanyCode { get; set; }
@@ -37,6 +37,6 @@ namespace Um.DataServices.Web
         public string OrganisationName { get; set; }
         public string SectorName { get; set; }
         public string BudgetSubSection { get; set; }
-        public string ChannelName { get; set; }
+        public Nullable<int> ChannelName { get; set; }
     }
 }

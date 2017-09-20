@@ -15,7 +15,7 @@ namespace Um.DataServices.Web
     public partial class Activity_Budget
     {
         public int budgetID { get; set; }
-        public int iati_activityID { get; set; }
+        public string ActivityID { get; set; }
         public string CurrencyCode { get; set; }
         public System.DateTime BudgetDate { get; set; }
         public long BudgetAmount { get; set; }

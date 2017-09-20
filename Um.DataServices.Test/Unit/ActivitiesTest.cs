@@ -56,6 +56,22 @@ namespace Um.DataServices.Test.Unit
         }
 
         [Test]
+        public void TestRemoveInvalidCharactersCanRemove3()
+        {
+            const string mixed = "',.<<::\\   :;>   >198123-28635|++==//?????fc";
+            var filtered = Activities.RemoveInvalidCharacters(mixed, @"[^0-9\-]");
+            Assert.That(filtered, Is.EqualTo("198123-28635"));
+        }
+
+        [Test]
+        public void TestRemoveInvalidCharactersDoesNotRemove()
+        {
+            const string mixed = "'198123-28635";
+            var filtered = Activities.RemoveInvalidCharacters(mixed, @"[^0-9\-]");
+            Assert.That(filtered, Is.EqualTo("198123-28635"));
+        }
+
+        [Test]
         public void TestValidateRecipientCountryCodeThrowsOnLong()
         {
             Assert.Throws<ArgumentException>(() =>

@@ -54,7 +54,7 @@ namespace Um.DataServices.Web
             var formattedRecipientCountryCode = FormatInputString(recipientCountryCode);
             var formattedSector = FormatInputInteger(sector);
             var formattedRegion = FormatInputInteger(region);
-            var formattedProjektId = FormatInputInteger(projektId);
+            var formattedProjektId = FormatProjektId(projektId);
 
             // Validate input parameters and throw exception if not valid
             ValidateSector(formattedSector);
@@ -83,6 +83,17 @@ namespace Um.DataServices.Web
             }
             return null;
         }
+
+        public static string FormatProjektId(string input)
+        {
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                var filtered = RemoveInvalidCharacters(input, @"[^0-9\-]");
+                return filtered.Trim().ToUpperInvariant();
+            }
+            return null;
+        }
+
 
         public static string FormatInputInteger(string input)
         {

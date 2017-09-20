@@ -9,34 +9,36 @@
 warning 6002: The table/view 'IATIv201.dbo.Activity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Activity">
           <Key>
-            <PropertyRef Name="ProjectId" />
-            <PropertyRef Name="iati-activityID" />
+            <PropertyRef Name="ActivityID" />
           </Key>
-          <Property Name="ProjectId" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="iati-activityID" Type="int" Nullable="false" />
           <Property Name="LastUpdateDateTime" Type="datetime" />
-          <Property Name="IatiIdentifier" Type="nvarchar" MaxLength="255" />
+          <Property Name="ActivityID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IATIIdentifier" Type="nvarchar" MaxLength="255" />
           <Property Name="JournalNo" Type="nvarchar(max)" />
-          <Property Name="LevelNo" Type="nvarchar(max)" />
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="ActivityStatus" Type="nvarchar(max)" />
+          <Property Name="DateStartPlanned" Type="datetime" />
+          <Property Name="DateEndPlanned" Type="datetime" />
+          <Property Name="DateStartActual" Type="datetime" />
+          <Property Name="DateEndActual" Type="datetime" />
           <Property Name="ContactInfoEmail" Type="nvarchar(max)" />
           <Property Name="ContactInfoOrganisation" Type="nvarchar(max)" />
           <Property Name="ContactInfoPerson" Type="nvarchar(max)" />
           <Property Name="ContactInfoTelephone" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IATIIdentifierProject" Type="nvarchar" MaxLength="255" />
+          <Property Name="ActivityIDProject" Type="varchar" MaxLength="25" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IATIv201.dbo.Activity_Budget' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Activity_Budget">
           <Key>
             <PropertyRef Name="budgetID" />
-            <PropertyRef Name="iati-activityID" />
             <PropertyRef Name="BudgetDate" />
             <PropertyRef Name="BudgetAmount" />
           </Key>
           <Property Name="budgetID" Type="int" Nullable="false" />
-          <Property Name="iati-activityID" Type="int" Nullable="false" />
+          <Property Name="ActivityID" Type="varchar" MaxLength="25" />
           <Property Name="CurrencyCode" Type="nchar" MaxLength="3" />
           <Property Name="BudgetDate" Type="datetime" Nullable="false" />
           <Property Name="BudgetAmount" Type="bigint" Nullable="false" />
@@ -53,14 +55,27 @@ warning 6002: The table/view 'IATIv201.dbo.Activity_Budget' does not have a prim
           <Property Name="BudgetSubSection" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'IATIv201.dbo.Activity_Result' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Activity_Result">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="ActivityID" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="IndicatorTitle" Type="nvarchar(max)" />
+          <Property Name="Year" Type="nvarchar(max)" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="Type" Type="varchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'IATIv201.dbo.Activity_Transactions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Activity_Transactions">
           <Key>
             <PropertyRef Name="transactionID" />
-            <PropertyRef Name="iati-activityID" />
           </Key>
           <Property Name="transactionID" Type="int" Nullable="false" />
-          <Property Name="iati-activityID" Type="int" Nullable="false" />
+          <Property Name="ActivityID" Type="varchar" MaxLength="25" />
           <Property Name="CurrencyCode" Type="nchar" MaxLength="3" />
           <Property Name="TransactionDate" Type="datetime" />
           <Property Name="TransactionAmount" Type="decimal" Precision="18" Scale="2" />
@@ -72,7 +87,7 @@ warning 6002: The table/view 'IATIv201.dbo.Activity_Transactions' does not have 
           <Property Name="DisbursementChannelCode" Type="nvarchar" MaxLength="255" />
           <Property Name="CountryCode" Type="nvarchar" MaxLength="5" />
           <Property Name="CountryCodeIati" Type="nvarchar" MaxLength="5" />
-          <Property Name="ChannelCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="ChannelCode" Type="int" />
           <Property Name="OrganisationId" Type="nvarchar(max)" />
           <Property Name="SectorCode" Type="int" />
           <Property Name="SubcompanyCode" Type="nvarchar(max)" />
@@ -82,7 +97,7 @@ warning 6002: The table/view 'IATIv201.dbo.Activity_Transactions' does not have 
           <Property Name="OrganisationName" Type="varchar" MaxLength="120" />
           <Property Name="SectorName" Type="nvarchar" MaxLength="255" />
           <Property Name="BudgetSubSection" Type="nvarchar" MaxLength="25" />
-          <Property Name="ChannelName" Type="varchar" MaxLength="200" />
+          <Property Name="ChannelName" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IATIv201.dbo.Aidtype' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -90,7 +105,7 @@ warning 6002: The table/view 'IATIv201.dbo.Aidtype' does not have a primary key 
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="aidtype_code" Type="nvarchar" MaxLength="255" />
           <Property Name="aidtype_name_uk" Type="nvarchar" MaxLength="255" />
           <Property Name="parent_code" Type="nvarchar" MaxLength="1" />
@@ -104,7 +119,7 @@ warning 6002: The table/view 'IATIv201.dbo.Channel' does not have a primary key 
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="channel_code" Type="int" />
           <Property Name="channel_category_code" Type="int" />
           <Property Name="channel_name_uk" Type="varchar" MaxLength="200" />
@@ -116,7 +131,7 @@ warning 6002: The table/view 'IATIv201.dbo.Country' does not have a primary key 
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="country_code" Type="nvarchar" MaxLength="5" />
           <Property Name="name_uk" Type="nvarchar" MaxLength="60" />
           <Property Name="name_dk" Type="nvarchar" MaxLength="60" />
@@ -132,7 +147,7 @@ warning 6002: The table/view 'IATIv201.dbo.Currency' does not have a primary key
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Year" Type="int" />
           <Property Name="CurrencyCode" Type="varchar" MaxLength="10" />
           <Property Name="ExchRate" Type="int" />
@@ -145,7 +160,7 @@ warning 6002: The table/view 'IATIv201.dbo.Finanslov' does not have a primary ke
             <PropertyRef Name="Category1_DK" />
             <PropertyRef Name="Category1_UK" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubCompanyCode" Type="int" />
           <Property Name="BudgetSubSection" Type="nvarchar" MaxLength="25" />
           <Property Name="BudgetSubSection_Name_UK" Type="nvarchar" MaxLength="250" />
@@ -167,7 +182,7 @@ warning 6002: The table/view 'IATIv201.dbo.Organisation' does not have a primary
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="organisation_code" Type="int" />
           <Property Name="organisation_name_uk" Type="varchar" MaxLength="120" />
           <Property Name="organisation_name_dk" Type="varchar" MaxLength="132" />
@@ -189,7 +204,7 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="sector_code" Type="int" />
           <Property Name="sector_name_uk" Type="nvarchar" MaxLength="255" />
           <Property Name="category_code" Type="int" />
@@ -209,25 +224,29 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
         <EntityContainer Name="IatiDbModelStoreContainer">
           <EntitySet Name="Activity" EntityType="Self.Activity" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Activity].[ProjectId] AS [ProjectId], 
-    [Activity].[iati-activityID] AS [iati-activityID], 
     [Activity].[LastUpdateDateTime] AS [LastUpdateDateTime], 
-    [Activity].[IatiIdentifier] AS [IatiIdentifier], 
+    [Activity].[ActivityID] AS [ActivityID], 
+    [Activity].[IATIIdentifier] AS [IATIIdentifier], 
     [Activity].[JournalNo] AS [JournalNo], 
-    [Activity].[LevelNo] AS [LevelNo], 
     [Activity].[Title] AS [Title], 
     [Activity].[ActivityStatus] AS [ActivityStatus], 
+    [Activity].[DateStartPlanned] AS [DateStartPlanned], 
+    [Activity].[DateEndPlanned] AS [DateEndPlanned], 
+    [Activity].[DateStartActual] AS [DateStartActual], 
+    [Activity].[DateEndActual] AS [DateEndActual], 
     [Activity].[ContactInfoEmail] AS [ContactInfoEmail], 
     [Activity].[ContactInfoOrganisation] AS [ContactInfoOrganisation], 
     [Activity].[ContactInfoPerson] AS [ContactInfoPerson], 
     [Activity].[ContactInfoTelephone] AS [ContactInfoTelephone], 
-    [Activity].[Description] AS [Description]
+    [Activity].[Description] AS [Description], 
+    [Activity].[IATIIdentifierProject] AS [IATIIdentifierProject], 
+    [Activity].[ActivityIDProject] AS [ActivityIDProject]
     FROM [dbo].[Activity] AS [Activity]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Activity_Budget" EntityType="Self.Activity_Budget" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Activity_Budget].[budgetID] AS [budgetID], 
-    [Activity_Budget].[iati-activityID] AS [iati-activityID], 
+    [Activity_Budget].[ActivityID] AS [ActivityID], 
     [Activity_Budget].[CurrencyCode] AS [CurrencyCode], 
     [Activity_Budget].[BudgetDate] AS [BudgetDate], 
     [Activity_Budget].[BudgetAmount] AS [BudgetAmount], 
@@ -244,10 +263,20 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
     [Activity_Budget].[BudgetSubSection] AS [BudgetSubSection]
     FROM [dbo].[Activity_Budget] AS [Activity_Budget]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Activity_Result" EntityType="Self.Activity_Result" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Activity_Result].[ActivityID] AS [ActivityID], 
+    [Activity_Result].[Title] AS [Title], 
+    [Activity_Result].[IndicatorTitle] AS [IndicatorTitle], 
+    [Activity_Result].[Year] AS [Year], 
+    [Activity_Result].[Value] AS [Value], 
+    [Activity_Result].[Type] AS [Type]
+    FROM [dbo].[Activity_Result] AS [Activity_Result]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Activity_Transactions" EntityType="Self.Activity_Transactions" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Activity_Transactions].[transactionID] AS [transactionID], 
-    [Activity_Transactions].[iati-activityID] AS [iati-activityID], 
+    [Activity_Transactions].[ActivityID] AS [ActivityID], 
     [Activity_Transactions].[CurrencyCode] AS [CurrencyCode], 
     [Activity_Transactions].[TransactionDate] AS [TransactionDate], 
     [Activity_Transactions].[TransactionAmount] AS [TransactionAmount], 
@@ -384,6 +413,7 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <EntitySet Name="Sectors" EntityType="IatiDbModel.Sector" />
           <EntitySet Name="Activities" EntityType="IatiDbModel.Activity" />
           <EntitySet Name="Activity_Budget" EntityType="IatiDbModel.Activity_Budget" />
+          <EntitySet Name="Activity_Result" EntityType="IatiDbModel.Activity_Result" />
           <EntitySet Name="Activity_Transactions" EntityType="IatiDbModel.Activity_Transactions" />
           </EntityContainer>
         <ComplexType Name="Activities_Result">
@@ -491,32 +521,34 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
         </EntityType>
         <EntityType Name="Activity">
           <Key>
-            <PropertyRef Name="ProjectId" />
-            <PropertyRef Name="iati_activityID" />
+            <PropertyRef Name="ActivityID" />
           </Key>
-          <Property Name="ProjectId" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="iati_activityID" Type="Int32" Nullable="false" />
           <Property Name="LastUpdateDateTime" Type="DateTime" Precision="3" />
-          <Property Name="IatiIdentifier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IATIIdentifier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="JournalNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LevelNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ActivityStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateStartPlanned" Type="DateTime" Precision="3" />
+          <Property Name="DateEndPlanned" Type="DateTime" Precision="3" />
+          <Property Name="DateStartActual" Type="DateTime" Precision="3" />
+          <Property Name="DateEndActual" Type="DateTime" Precision="3" />
           <Property Name="ContactInfoEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContactInfoOrganisation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContactInfoPerson" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContactInfoTelephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IATIIdentifierProject" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityIDProject" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Activity_Budget">
           <Key>
             <PropertyRef Name="budgetID" />
-            <PropertyRef Name="iati_activityID" />
             <PropertyRef Name="BudgetDate" />
             <PropertyRef Name="BudgetAmount" />
           </Key>
           <Property Name="budgetID" Type="Int32" Nullable="false" />
-          <Property Name="iati_activityID" Type="Int32" Nullable="false" />
+          <Property Name="ActivityID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="CurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="BudgetDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="BudgetAmount" Type="Int64" Nullable="false" />
@@ -532,13 +564,24 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <Property Name="SectorName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="BudgetSubSection" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Activity_Result">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="ActivityID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IndicatorTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Activity_Transactions">
           <Key>
             <PropertyRef Name="transactionID" />
-            <PropertyRef Name="iati_activityID" />
           </Key>
           <Property Name="transactionID" Type="Int32" Nullable="false" />
-          <Property Name="iati_activityID" Type="Int32" Nullable="false" />
+          <Property Name="ActivityID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="CurrencyCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="TransactionDate" Type="DateTime" Precision="3" />
           <Property Name="TransactionAmount" Type="Decimal" Precision="18" Scale="2" />
@@ -550,7 +593,7 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <Property Name="DisbursementChannelCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CountryCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="CountryCodeIati" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="ChannelCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ChannelCode" Type="Int32" />
           <Property Name="OrganisationId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SectorCode" Type="Int32" />
           <Property Name="SubcompanyCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -560,7 +603,7 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <Property Name="OrganisationName" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
           <Property Name="SectorName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="BudgetSubSection" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="ChannelName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ChannelName" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -684,19 +727,23 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
           <EntitySetMapping Name="Activities">
             <EntityTypeMapping TypeName="IatiDbModel.Activity">
               <MappingFragment StoreEntitySet="Activity">
+                <ScalarProperty Name="ActivityIDProject" ColumnName="ActivityIDProject" />
+                <ScalarProperty Name="IATIIdentifierProject" ColumnName="IATIIdentifierProject" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ContactInfoTelephone" ColumnName="ContactInfoTelephone" />
                 <ScalarProperty Name="ContactInfoPerson" ColumnName="ContactInfoPerson" />
                 <ScalarProperty Name="ContactInfoOrganisation" ColumnName="ContactInfoOrganisation" />
                 <ScalarProperty Name="ContactInfoEmail" ColumnName="ContactInfoEmail" />
+                <ScalarProperty Name="DateEndActual" ColumnName="DateEndActual" />
+                <ScalarProperty Name="DateStartActual" ColumnName="DateStartActual" />
+                <ScalarProperty Name="DateEndPlanned" ColumnName="DateEndPlanned" />
+                <ScalarProperty Name="DateStartPlanned" ColumnName="DateStartPlanned" />
                 <ScalarProperty Name="ActivityStatus" ColumnName="ActivityStatus" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="LevelNo" ColumnName="LevelNo" />
                 <ScalarProperty Name="JournalNo" ColumnName="JournalNo" />
-                <ScalarProperty Name="IatiIdentifier" ColumnName="IatiIdentifier" />
+                <ScalarProperty Name="IATIIdentifier" ColumnName="IATIIdentifier" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="LastUpdateDateTime" ColumnName="LastUpdateDateTime" />
-                <ScalarProperty Name="iati_activityID" ColumnName="iati-activityID" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -717,8 +764,20 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
                 <ScalarProperty Name="BudgetAmount" ColumnName="BudgetAmount" />
                 <ScalarProperty Name="BudgetDate" ColumnName="BudgetDate" />
                 <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
-                <ScalarProperty Name="iati_activityID" ColumnName="iati-activityID" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="budgetID" ColumnName="budgetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activity_Result">
+            <EntityTypeMapping TypeName="IatiDbModel.Activity_Result">
+              <MappingFragment StoreEntitySet="Activity_Result">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IndicatorTitle" ColumnName="IndicatorTitle" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -747,7 +806,7 @@ warning 6002: The table/view 'IATIv201.dbo.Sector' does not have a primary key d
                 <ScalarProperty Name="TransactionAmount" ColumnName="TransactionAmount" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
-                <ScalarProperty Name="iati_activityID" ColumnName="iati-activityID" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
                 <ScalarProperty Name="transactionID" ColumnName="transactionID" />
               </MappingFragment>
             </EntityTypeMapping>
