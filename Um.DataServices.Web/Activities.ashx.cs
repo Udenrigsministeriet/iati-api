@@ -158,8 +158,7 @@ namespace Um.DataServices.Web
                 return;
             }
 
-            int parsedSector;
-            if (!int.TryParse(sector, out parsedSector))
+            if (!int.TryParse(sector, out var parsedSector))
             {
                 var msg =
                     string.Format(

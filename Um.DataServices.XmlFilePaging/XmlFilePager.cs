@@ -20,7 +20,9 @@ namespace Um.DataServices.XmlFilePaging
         public static void LogXmlFilePagingExceptionToEventLog(Exception ex)
         {
             if (!EventLog.SourceExists(EventlogSourceName))
+            {
                 EventLog.CreateEventSource(EventlogSourceName, EventlogName);
+            }
 
             var logMessage =
                 string.Format("En error was encountered while running xml file paging. {0}" + Environment.NewLine,
@@ -40,22 +42,26 @@ namespace Um.DataServices.XmlFilePaging
         {
             // 1a. Read the xml document from the configured URI.
             var sourceElements = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri,
-                settings.XmlElementToPage);
+                settings.XmlElementToPage, settings.HttpRequestTimeout);
 
             // 1b. Check for duplicate identifiers in the source file.
             var sourceActivityIdentifies = ReadRootAndElementsFromXmlDocument(settings.SourceDocumentUri,
-                settings.XmlElementIdentifier);
+                settings.XmlElementIdentifier, settings.HttpRequestTimeout);
             var distinctCount = sourceActivityIdentifies.Elements.Distinct().Count();
             if (sourceElements.Elements.Count != distinctCount)
+            {
                 throw new ApplicationException("The source file contains duplicates of <iati-identifier>.");
+            }
 
             // 2. The page size is the number of XML elements that will be put in each file.
             var pageSize = CalculatePageSize(sourceElements.Elements.Count, settings.NumberOfPages);
 
             if (pageSize == 0)
+            {
                 throw new ApplicationException(
                     "The source document did not contain any elements with the specifed name." +
                     $"Source document URL: {settings.SourceDocumentUri}, Element name: {settings.XmlElementToPage}");
+            }
 
             // 3. Page the source document elements.
             var indexedPages = PageAndIndexElements(sourceElements, pageSize);
@@ -81,7 +87,10 @@ namespace Um.DataServices.XmlFilePaging
                 }
 
                 if (File.Exists(filePath))
+                {
                     File.Delete(filePath);
+                }
+
                 File.Move(temporaryFile, filePath);
             }
 
@@ -89,7 +98,8 @@ namespace Um.DataServices.XmlFilePaging
             foreach (var fileName in fileNames)
             {
                 var fileUri = new Uri(Path.Combine(settings.OutputFolder, fileName));
-                var elements = ReadRootAndElementsFromXmlDocument(fileUri, "iati-identifier");
+                var elements =
+                    ReadRootAndElementsFromXmlDocument(fileUri, "iati-identifier", settings.HttpRequestTimeout);
                 fileCheckDict.Add(fileName, elements.Elements.Count);
             }
 
@@ -106,11 +116,11 @@ namespace Um.DataServices.XmlFilePaging
 
             // 5. Generate metadata result file.
             var pagedFileInfos = fileNames.Select(fn =>
-                    new PagedFileInfo
-                    {
-                        Url = settings.OutputFileBaseUri.Combine(fn).ToString(),
-                        ElementCount = fileCheckDict[fn]
-                    }
+                new PagedFileInfo
+                {
+                    Url = settings.OutputFileBaseUri.Combine(fn).ToString(),
+                    ElementCount = fileCheckDict[fn]
+                }
             ).ToList();
             var metadata = new PagingMetadata(
                 DateTime.UtcNow,
@@ -125,19 +135,22 @@ namespace Um.DataServices.XmlFilePaging
             File.WriteAllText(metadataFilePath, jsonMetadata);
         }
 
-        public static DocumentParts ReadRootAndElementsFromXmlDocument(Uri documentSource, string elementName)
+        public static DocumentParts ReadRootAndElementsFromXmlDocument(Uri documentSource, string elementName,
+            int httpRequestTimeout)
         {
             var request = WebRequest.Create(documentSource.AbsoluteUri);
-            
-            // 1000ms/sec * 60sec/min * 10min
-            request.Timeout = 1000 * 60 * 10;
+
+            // ms/sek * sek/min * min 
+            request.Timeout = 1000 * 60 * httpRequestTimeout;
 
             using (var response = request.GetResponse())
             {
                 var stream = response.GetResponseStream();
                 if (stream == null)
+                {
                     throw new Exception(
                         "Unable to read IATI Activities XML document from service. Response stream is null.");
+                }
 
                 using (var reader = XmlReader.Create(stream))
                 {
@@ -155,7 +168,7 @@ namespace Um.DataServices.XmlFilePaging
 
         public static int CalculatePageSize(int elementCount, int numberOfPages)
         {
-            return (int) Math.Ceiling(elementCount/(double) numberOfPages);
+            return (int) Math.Ceiling(elementCount / (double) numberOfPages);
         }
 
         public static IEnumerable<KeyValuePair<int, XDocument>> PageAndIndexElements(DocumentParts parts, int pageSize)
@@ -222,50 +235,76 @@ namespace Um.DataServices.XmlFilePaging
             public Uri OutputFileBaseUri { get; set; }
             public int NumberOfPages { get; set; }
 
+            public int HttpRequestTimeout { get; set; }
+
             public static XmlFilePagingSettings ReadFromAppConfig()
             {
                 var settings = new XmlFilePagingSettings();
 
-                Uri sourceDocumentUri;
                 if (
                     !Uri.TryCreate(ConfigurationManager.AppSettings["SourceDocumentUri"], UriKind.RelativeOrAbsolute,
-                        out sourceDocumentUri))
+                        out var sourceDocumentUri))
+                {
                     throw new ConfigurationErrorsException(
                         $"App setting 'SourceDocumentUri' is not a valid URI. Value: {ConfigurationManager.AppSettings["SourceDocumentUri"]}");
+                }
+
                 settings.SourceDocumentUri = sourceDocumentUri;
 
                 settings.XmlElementToPage = ConfigurationManager.AppSettings["XmlElementToPage"];
                 if (string.IsNullOrWhiteSpace(settings.XmlElementToPage))
+                {
                     throw new ConfigurationErrorsException(
                         "App setting \'XmlElementToPage\' must be specified.");
+                }
 
                 settings.XmlElementIdentifier = ConfigurationManager.AppSettings["XmlElementIdentifier"];
                 if (string.IsNullOrWhiteSpace(settings.XmlElementIdentifier))
+                {
                     throw new ConfigurationErrorsException(
                         "App setting \'XmlElementIdentifier\' must be specified.");
+                }
 
                 settings.OutputFileNameBase = ConfigurationManager.AppSettings["OutputFileNameBase"];
                 if (string.IsNullOrWhiteSpace(settings.OutputFileNameBase))
+                {
                     settings.OutputFileNameBase = "page";
+                }
 
                 settings.OutputFolder = ConfigurationManager.AppSettings["OutputFolder"];
                 if (!Directory.Exists(settings.OutputFolder))
+                {
                     throw new ConfigurationErrorsException(
                         $"App setting 'OutputFolder' is not an existing directory. Value: {settings.OutputFolder}");
+                }
 
-                Uri outputFileBaseUri;
                 if (
                     !Uri.TryCreate(ConfigurationManager.AppSettings["OutputFileBaseUrl"], UriKind.Absolute,
-                        out outputFileBaseUri))
+                        out var outputFileBaseUri))
+                {
                     throw new ConfigurationErrorsException(
                         $"App setting 'OutputFileBaseUrl' is not a valid absolute URI. Value: {ConfigurationManager.AppSettings["OutputFileBaseUrl"]}");
+                }
+
                 settings.OutputFileBaseUri = outputFileBaseUri;
 
-                int numberOfPages;
-                if (int.TryParse(ConfigurationManager.AppSettings["NumberOfPages"], out numberOfPages))
+                if (int.TryParse(ConfigurationManager.AppSettings["NumberOfPages"], out var numberOfPages))
+                {
                     settings.NumberOfPages = numberOfPages;
+                }
                 else
+                {
                     settings.NumberOfPages = 7; // Revert to default value.
+                }
+
+                if (int.TryParse(ConfigurationManager.AppSettings["HttpRequestTimeout"], out var httpRequestTimeout))
+                {
+                    settings.HttpRequestTimeout = httpRequestTimeout;
+                }
+                else
+                {
+                    settings.HttpRequestTimeout = 30; // Revert to default value.
+                }
 
                 return settings;
             }
@@ -284,17 +323,21 @@ namespace Um.DataServices.XmlFilePaging
         {
             return elements
                 .Select((x, i) => new {Index = i, Value = x})
-                .GroupBy(x => x.Index/pageSize)
+                .GroupBy(x => x.Index / pageSize)
                 .Select(x => x.Select(v => v.Value));
         }
 
         public static Uri Combine(this Uri uri, string relativePath)
         {
             if (uri == null)
+            {
                 throw new ArgumentNullException("uri");
+            }
 
             if ((relativePath == null) || (relativePath.Trim().Length == 0))
+            {
                 return uri;
+            }
 
             var uriUrl = uri.ToString().TrimEnd('/', '\\');
             var pathUrl = relativePath.TrimStart('/', '\\');
